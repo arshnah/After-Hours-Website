@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testers — Jugaad</title>
+  <meta name="description" content="Alpha test checklist for Jugaad. Run each live command, check the expected result, and report anything that breaks." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo">Jugaad</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="commands.html">Commands</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="testers-page">
+
+    <section class="alpha-banner">
+      <h1>ALPHA — Testers Wanted</h1>
+      <p>Jugaad is in active development. Commands change often, and some will break — that's expected at this stage. The whole point of the alpha is to find those breakages before a stable release. If you run the tests below and report what goes wrong, you're directly moving the bot toward being stable and trustworthy. Thank you for helping.</p>
+    </section>
+
+    <section class="report-bug">
+      <h2>How to report a bug</h2>
+      <p>If any test below fails or behaves differently than the expected result, message <span class="report-target">@vasucoded</span> on Discord directly.</p>
+      <p>Include three things so the bug can actually be fixed:</p>
+      <p>1. <strong>What you ran</strong> — the exact command and options (e.g. <code>/coinflip amount:50 side:heads</code>).<br />
+         2. <strong>What you expected</strong> — what the checklist said should happen.<br />
+         3. <strong>What actually happened</strong> — the real result, including any error text like "The application did not respond." A screenshot helps.</p>
+    </section>
+
+    <p class="testers-intro">This checklist covers only the commands that are live in the current build. Planned commands that aren't implemented yet are left out on purpose — there's nothing to test there. Run each one in a server where Jugaad is installed. Where an <span class="test-label edge">Edge case</span> is listed, please test it too — those are the situations most likely to expose a bug.</p>
+
+    <!-- Economy & Jobs -->
+    <section class="test-category">
+      <h2>Economy &amp; Jobs</h2>
+
+      <article class="test-card">
+        <h3>/balance</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/balance</code></p>
+          <p><span class="test-label expected">Expected</span> An embed shows your current Rokda balance. The very first time you run it, your wallet is created with a starting balance instead of an error.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/balance user:@anotherperson</code></p>
+          <p><span class="test-label expected">Expected</span> Shows that person's balance instead of yours.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/daily</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/daily</code></p>
+          <p><span class="test-label expected">Expected</span> Your balance goes up by somewhere between 150 and 400 Rokda, and an embed confirms the amount and your current daily streak.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/daily</code> again right away</p>
+          <p><span class="test-label expected">Expected</span> It refuses and tells you how long until you can claim again. Your balance does not change — you cannot claim twice in one day.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/weekly</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/weekly</code></p>
+          <p><span class="test-label expected">Expected</span> Your balance goes up by 1000–2000 Rokda once, and a 7-day cooldown starts.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/weekly</code> again right away</p>
+          <p><span class="test-label expected">Expected</span> Cooldown message with time remaining. No second payout.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/job list</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/job list</code></p>
+          <p><span class="test-label expected">Expected</span> Lists every available job, each with its payout range and cooldown.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/job apply</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/job apply name:</code> then pick a job from the dropdown</p>
+          <p><span class="test-label expected">Expected</span> You're assigned that job and get a confirmation. The job comes from a dropdown — you can't type a job name that doesn't exist.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/job stats</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/job stats</code></p>
+          <p><span class="test-label expected">Expected</span> Shows your current job, your XP, and your payout bonus tier. If you haven't applied for a job yet, it tells you to apply first rather than erroring.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/work</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/work</code></p>
+          <p><span class="test-label expected">Expected</span> You earn Rokda for your current job and your balance rises. If you have no job, it prompts you to apply for one first.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/work</code> again right away</p>
+          <p><span class="test-label expected">Expected</span> A per-job cooldown message. No extra pay until the cooldown is up.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Gambling -->
+    <section class="test-category">
+      <h2>Gambling</h2>
+
+      <article class="test-card">
+        <h3>/coinflip</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/coinflip amount:50 side:heads</code></p>
+          <p><span class="test-label expected">Expected</span> Your balance drops by 50 if you lose, or you net +50 (the bet is doubled) if you win. A result embed appears either way — no "application did not respond" error.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/coinflip amount:999999 side:heads</code> (more than you own)</p>
+          <p><span class="test-label expected">Expected</span> Rejected for not having enough Rokda; your balance is unchanged. Amounts below 10 or above 5000 are blocked by Discord before the command even runs.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/slots</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/slots amount:50</code></p>
+          <p><span class="test-label expected">Expected</span> Three reels are shown, your bet is deducted, and you're paid out when symbols match. The embed shows the reels and whether you won or lost.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/blackjack</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/blackjack amount:100</code>, then use the Hit / Stand buttons</p>
+          <p><span class="test-label expected">Expected</span> You're dealt a hand against the dealer with working Hit and Stand buttons. The hand resolves to a win, loss, or push and your balance updates. A natural blackjack pays 3:2.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Start a hand, then run <code>/blackjack amount:100</code> again before finishing the first</p>
+          <p><span class="test-label expected">Expected</span> The second attempt is blocked — only one hand at a time. Separately, if you start a hand and just wait, it auto-resolves after 60 seconds instead of getting stuck.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/dice</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/dice amount:50 mode:higher number:10</code></p>
+          <p><span class="test-label expected">Expected</span> A hidden 20-sided die is rolled. You win even money if it lands higher than 10, otherwise you lose. The embed shows the roll.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/dice amount:50 mode:exact number:7</code></p>
+          <p><span class="test-label expected">Expected</span> You only win if the roll is exactly 7, but the payout multiplier is much bigger than a higher/lower guess.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/dice amount:50 mode:higher number:25</code> (outside 1–20)</p>
+          <p><span class="test-label expected">Expected</span> Discord rejects the number before the command runs — it must be between 1 and 20.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/roulette</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/roulette amount:50 bet_type:red</code></p>
+          <p><span class="test-label expected">Expected</span> The wheel spins and the embed shows which pocket it landed on. A red bet pays 1:1 if it hits.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/roulette amount:50 bet_type:number value:17</code></p>
+          <p><span class="test-label expected">Expected</span> A straight-up bet on 17 pays 35:1 if the wheel lands on 17.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/roulette amount:50 bet_type:number</code> with no <code>value</code></p>
+          <p><span class="test-label expected">Expected</span> It tells you a number is required and the bet is not placed — your balance stays the same.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/crash</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/crash amount:50</code>, then press Cash Out</p>
+          <p><span class="test-label expected">Expected</span> A multiplier climbs from 1.00x. Pressing Cash Out pays your bet times the multiplier at that instant. The embed shows where you cashed out.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/crash amount:50</code> and never press Cash Out</p>
+          <p><span class="test-label expected">Expected</span> When the multiplier crashes you lose your bet — no payout, and the message resolves cleanly rather than hanging.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/lottery buy</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/lottery buy tickets:1</code></p>
+          <p><span class="test-label expected">Expected</span> The ticket cost is deducted, a confirmation shows how many tickets you now hold and the current pool size. The draw happens weekly.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/lottery buy tickets:99999</code> (beyond your balance or the per-purchase cap)</p>
+          <p><span class="test-label expected">Expected</span> Rejected — either the ticket count is capped by Discord or you're told you can't afford it. Your balance is unchanged.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/race</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/race bet amount:50 horse:</code> then pick a horse</p>
+          <p><span class="test-label expected">Expected</span> Your bet is placed on that horse and a betting round opens for the server.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/race start</code></p>
+          <p><span class="test-label expected">Expected</span> Betting closes, the race animates to a finish, and backers of the winning horse are paid.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/race start</code> with no bets placed, or place a bet and never start</p>
+          <p><span class="test-label expected">Expected</span> Starting with no open race tells you there's nothing to start. If a round is left unstarted, it auto-cancels after a short wait and refunds everyone who bet.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/elimination</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/elimination start</code>, then react to join</p>
+          <p><span class="test-label expected">Expected</span> A join message appears; reacting enters you and deducts the entry fee. After the join window, entrants are removed one at a time until one player remains and takes the pot.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Start an event where fewer than 2 people join</p>
+          <p><span class="test-label expected">Expected</span> The event cancels and everyone who joined is refunded their entry fee.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/elimination config enabled:true</code></p>
+          <p><span class="test-label expected">Expected</span> Only works if you have the Manage Server permission; it turns the short-timeout penalty for eliminated players on or off. Members without that permission get a permission error instead.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Fun & Social -->
+    <section class="test-category">
+      <h2>Fun &amp; Social</h2>
+
+      <article class="test-card">
+        <h3>/td</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/td</code></p>
+          <p><span class="test-label expected">Expected</span> The bot picks a random truth or dare and posts it with a Reroll button.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/td mode:dare</code>, then press Reroll a few times</p>
+          <p><span class="test-label expected">Expected</span> Forces a dare. Reroll swaps in a new one, but stops working after 3 rerolls on the same message.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/activechat</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/activechat</code></p>
+          <p><span class="test-label expected">Expected</span> Posts a random conversation starter. Occasionally (roughly a quarter of the time) it posts a light truth instead, for variety.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/pickup</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/pickup</code></p>
+          <p><span class="test-label expected">Expected</span> Returns a random pickup line.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/pickup category:</code> then pick a style</p>
+          <p><span class="test-label expected">Expected</span> Returns a line from the chosen style category.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/joke</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/joke</code></p>
+          <p><span class="test-label expected">Expected</span> Returns a random joke.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/joke category:</code> then pick a style</p>
+          <p><span class="test-label expected">Expected</span> Returns a joke from the chosen category.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/8ball</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/8ball question:will I win the next coinflip</code></p>
+          <p><span class="test-label expected">Expected</span> Replies with a random yes / no / maybe style answer.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/roast</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/roast user:@someone</code></p>
+          <p><span class="test-label expected">Expected</span> Posts a random templated roast aimed at the mentioned user.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/compliment</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/compliment user:@someone</code></p>
+          <p><span class="test-label expected">Expected</span> Posts a random templated compliment aimed at the mentioned user.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/ship</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/ship user1:@a user2:@b</code></p>
+          <p><span class="test-label expected">Expected</span> Shows a compatibility percentage for the pair.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Run the exact same pair again</p>
+          <p><span class="test-label expected">Expected</span> You get the same percentage every time — the result is deterministic for a given pair.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/rate</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/rate thing:my chances of hitting the jackpot</code></p>
+          <p><span class="test-label expected">Expected</span> Returns a 0–100 rating for whatever you typed, with a short flavor comment.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/wyr</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/wyr</code>, then react with one of the two options</p>
+          <p><span class="test-label expected">Expected</span> Posts a would-you-rather with two reaction options, tallies votes for about 30 seconds, then reveals the split.</p>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+</body>
+</html>

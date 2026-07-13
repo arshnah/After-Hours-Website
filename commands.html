@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commands — Jugaad</title>
+  <meta name="description" content="Full command reference for Jugaad, a Discord bot for economy, gambling, and community." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo">Jugaad</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="testers.html">Testers</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="commands-page">
+
+    <p class="build-note">This list reflects what's live in the current build plus commands planned for later phases. Planned commands are tagged <span class="badge badge-soon">Coming soon</span> so you can tell them apart.</p>
+
+    <div class="legend">
+      <div class="legend-item"><code class="mono">&lt;required&gt;</code> — argument must be provided</div>
+      <div class="legend-item"><code class="mono">[optional]</code> — argument may be omitted</div>
+      <div class="legend-item"><span class="badge badge-soon">Coming soon</span> — planned, not yet implemented</div>
+    </div>
+
+    <div class="filter-bar">
+      <input type="text" id="command-filter" placeholder="Filter commands…" autocomplete="off" />
+    </div>
+
+    <button type="button" class="mobile-nav-toggle" id="mobile-nav-toggle">Categories ▾</button>
+
+    <aside class="sidebar" id="sidebar">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="#economy">Economy &amp; Jobs</a></li>
+        <li><a href="#gambling">Gambling</a></li>
+        <li><a href="#fun-social">Fun &amp; Social</a></li>
+        <li><a href="#image-meme">Image &amp; Meme Tools</a></li>
+        <li><a href="#moderation">Moderation</a></li>
+        <li><a href="#leveling">Leveling &amp; Leaderboards</a></li>
+        <li><a href="#community">Community &amp; Engagement</a></li>
+        <li><a href="#automod-birthdays-trivia">Auto-mod, Birthdays, Trivia</a></li>
+        <li><a href="#focus-room">Focus Room</a></li>
+        <li><a href="#confessions">Confessions</a></li>
+        <li><a href="#meme-battle">Meme Battle</a></li>
+        <li><a href="#invest-stocks">Invest / Stocks</a></li>
+        <li><a href="#server-pulse">Server Pulse</a></li>
+        <li><a href="#study-buddy">Study Buddy</a></li>
+      </ul>
+    </aside>
+
+    <main class="command-main">
+
+      <p class="no-results" id="no-results">No commands match your filter.</p>
+
+      <!-- Economy & Jobs -->
+      <section class="command-category" id="economy">
+        <h2>Economy &amp; Jobs</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="balance">
+            <header><code>/balance [user]</code></header>
+            <p class="desc">Check your or someone else's Rokda balance.</p>
+            <p class="note">Creates your wallet on first use.</p>
+          </article>
+          <article class="command-card" data-name="daily">
+            <header><code>/daily</code></header>
+            <p class="desc">Claim your daily Rokda reward.</p>
+            <p class="note">150–400 Rokda. 24-hour cooldown. Consecutive-day streak bonus at streak ≥ 7.</p>
+          </article>
+          <article class="command-card" data-name="weekly">
+            <header><code>/weekly</code></header>
+            <p class="desc">Claim your weekly Rokda reward.</p>
+            <p class="note">1000–2000 Rokda. 7-day cooldown.</p>
+          </article>
+          <article class="command-card" data-name="job list">
+            <header><code>/job list</code></header>
+            <p class="desc">List every available job.</p>
+          </article>
+          <article class="command-card" data-name="job apply">
+            <header><code>/job apply &lt;name&gt;</code></header>
+            <p class="desc">Apply for a job.</p>
+            <p class="note">Dropdown of available jobs, not free text.</p>
+          </article>
+          <article class="command-card" data-name="job stats">
+            <header><code>/job stats</code></header>
+            <p class="desc">View your job stats.</p>
+          </article>
+          <article class="command-card" data-name="work">
+            <header><code>/work</code></header>
+            <p class="desc">Clock in at your job and earn Rokda.</p>
+            <p class="note">Per-job cooldown. Payout scales with XP.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Gambling -->
+      <section class="command-category" id="gambling">
+        <h2>Gambling</h2>
+        <p class="category-note">All bets have a min of 10 and max of 5000 Rokda unless otherwise stated. Randomness is server-side and cryptographic.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="coinflip">
+            <header><code>/coinflip &lt;amount&gt; &lt;side&gt;</code></header>
+            <p class="desc">Flip a coin — call it right to double your bet.</p>
+            <p class="note">Side choices: heads or tails.</p>
+          </article>
+          <article class="command-card" data-name="slots">
+            <header><code>/slots &lt;amount&gt;</code></header>
+            <p class="desc">Spin the reels and chase the 💎 jackpot.</p>
+            <p class="note">3-reel emoji slots with a weighted symbol table.</p>
+          </article>
+          <article class="command-card" data-name="blackjack">
+            <header><code>/blackjack &lt;amount&gt;</code></header>
+            <p class="desc">Play a hand of blackjack against the dealer.</p>
+            <p class="note">Hit/Stand buttons, 60-second timeout. Blackjack pays 3:2. Only one hand per user at a time.</p>
+          </article>
+          <article class="command-card" data-name="dice">
+            <header><code>/dice &lt;amount&gt; &lt;mode&gt; &lt;number&gt;</code></header>
+            <p class="desc">Roll a hidden d20 — guess higher/lower or the exact number.</p>
+            <p class="note">Mode choices: higher, lower, or exact. Number is 1–20. Higher/lower pays even money, an exact guess pays a bigger multiplier.</p>
+          </article>
+          <article class="command-card" data-name="roulette">
+            <header><code>/roulette &lt;amount&gt; &lt;bet_type&gt; [value]</code></header>
+            <p class="desc">Spin the wheel — red/black, odd/even, a number, or a dozen.</p>
+            <p class="note">Bet-type choices: red, black, odd, even (all 1:1), number (35:1), dozen (2:1). Provide <code>value</code> as a number 0–36 for a straight-up bet, or 1/2/3 for a dozen.</p>
+          </article>
+          <article class="command-card" data-name="crash">
+            <header><code>/crash &lt;amount&gt;</code></header>
+            <p class="desc">Cash out before the multiplier crashes.</p>
+            <p class="note">Multiplier climbs from 1.00x. Hit the Cash Out button before it busts.</p>
+          </article>
+          <article class="command-card" data-name="lottery buy">
+            <header><code>/lottery buy &lt;tickets&gt;</code></header>
+            <p class="desc">Buy tickets for the weekly lottery draw.</p>
+            <p class="note">The draw runs every Sunday at 20:00 UTC. Winner takes most of the pool.</p>
+          </article>
+          <article class="command-card" data-name="race bet">
+            <header><code>/race bet &lt;amount&gt; &lt;horse&gt;</code></header>
+            <p class="desc">Bet on one of five emoji horses.</p>
+            <p class="note">Opens a betting round; anyone can join before it starts.</p>
+          </article>
+          <article class="command-card" data-name="race start">
+            <header><code>/race start</code></header>
+            <p class="desc">Close betting and run the race.</p>
+            <p class="note">Animates the finish, then pays out the winning horse's backers. Unstarted rounds auto-cancel and refund.</p>
+          </article>
+          <article class="command-card" data-name="elimination start">
+            <header><code>/elimination start</code></header>
+            <p class="desc">Start a last-one-standing event.</p>
+            <p class="note">React to join within the entry window. One entrant is eliminated at a time until one remains and takes the pot.</p>
+          </article>
+          <article class="command-card" data-name="elimination config">
+            <header><code>/elimination config &lt;enabled&gt;</code></header>
+            <p class="desc">Configure whether eliminated players get a short timeout.</p>
+            <p class="note">Requires the Manage Server permission.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Fun & Social -->
+      <section class="command-category" id="fun-social">
+        <h2>Fun &amp; Social</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="td">
+            <header><code>/td [mode]</code></header>
+            <p class="desc">Truth or Dare — random pick, or force a mode.</p>
+            <p class="note">Mode choices: truth or dare. Reroll button, capped at 3 rerolls per message.</p>
+          </article>
+          <article class="command-card" data-name="activechat">
+            <header><code>/activechat</code></header>
+            <p class="desc">Post a random conversation starter to revive a dead channel.</p>
+            <p class="note">~25% chance pulls a light truth instead, for variety.</p>
+          </article>
+          <article class="command-card" data-name="pickup">
+            <header><code>/pickup [category]</code></header>
+            <p class="desc">Get a random pickup line.</p>
+            <p class="note">Optional category, or leave blank for a random style.</p>
+          </article>
+          <article class="command-card" data-name="joke">
+            <header><code>/joke [category]</code></header>
+            <p class="desc">Get a random joke.</p>
+            <p class="note">Optional category, or leave blank for a random style.</p>
+          </article>
+          <article class="command-card" data-name="8ball">
+            <header><code>/8ball &lt;question&gt;</code></header>
+            <p class="desc">Ask the magic 8-ball a question.</p>
+          </article>
+          <article class="command-card" data-name="roast">
+            <header><code>/roast &lt;user&gt;</code></header>
+            <p class="desc">Roast a member.</p>
+            <p class="note">Random templated roast targeting the mentioned user.</p>
+          </article>
+          <article class="command-card" data-name="compliment">
+            <header><code>/compliment &lt;user&gt;</code></header>
+            <p class="desc">Compliment a member.</p>
+            <p class="note">Random templated compliment targeting the mentioned user.</p>
+          </article>
+          <article class="command-card" data-name="ship">
+            <header><code>/ship &lt;user1&gt; &lt;user2&gt;</code></header>
+            <p class="desc">Ship two people and get a compatibility score.</p>
+            <p class="note">Deterministic — the same pair always gets the same number.</p>
+          </article>
+          <article class="command-card" data-name="rate">
+            <header><code>/rate &lt;thing&gt;</code></header>
+            <p class="desc">Rate anything out of 100.</p>
+            <p class="note">Includes a flavor suffix.</p>
+          </article>
+          <article class="command-card" data-name="wyr">
+            <header><code>/wyr</code></header>
+            <p class="desc">Would You Rather — vote with reactions, results in 30 seconds.</p>
+            <p class="note">Auto-tallies votes and reveals the split.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Image & Meme Tools -->
+      <section class="command-category" id="image-meme">
+        <h2>Image &amp; Meme Tools</h2>
+        <p class="category-note">All image commands work on the caller's own avatar if no user is provided.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="wanted">
+            <header><code>/wanted [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Composites the avatar into a WANTED poster with a bounty pulled from the user's current Rokda balance.</p>
+          </article>
+          <article class="command-card" data-name="deepfry">
+            <header><code>/deepfry [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Classic deep-fried meme effect on the avatar.</p>
+          </article>
+          <article class="command-card" data-name="jail">
+            <header><code>/jail [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Jail-bars overlay on the avatar.</p>
+          </article>
+          <article class="command-card" data-name="wasted">
+            <header><code>/wasted [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">GTA-style desaturated WASTED screen.</p>
+          </article>
+          <article class="command-card" data-name="pixelate">
+            <header><code>/pixelate [user] [level] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Mosaic effect. Level controls block size.</p>
+          </article>
+          <article class="command-card" data-name="glitch">
+            <header><code>/glitch [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">RGB channel shift / chromatic aberration.</p>
+          </article>
+          <article class="command-card" data-name="pfp-card">
+            <header><code>/pfp-card [user] [color] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Circle-cropped avatar with a colored ring border.</p>
+          </article>
+          <article class="command-card" data-name="caption">
+            <header><code>/caption [user] [top] [bottom] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Classic impact-font meme caption on an avatar or uploaded image.</p>
+          </article>
+          <article class="command-card" data-name="achievement">
+            <header><code>/achievement &lt;text&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Achievement Unlocked toast card with fill-in text.</p>
+          </article>
+          <article class="command-card" data-name="ascii">
+            <header><code>/ascii [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Convert avatar to ASCII art.</p>
+          </article>
+          <article class="command-card" data-name="ship-card">
+            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Visual version of <code>/ship</code> — two avatars, a heart, and the compatibility percentage.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Moderation -->
+      <section class="command-category" id="moderation">
+        <h2>Moderation</h2>
+        <p class="category-note">Moderation commands are gated by real Discord permissions, so only staff with the relevant permission see them at all.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="lock">
+            <header><code>/lock <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Lock the current channel for @everyone.</p>
+          </article>
+          <article class="command-card" data-name="unlock">
+            <header><code>/unlock <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Unlock the current channel.</p>
+          </article>
+          <article class="command-card" data-name="lockdown">
+            <header><code>/lockdown <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Lock every text channel in the server.</p>
+            <p class="note">Requires confirmation.</p>
+          </article>
+          <article class="command-card" data-name="unlockdown">
+            <header><code>/unlockdown <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Unlock every text channel in the server.</p>
+          </article>
+          <article class="command-card" data-name="warn">
+            <header><code>/warn &lt;user&gt; &lt;reason&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Record a warning.</p>
+            <p class="note">Auto-timeouts the user for 10 minutes after their 3rd warning.</p>
+          </article>
+          <article class="command-card" data-name="warnings">
+            <header><code>/warnings &lt;user&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Show a user's warning history.</p>
+          </article>
+          <article class="command-card" data-name="kick">
+            <header><code>/kick &lt;user&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Kick a user.</p>
+          </article>
+          <article class="command-card" data-name="ban">
+            <header><code>/ban &lt;user&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Ban a user.</p>
+          </article>
+          <article class="command-card" data-name="unban">
+            <header><code>/unban &lt;user-id&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Unban by user ID.</p>
+          </article>
+          <article class="command-card" data-name="timeout">
+            <header><code>/timeout &lt;user&gt; &lt;duration&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Put a user in timeout.</p>
+          </article>
+          <article class="command-card" data-name="purge">
+            <header><code>/purge &lt;amount&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Bulk delete recent messages.</p>
+            <p class="note">Capped at 100 by Discord's API limit.</p>
+          </article>
+          <article class="command-card" data-name="slowmode">
+            <header><code>/slowmode &lt;seconds&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Set channel slowmode.</p>
+          </article>
+          <article class="command-card" data-name="nickname reset">
+            <header><code>/nickname reset &lt;user&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Clear an abused nickname.</p>
+          </article>
+          <article class="command-card" data-name="modlog set">
+            <header><code>/modlog set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure the mod-log channel for this server.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Leveling & Leaderboards -->
+      <section class="command-category" id="leveling">
+        <h2>Leveling &amp; Leaderboards</h2>
+        <p class="category-note">Passive XP is awarded automatically on messages (5–15 per message, once per 60 seconds per user). Level-ups pay a Rokda bonus equal to level × 50 and post a congratulations embed.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="rank">
+            <header><code>/rank [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Show level, XP, XP to next level, and progress bar.</p>
+          </article>
+          <article class="command-card" data-name="leaderboard">
+            <header><code>/leaderboard [richest-or-level] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Top 10 by Rokda balance or by level.</p>
+            <p class="note">Paginated.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Community & Engagement -->
+      <section class="command-category" id="community">
+        <h2>Community &amp; Engagement</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="reactionrole add">
+            <header><code>/reactionrole add &lt;message-link&gt; &lt;emoji&gt; &lt;role&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Bind an emoji reaction to a role grant.</p>
+          </article>
+          <article class="command-card" data-name="welcome set">
+            <header><code>/welcome set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure the welcome channel for new-member embeds.</p>
+          </article>
+          <article class="command-card" data-name="goodbye set">
+            <header><code>/goodbye set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure the goodbye channel for member-leave embeds.</p>
+          </article>
+          <article class="command-card" data-name="suggest">
+            <header><code>/suggest &lt;text&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Post a suggestion embed with 👍/👎 pre-added.</p>
+          </article>
+          <article class="command-card" data-name="poll">
+            <header><code>/poll &lt;question&gt; &lt;option1&gt; &lt;option2&gt; [option3] [option4] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Post a poll with numbered emoji reactions.</p>
+          </article>
+          <article class="command-card" data-name="giveaway start">
+            <header><code>/giveaway start &lt;duration&gt; &lt;prize&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Start a giveaway.</p>
+            <p class="note">Reactors are entered; winner is picked randomly when the timer ends.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Auto-mod, Birthdays, Trivia -->
+      <section class="command-category" id="automod-birthdays-trivia">
+        <h2>Auto-mod, Birthdays, Trivia</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="automod toggle">
+            <header><code>/automod toggle <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Turn per-guild automod on or off.</p>
+            <p class="note">Checks messages against a banned-word list and an invite-link regex.</p>
+          </article>
+          <article class="command-card" data-name="birthday set">
+            <header><code>/birthday set &lt;month&gt; &lt;day&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Register your birthday.</p>
+            <p class="note">A daily job posts happy-birthday embeds and credits a small Rokda gift.</p>
+          </article>
+          <article class="command-card" data-name="trivia start">
+            <header><code>/trivia start <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Post a trivia question with A/B/C/D reactions.</p>
+            <p class="note">20-second timer. Faster correct answers earn slightly more Rokda.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Focus Room -->
+      <section class="command-category" id="focus-room">
+        <h2>Focus Room</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="focus start">
+            <header><code>/focus start &lt;minutes&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Start a Pomodoro-style focus session while in a voice channel.</p>
+            <p class="note">Pays 2 Rokda per minute, capped at 120 minutes per session.</p>
+          </article>
+          <article class="command-card" data-name="focus setroom">
+            <header><code>/focus setroom &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure a specific voice channel as the study hall.</p>
+            <p class="note">Admin only.</p>
+          </article>
+          <article class="command-card" data-name="focus leaderboard">
+            <header><code>/focus leaderboard <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Top users by focused minutes this week.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Confessions -->
+      <section class="command-category" id="confessions">
+        <h2>Confessions</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="confess">
+            <header><code>/confess &lt;text&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Submit an anonymous confession.</p>
+            <p class="note">Posted as a numbered embed to the confessions channel. The bot never stores the author's user ID. Rate-limited to one per 10 minutes per user.</p>
+          </article>
+          <article class="command-card" data-name="confess-settings set">
+            <header><code>/confess-settings set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure the confessions channel.</p>
+            <p class="note">Admin only.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Meme Battle -->
+      <section class="command-category" id="meme-battle">
+        <h2>Meme Battle</h2>
+        <p class="category-note">The meme prize pool auto-funds from a 2% skim of every gambling loss server-wide.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="meme submit">
+            <header><code>/meme submit &lt;image&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Submit a meme to this week's battle.</p>
+            <p class="note">🔥 reactions count as votes.</p>
+          </article>
+          <article class="command-card" data-name="meme leaderboard">
+            <header><code>/meme leaderboard <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Current week's meme standings.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Invest / Stocks -->
+      <section class="command-category" id="invest-stocks">
+        <h2>Invest / Stocks</h2>
+        <p class="category-note">Prices update daily via a scheduled job. Tickers include CHAI (chai-wallah stonks) and CRYP (crypto-bro joke, high volatility).</p>
+        <div class="command-list">
+          <article class="command-card" data-name="invest market">
+            <header><code>/invest market <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Show every ticker with current price and today's percent change.</p>
+          </article>
+          <article class="command-card" data-name="invest buy">
+            <header><code>/invest buy &lt;ticker&gt; &lt;amount-in-rokda&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Buy shares at the current price.</p>
+          </article>
+          <article class="command-card" data-name="invest sell">
+            <header><code>/invest sell &lt;ticker&gt; &lt;shares&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Sell shares at the current price.</p>
+          </article>
+          <article class="command-card" data-name="invest portfolio">
+            <header><code>/invest portfolio [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Holdings, current value per ticker, and unrealized P/L.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Server Pulse -->
+      <section class="command-category" id="server-pulse">
+        <h2>Server Pulse</h2>
+        <p class="category-note">The weekly Server Pulse embed auto-posts every Sunday summarizing the week's top Rokda earner, biggest gambling win and loss, new-member count, most active channel, and warnings issued.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="pulse setchannel">
+            <header><code>/pulse setchannel &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Configure the channel where the weekly recap embed is posted.</p>
+            <p class="note">Admin only.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Study Buddy -->
+      <section class="command-category" id="study-buddy">
+        <h2>Study Buddy</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="studybuddy join">
+            <header><code>/studybuddy join &lt;tags&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Opt in with up to 5 tags (e.g. "JEE", "UI design").</p>
+          </article>
+          <article class="command-card" data-name="studybuddy leave">
+            <header><code>/studybuddy leave <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Opt out.</p>
+          </article>
+          <article class="command-card" data-name="studybuddy match">
+            <header><code>/studybuddy match <span class="badge badge-soon">Coming soon</span></code></header>
+            <p class="desc">Get matched with another opted-in user sharing at least one tag.</p>
+            <p class="note">Both users receive an intro DM.</p>
+          </article>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

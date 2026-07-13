@@ -1,0 +1,7 @@
+# Internal build spec — not part of the published site
+jugaad-docs-spec.md
+
+# Never commit these to a public repo
+.env
+.env.*
+node_modules/

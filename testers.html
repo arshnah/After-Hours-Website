@@ -131,7 +131,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/coinflip amount:999999 side:heads</code> (more than you own)</p>
-          <p><span class="test-label expected">Expected</span> Rejected for not having enough Rokda; your balance is unchanged. Amounts below 10 or above 5000 are blocked by Discord before the command even runs.</p>
+          <p><span class="test-label expected">Expected</span> Rejected for not having enough Rokda; your balance is unchanged. Amounts below 10 or above 250,000 are blocked by Discord before the command even runs.</p>
         </div>
       </article>
 
@@ -341,6 +341,156 @@
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/wyr</code>, then react with one of the two options</p>
           <p><span class="test-label expected">Expected</span> Posts a would-you-rather with two reaction options, tallies votes for about 30 seconds, then reveals the split.</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Moderation -->
+    <section class="test-category">
+      <h2>Moderation</h2>
+      <p class="testers-intro">These commands only appear in Discord's slash-command list for members who hold the matching permission (e.g. Ban Members for <code>/ban</code>). If you can't see a command at all, that's the permission gate working correctly — not a bug. Ask a server admin to grant you a staff role with the needed permissions before testing the rest of this section. Test these on a throwaway account or a member who's expecting it, not a real regular.</p>
+
+      <article class="test-card">
+        <h3>/warn</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/warn user:@testaccount reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> A private reply confirms the warning number, and an entry appears in the mod-log channel (if one is configured).</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Run <code>/warn</code> on the same user 3 times total</p>
+          <p><span class="test-label expected">Expected</span> On the 3rd warning, the bot also applies a 10-minute timeout automatically and says so in the reply — as long as your role is above the target's.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/warn user:@yourself reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> Rejected — you can't warn yourself.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/warnings</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/warnings user:@testaccount</code> (after giving them at least one warning)</p>
+          <p><span class="test-label expected">Expected</span> Lists each warning with its reason, who issued it, and when — most recent 15 if there are more.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/warnings user:@someoneneverwarned</code></p>
+          <p><span class="test-label expected">Expected</span> Says the user has no warnings, instead of an empty or broken embed.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/kick</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/kick user:@testaccount reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> The member is removed from the server, you get a private confirmation, and it's logged to the mod-log channel.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/kick user:@someonewithahigherrole</code></p>
+          <p><span class="test-label expected">Expected</span> Rejected with a message about role hierarchy — nobody gets kicked.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/ban and /unban</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/ban user:@testaccount reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> The member is banned, you get a private confirmation, and it's logged.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/unban user-id:&lt;their ID&gt; reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> The ban is lifted and confirmed. You'll need the numeric user ID, not their username.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/unban user-id:&lt;an ID that was never banned&gt;</code></p>
+          <p><span class="test-label expected">Expected</span> Says that user isn't banned — no error, no false success.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/timeout</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/timeout user:@testaccount duration:5 reason:testing</code></p>
+          <p><span class="test-label expected">Expected</span> The member can't send messages or react for 5 minutes; the reply confirms the duration and shows when it lifts.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/timeout user:@yourself duration:5</code></p>
+          <p><span class="test-label expected">Expected</span> Rejected — you can't time yourself out.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/purge</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> Post a few throwaway messages, then <code>/purge amount:5</code></p>
+          <p><span class="test-label expected">Expected</span> The 5 most recent messages in the channel disappear and the bot confirms how many were deleted.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/purge amount:150</code></p>
+          <p><span class="test-label expected">Expected</span> Discord blocks the option before the command runs — 100 is the max.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/slowmode</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/slowmode seconds:10</code>, then try sending two messages quickly</p>
+          <p><span class="test-label expected">Expected</span> Discord itself enforces a 10-second gap between your messages in that channel. The bot's confirmation posts publicly (not just to you), since it's a visible channel setting.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/slowmode seconds:0</code></p>
+          <p><span class="test-label expected">Expected</span> Slowmode is disabled and the bot confirms it.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/lock and /unlock</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/lock reason:testing</code> in a test channel</p>
+          <p><span class="test-label expected">Expected</span> @everyone can no longer send messages in that channel; the bot posts a public embed confirming the lock.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/unlock reason:testing</code> in the same channel</p>
+          <p><span class="test-label expected">Expected</span> @everyone can send messages again; a public embed confirms the unlock.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/lockdown and /unlockdown</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/lockdown reason:testing</code>, then press Confirm</p>
+          <p><span class="test-label expected">Expected</span> A warning prompt appears first, listing how many channels will be affected. After confirming, every text/announcement/forum channel locks and the bot reports how many succeeded.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/unlockdown reason:testing</code>, then press Confirm</p>
+          <p><span class="test-label expected">Expected</span> Same flow in reverse — every channel unlocks.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Run <code>/lockdown</code> again, but press Cancel (or just let the prompt sit for 30 seconds)</p>
+          <p><span class="test-label expected">Expected</span> Cancel: nothing is locked, and the bot says so. Timeout: same outcome after 30 seconds pass with no click.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/nickname reset</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> Set a nickname on a test account, then <code>/nickname reset user:@testaccount</code></p>
+          <p><span class="test-label expected">Expected</span> The nickname clears back to their username, and the bot confirms it privately.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/nickname reset user:@someonewithnonickname</code></p>
+          <p><span class="test-label expected">Expected</span> Says that member doesn't have a nickname set — nothing changes.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/modlog set</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/modlog set channel:#mod-log</code></p>
+          <p><span class="test-label expected">Expected</span> Confirms the channel is set. Running any moderation command afterward (warn, kick, ban, etc.) should now post a log entry there.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/modlog set channel:</code> pointed at a channel the bot can't post in</p>
+          <p><span class="test-label expected">Expected</span> Rejected with a message saying the bot can't send messages there — the setting isn't saved.</p>
         </div>
       </article>
     </section>

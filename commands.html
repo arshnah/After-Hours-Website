@@ -107,7 +107,7 @@
       <!-- Gambling -->
       <section class="command-category" id="gambling">
         <h2>Gambling</h2>
-        <p class="category-note">All bets have a min of 10 and max of 5000 Rokda unless otherwise stated. Randomness is server-side and cryptographic.</p>
+        <p class="category-note">All bets have a min of 10 and max of 250,000 Rokda unless otherwise stated. Randomness is server-side and cryptographic.</p>
         <div class="command-list">
           <article class="command-card" data-name="coinflip">
             <header><code>/coinflip &lt;amount&gt; &lt;side&gt;</code></header>
@@ -278,66 +278,77 @@
       <!-- Moderation -->
       <section class="command-category" id="moderation">
         <h2>Moderation</h2>
-        <p class="category-note">Moderation commands are gated by real Discord permissions, so only staff with the relevant permission see them at all.</p>
+        <p class="category-note">Moderation commands are gated by real Discord permissions — Discord hides each one from anyone who lacks the matching permission, so most members never see this category at all. Every action here (except <code>/slowmode</code>, <code>/lock</code>, and <code>/unlock</code>, which reply publicly since they change visible channel state) replies privately to the moderator, and is also posted to the server's mod-log channel if one is configured with <code>/modlog set</code>.</p>
         <div class="command-list">
-          <article class="command-card" data-name="lock">
-            <header><code>/lock <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Lock the current channel for @everyone.</p>
-          </article>
-          <article class="command-card" data-name="unlock">
-            <header><code>/unlock <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Unlock the current channel.</p>
-          </article>
-          <article class="command-card" data-name="lockdown">
-            <header><code>/lockdown <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Lock every text channel in the server.</p>
-            <p class="note">Requires confirmation.</p>
-          </article>
-          <article class="command-card" data-name="unlockdown">
-            <header><code>/unlockdown <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Unlock every text channel in the server.</p>
-          </article>
           <article class="command-card" data-name="warn">
-            <header><code>/warn &lt;user&gt; &lt;reason&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Record a warning.</p>
-            <p class="note">Auto-timeouts the user for 10 minutes after their 3rd warning.</p>
+            <header><code>/warn &lt;user&gt; &lt;reason&gt;</code></header>
+            <p class="desc">Warn a member.</p>
+            <p class="note">Requires Moderate Members. Auto-times the member out for 10 minutes on their 3rd (or later) warning, if role hierarchy allows it.</p>
           </article>
           <article class="command-card" data-name="warnings">
-            <header><code>/warnings &lt;user&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Show a user's warning history.</p>
+            <header><code>/warnings &lt;user&gt;</code></header>
+            <p class="desc">List a member's warning history.</p>
+            <p class="note">Requires Moderate Members. Shows the 15 most recent, each with reason, moderator, and timestamp.</p>
           </article>
           <article class="command-card" data-name="kick">
-            <header><code>/kick &lt;user&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Kick a user.</p>
+            <header><code>/kick &lt;user&gt; [reason]</code></header>
+            <p class="desc">Kick a member from the server.</p>
+            <p class="note">Requires Kick Members.</p>
           </article>
           <article class="command-card" data-name="ban">
-            <header><code>/ban &lt;user&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Ban a user.</p>
+            <header><code>/ban &lt;user&gt; [reason]</code></header>
+            <p class="desc">Ban a member from the server.</p>
+            <p class="note">Requires Ban Members. Works even if the user isn't currently in the server.</p>
           </article>
           <article class="command-card" data-name="unban">
-            <header><code>/unban &lt;user-id&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Unban by user ID.</p>
+            <header><code>/unban &lt;user-id&gt; [reason]</code></header>
+            <p class="desc">Unban a user by their ID.</p>
+            <p class="note">Requires Ban Members. Checks that the user is actually banned first, so the reply is unambiguous either way.</p>
           </article>
           <article class="command-card" data-name="timeout">
-            <header><code>/timeout &lt;user&gt; &lt;duration&gt; [reason] <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Put a user in timeout.</p>
+            <header><code>/timeout &lt;user&gt; &lt;duration&gt; [reason]</code></header>
+            <p class="desc">Time a member out.</p>
+            <p class="note">Requires Moderate Members. Duration is in minutes, capped at 40,320 (Discord's 28-day timeout limit).</p>
           </article>
           <article class="command-card" data-name="purge">
-            <header><code>/purge &lt;amount&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Bulk delete recent messages.</p>
-            <p class="note">Capped at 100 by Discord's API limit.</p>
+            <header><code>/purge &lt;amount&gt;</code></header>
+            <p class="desc">Bulk-delete recent messages in the current channel.</p>
+            <p class="note">Requires Manage Messages. Capped at 100 per run — Discord's bulk-delete limit. Messages older than 14 days are silently skipped and reported as such.</p>
           </article>
           <article class="command-card" data-name="slowmode">
-            <header><code>/slowmode &lt;seconds&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Set channel slowmode.</p>
+            <header><code>/slowmode &lt;seconds&gt;</code></header>
+            <p class="desc">Set this channel's slowmode, or disable it.</p>
+            <p class="note">Requires Manage Channels. 0–21,600 seconds (Discord's 6-hour cap). Use 0 to disable.</p>
+          </article>
+          <article class="command-card" data-name="lock">
+            <header><code>/lock [reason]</code></header>
+            <p class="desc">Lock the current channel — stops @everyone from sending messages.</p>
+            <p class="note">Requires Manage Channels.</p>
+          </article>
+          <article class="command-card" data-name="unlock">
+            <header><code>/unlock [reason]</code></header>
+            <p class="desc">Unlock the current channel.</p>
+            <p class="note">Requires Manage Channels. Resets the permission to inherit rather than force-allowing, so category/role overrides still apply.</p>
+          </article>
+          <article class="command-card" data-name="lockdown">
+            <header><code>/lockdown [reason]</code></header>
+            <p class="desc">Raid response — lock every text/announcement/forum channel in the server.</p>
+            <p class="note">Requires Manage Channels. Shows a Confirm/Cancel prompt (30s, scoped to you) before touching anything.</p>
+          </article>
+          <article class="command-card" data-name="unlockdown">
+            <header><code>/unlockdown [reason]</code></header>
+            <p class="desc">Lift a server-wide lockdown — unlock every text/announcement/forum channel.</p>
+            <p class="note">Requires Manage Channels. Same Confirm/Cancel prompt as <code>/lockdown</code>.</p>
           </article>
           <article class="command-card" data-name="nickname reset">
-            <header><code>/nickname reset &lt;user&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Clear an abused nickname.</p>
+            <header><code>/nickname reset &lt;user&gt;</code></header>
+            <p class="desc">Clear a member's nickname.</p>
+            <p class="note">Requires Manage Nicknames.</p>
           </article>
           <article class="command-card" data-name="modlog set">
-            <header><code>/modlog set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
-            <p class="desc">Configure the mod-log channel for this server.</p>
+            <header><code>/modlog set &lt;channel&gt;</code></header>
+            <p class="desc">Set the channel where moderation actions are logged.</p>
+            <p class="note">Requires Manage Server. Checks the bot can actually post there before saving.</p>
           </article>
         </div>
       </section>

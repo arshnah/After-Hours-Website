@@ -482,6 +482,12 @@ section > .container > h2 {
   border: 1px solid rgba(212, 165, 74, 0.35);
 }
 
+.badge-issue {
+  background: rgba(194, 106, 91, 0.14);
+  color: var(--warning);
+  border: 1px solid rgba(194, 106, 91, 0.35);
+}
+
 .no-results {
   display: none;
   color: var(--text-muted);
@@ -550,6 +556,43 @@ section > .container > h2 {
   color: var(--text-muted);
   font-size: 0.9rem;
   margin-bottom: 32px;
+}
+
+.known-issues {
+  background: rgba(194, 106, 91, 0.08);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--warning);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+
+.known-issues h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.5em;
+}
+
+.known-issues p {
+  margin: 0 0 0.6em;
+  font-size: 0.9rem;
+}
+
+.known-issues p:last-child {
+  margin-bottom: 0;
+}
+
+.known-issues ul {
+  margin: 0 0 0.6em;
+  padding-left: 1.3em;
+  font-size: 0.9rem;
+}
+
+.known-issues code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 0.87rem;
 }
 
 .test-category {

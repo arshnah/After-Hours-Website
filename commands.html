@@ -26,13 +26,11 @@
 
   <div class="commands-page">
 
-    <p class="build-note">This list reflects what's live in the current build plus commands planned for later phases. Planned commands are tagged <span class="badge badge-soon">Coming soon</span> so you can tell them apart.</p>
+    <p class="build-note">Every command below is live in the current build.</p>
 
     <div class="legend">
       <div class="legend-item"><code class="mono">&lt;required&gt;</code> — argument must be provided</div>
       <div class="legend-item"><code class="mono">[optional]</code> — argument may be omitted</div>
-      <div class="legend-item"><span class="badge badge-soon">Coming soon</span> — planned, not yet implemented</div>
-      <div class="legend-item"><span class="badge badge-issue">Known issue</span> — built, but currently broken</div>
     </div>
 
     <div class="filter-bar">
@@ -58,6 +56,9 @@
         <li><a href="#invest-stocks">Invest / Stocks</a></li>
         <li><a href="#server-pulse">Server Pulse</a></li>
         <li><a href="#study-buddy">Study Buddy</a></li>
+        <li><a href="#music">Music (Last.fm)</a></li>
+        <li><a href="#social">Social</a></li>
+        <li><a href="#utility">Utility</a></li>
       </ul>
     </aside>
 
@@ -225,56 +226,71 @@
             <p class="desc">Would You Rather — vote with reactions, results in 30 seconds.</p>
             <p class="note">Auto-tallies votes and reveals the split.</p>
           </article>
+          <article class="command-card" data-name="define">
+            <header><code>/define &lt;word&gt;</code></header>
+            <p class="desc">Look up a word's definition.</p>
+            <p class="note">Also works as a text command: <code>.define</code> or <code>jugaad define &lt;word&gt;</code>.</p>
+          </article>
+          <article class="command-card" data-name="gif">
+            <header><code>/gif &lt;search&gt;</code></header>
+            <p class="desc">Search Giphy for a GIF.</p>
+            <p class="note">SFW-filtered, with a 🔀 button to shuffle to another result.</p>
+          </article>
         </div>
       </section>
 
       <!-- Image & Meme Tools -->
       <section class="command-category" id="image-meme">
         <h2>Image &amp; Meme Tools</h2>
-        <p class="category-note">All image commands work on the caller's own avatar if no user is provided. The eleven canvas-based commands below (marked <span class="badge badge-issue">Known issue</span>) are built but currently broken — see the <a href="testers.html">Testers</a> page for details. The rest are unaffected.</p>
+        <p class="category-note">All image commands work on the caller's own avatar if no user is provided.</p>
         <div class="command-list">
+          <article class="command-card" data-name="action">
+            <header><code>/action &lt;type&gt; [user]</code></header>
+            <p class="desc">Anime reaction GIF — hug, pat, kiss, slap, punch, dance, cry, and 25 more.</p>
+            <p class="note">One command for all reactions, powered by nekos.best. Solo reactions ignore the target.</p>
+          </article>
           <article class="command-card" data-name="wanted">
-            <header><code>/wanted [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/wanted [user]</code></header>
             <p class="desc">Composites the avatar into a WANTED poster with a bounty pulled from the user's current Rokda balance.</p>
           </article>
           <article class="command-card" data-name="deepfry">
-            <header><code>/deepfry [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/deepfry [user]</code></header>
             <p class="desc">Classic deep-fried meme effect on the avatar.</p>
           </article>
           <article class="command-card" data-name="jail">
-            <header><code>/jail [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/jail [user]</code></header>
             <p class="desc">Jail-bars overlay on the avatar.</p>
           </article>
           <article class="command-card" data-name="wasted">
-            <header><code>/wasted [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/wasted [user]</code></header>
             <p class="desc">GTA-style desaturated WASTED screen.</p>
           </article>
           <article class="command-card" data-name="pixelate">
-            <header><code>/pixelate [user] [level] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/pixelate [user] [level]</code></header>
             <p class="desc">Mosaic effect. Level controls block size.</p>
           </article>
           <article class="command-card" data-name="glitch">
-            <header><code>/glitch [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/glitch [user]</code></header>
             <p class="desc">RGB channel shift / chromatic aberration.</p>
           </article>
           <article class="command-card" data-name="pfp-card">
-            <header><code>/pfp-card [user] [color] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/pfp-card [user] [color]</code></header>
             <p class="desc">Circle-cropped avatar with a colored ring border.</p>
           </article>
           <article class="command-card" data-name="caption">
-            <header><code>/caption [user] [top] [bottom] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/caption [user] [top] [bottom]</code></header>
             <p class="desc">Classic impact-font meme caption on an avatar or uploaded image.</p>
           </article>
           <article class="command-card" data-name="achievement">
-            <header><code>/achievement &lt;text&gt; <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/achievement &lt;text&gt;</code></header>
             <p class="desc">Achievement Unlocked toast card with fill-in text.</p>
           </article>
           <article class="command-card" data-name="ascii">
-            <header><code>/ascii [user] <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/ascii [user]</code></header>
             <p class="desc">Convert avatar to ASCII art.</p>
           </article>
           <article class="command-card" data-name="ship-card">
-            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt; <span class="badge badge-issue">Known issue</span></code></header>
+            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt;</code></header>
             <p class="desc">Visual version of <code>/ship</code> — two avatars, a heart, and the compatibility percentage.</p>
           </article>
         </div>
@@ -355,6 +371,11 @@
             <p class="desc">Set the channel where moderation actions are logged.</p>
             <p class="note">Requires Manage Server. Checks the bot can actually post there before saving.</p>
           </article>
+          <article class="command-card" data-name="autorole">
+            <header><code>/autorole set|disable &lt;role&gt;</code></header>
+            <p class="desc">Automatically give a role to new members on join.</p>
+            <p class="note">Requires Manage Server. The role must sit below the bot's highest role.</p>
+          </article>
         </div>
       </section>
 
@@ -364,13 +385,13 @@
         <p class="category-note">Passive XP is awarded automatically on messages (5–15 per message, once per 60 seconds per user). Level-ups pay a Rokda bonus equal to level × 50 and post a congratulations embed.</p>
         <div class="command-list">
           <article class="command-card" data-name="rank">
-            <header><code>/rank [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/rank [user]</code></header>
             <p class="desc">Show level, XP, XP to next level, and progress bar.</p>
           </article>
           <article class="command-card" data-name="leaderboard">
-            <header><code>/leaderboard</code></header>
-            <p class="desc">Top 10 by Rokda balance.</p>
-            <p class="note">By-level mode and pagination land once the leveling system above ships.</p>
+            <header><code>/leaderboard [type]</code></header>
+            <p class="desc">Top 10 by Rokda balance or by level.</p>
+            <p class="note">Type choices: richest (default) or level.</p>
           </article>
         </div>
       </section>
@@ -380,15 +401,15 @@
         <h2>Community &amp; Engagement</h2>
         <div class="command-list">
           <article class="command-card" data-name="reactionrole add">
-            <header><code>/reactionrole add &lt;message-link&gt; &lt;emoji&gt; &lt;role&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/reactionrole add &lt;message-link&gt; &lt;emoji&gt; &lt;role&gt;</code></header>
             <p class="desc">Bind an emoji reaction to a role grant.</p>
           </article>
           <article class="command-card" data-name="welcome set">
-            <header><code>/welcome set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/welcome set &lt;channel&gt;</code></header>
             <p class="desc">Configure the welcome channel for new-member embeds.</p>
           </article>
           <article class="command-card" data-name="goodbye set">
-            <header><code>/goodbye set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/goodbye set &lt;channel&gt;</code></header>
             <p class="desc">Configure the goodbye channel for member-leave embeds.</p>
           </article>
           <article class="command-card" data-name="suggest">
@@ -400,9 +421,28 @@
             <p class="desc">Post a poll with numbered emoji reactions.</p>
           </article>
           <article class="command-card" data-name="giveaway start">
-            <header><code>/giveaway start &lt;duration&gt; &lt;prize&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/giveaway start &lt;duration&gt; &lt;prize&gt;</code></header>
             <p class="desc">Start a giveaway.</p>
             <p class="note">Reactors are entered; winner is picked randomly when the timer ends.</p>
+          </article>
+          <article class="command-card" data-name="starboard set">
+            <header><code>/starboard set &lt;channel&gt; [threshold]</code></header>
+            <p class="desc">Repost messages that hit a ⭐ threshold to a starboard channel.</p>
+            <p class="note">Admin only. Live star count; the post is removed if it drops below the threshold.</p>
+          </article>
+          <article class="command-card" data-name="remind">
+            <header><code>/remind &lt;when&gt; &lt;text&gt;</code></header>
+            <p class="desc">Set a reminder (e.g. 10m, 2h, 1d).</p>
+            <p class="note">DB-backed, so reminders survive a bot restart. Pings you in-channel, DMs as a fallback.</p>
+          </article>
+          <article class="command-card" data-name="reminders">
+            <header><code>/reminders</code></header>
+            <p class="desc">List your pending reminders.</p>
+          </article>
+          <article class="command-card" data-name="afk">
+            <header><code>/afk [reason]</code></header>
+            <p class="desc">Set yourself AFK — the bot tells anyone who pings you.</p>
+            <p class="note">Auto-clears the moment you send your next message.</p>
           </article>
         </div>
       </section>
@@ -412,17 +452,17 @@
         <h2>Auto-mod, Birthdays, Trivia</h2>
         <div class="command-list">
           <article class="command-card" data-name="automod toggle">
-            <header><code>/automod toggle <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/automod toggle</code></header>
             <p class="desc">Turn per-guild automod on or off.</p>
             <p class="note">Checks messages against a banned-word list and an invite-link regex.</p>
           </article>
           <article class="command-card" data-name="birthday set">
-            <header><code>/birthday set &lt;month&gt; &lt;day&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/birthday set &lt;month&gt; &lt;day&gt;</code></header>
             <p class="desc">Register your birthday.</p>
             <p class="note">A daily job posts happy-birthday embeds and credits a small Rokda gift.</p>
           </article>
           <article class="command-card" data-name="trivia start">
-            <header><code>/trivia start <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/trivia start</code></header>
             <p class="desc">Post a trivia question with A/B/C/D reactions.</p>
             <p class="note">20-second timer. Faster correct answers earn slightly more Rokda.</p>
           </article>
@@ -434,17 +474,17 @@
         <h2>Focus Room</h2>
         <div class="command-list">
           <article class="command-card" data-name="focus start">
-            <header><code>/focus start &lt;minutes&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/focus start &lt;minutes&gt;</code></header>
             <p class="desc">Start a Pomodoro-style focus session while in a voice channel.</p>
             <p class="note">Pays 2 Rokda per minute, capped at 120 minutes per session.</p>
           </article>
           <article class="command-card" data-name="focus setroom">
-            <header><code>/focus setroom &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/focus setroom &lt;channel&gt;</code></header>
             <p class="desc">Configure a specific voice channel as the study hall.</p>
             <p class="note">Admin only.</p>
           </article>
           <article class="command-card" data-name="focus leaderboard">
-            <header><code>/focus leaderboard <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/focus leaderboard</code></header>
             <p class="desc">Top users by focused minutes this week.</p>
           </article>
         </div>
@@ -455,14 +495,19 @@
         <h2>Confessions</h2>
         <div class="command-list">
           <article class="command-card" data-name="confess">
-            <header><code>/confess &lt;text&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/confess &lt;text&gt;</code></header>
             <p class="desc">Submit an anonymous confession.</p>
             <p class="note">Posted as a numbered embed to the confessions channel. The bot never stores the author's user ID. Rate-limited to one per 10 minutes per user.</p>
           </article>
           <article class="command-card" data-name="confess-settings set">
-            <header><code>/confess-settings set &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/confess-settings set &lt;channel&gt;</code></header>
             <p class="desc">Configure the confessions channel.</p>
             <p class="note">Admin only.</p>
+          </article>
+          <article class="command-card" data-name="confess-settings panel">
+            <header><code>/confess-settings panel [channel]</code></header>
+            <p class="desc">Post a "Submit a confession!" button panel.</p>
+            <p class="note">Admin only. Members click the button to submit anonymously via a popup — no need to type the command.</p>
           </article>
         </div>
       </section>
@@ -473,12 +518,12 @@
         <p class="category-note">The meme prize pool auto-funds from a 2% skim of every gambling loss server-wide.</p>
         <div class="command-list">
           <article class="command-card" data-name="meme submit">
-            <header><code>/meme submit &lt;image&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/meme submit &lt;image&gt;</code></header>
             <p class="desc">Submit a meme to this week's battle.</p>
             <p class="note">🔥 reactions count as votes.</p>
           </article>
           <article class="command-card" data-name="meme leaderboard">
-            <header><code>/meme leaderboard <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/meme leaderboard</code></header>
             <p class="desc">Current week's meme standings.</p>
           </article>
         </div>
@@ -490,19 +535,19 @@
         <p class="category-note">Prices update daily via a scheduled job. Tickers include CHAI (chai-wallah stonks) and CRYP (crypto-bro joke, high volatility).</p>
         <div class="command-list">
           <article class="command-card" data-name="invest market">
-            <header><code>/invest market <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/invest market</code></header>
             <p class="desc">Show every ticker with current price and today's percent change.</p>
           </article>
           <article class="command-card" data-name="invest buy">
-            <header><code>/invest buy &lt;ticker&gt; &lt;amount-in-rokda&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/invest buy &lt;ticker&gt; &lt;amount-in-rokda&gt;</code></header>
             <p class="desc">Buy shares at the current price.</p>
           </article>
           <article class="command-card" data-name="invest sell">
-            <header><code>/invest sell &lt;ticker&gt; &lt;shares&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/invest sell &lt;ticker&gt; &lt;shares&gt;</code></header>
             <p class="desc">Sell shares at the current price.</p>
           </article>
           <article class="command-card" data-name="invest portfolio">
-            <header><code>/invest portfolio [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/invest portfolio [user]</code></header>
             <p class="desc">Holdings, current value per ticker, and unrealized P/L.</p>
           </article>
         </div>
@@ -514,7 +559,7 @@
         <p class="category-note">The weekly Server Pulse embed auto-posts every Sunday summarizing the week's top Rokda earner, biggest gambling win and loss, new-member count, most active channel, and warnings issued.</p>
         <div class="command-list">
           <article class="command-card" data-name="pulse setchannel">
-            <header><code>/pulse setchannel &lt;channel&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/pulse setchannel &lt;channel&gt;</code></header>
             <p class="desc">Configure the channel where the weekly recap embed is posted.</p>
             <p class="note">Admin only.</p>
           </article>
@@ -526,17 +571,100 @@
         <h2>Study Buddy</h2>
         <div class="command-list">
           <article class="command-card" data-name="studybuddy join">
-            <header><code>/studybuddy join &lt;tags&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/studybuddy join &lt;tags&gt;</code></header>
             <p class="desc">Opt in with up to 5 tags (e.g. "JEE", "UI design").</p>
           </article>
           <article class="command-card" data-name="studybuddy leave">
-            <header><code>/studybuddy leave <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/studybuddy leave</code></header>
             <p class="desc">Opt out.</p>
           </article>
           <article class="command-card" data-name="studybuddy match">
-            <header><code>/studybuddy match <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/studybuddy match</code></header>
             <p class="desc">Get matched with another opted-in user sharing at least one tag.</p>
             <p class="note">Both users receive an intro DM.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Music (Last.fm) -->
+      <section class="command-category" id="music">
+        <h2>Music (Last.fm)</h2>
+        <p class="category-note">A .fmbot-style suite under one <code>/fm</code> command. Every subcommand also has a <code>.</code> / <code>jugaad</code> text alias (e.g. <code>.fm</code>, <code>.wk</code>). Link up to two Last.fm accounts to merge them into one feed.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="fm set">
+            <header><code>/fm set &lt;username&gt; [second]</code></header>
+            <p class="desc">Link your Last.fm account (up to two, merged).</p>
+          </article>
+          <article class="command-card" data-name="fm np">
+            <header><code>/fm np [user]</code> · <code>.fm</code></header>
+            <p class="desc">Now playing — current and previous track, plus scrobble counts.</p>
+          </article>
+          <article class="command-card" data-name="fm recent">
+            <header><code>/fm recent [user]</code> · <code>.rc</code></header>
+            <p class="desc">Your last ~8 scrobbles.</p>
+          </article>
+          <article class="command-card" data-name="fm artist">
+            <header><code>/fm artist [name]</code> · <code>.a</code></header>
+            <p class="desc">Artist info plus your playcount and tags.</p>
+          </article>
+          <article class="command-card" data-name="fm album">
+            <header><code>/fm album [name]</code> · <code>.ab</code></header>
+            <p class="desc">Album info plus your playcount.</p>
+          </article>
+          <article class="command-card" data-name="fm track">
+            <header><code>/fm track [name]</code> · <code>.tr</code></header>
+            <p class="desc">Track info plus your playcount.</p>
+          </article>
+          <article class="command-card" data-name="fm top">
+            <header><code>/fm top &lt;type&gt; [period]</code> · <code>.ta</code> / <code>.tab</code> / <code>.tt</code></header>
+            <p class="desc">Your top artists, albums, or tracks over a time period.</p>
+          </article>
+          <article class="command-card" data-name="fm whoknows">
+            <header><code>/fm whoknows [artist]</code> · <code>.wk</code></header>
+            <p class="desc">Who in this server listens to an artist, ranked by plays.</p>
+          </article>
+          <article class="command-card" data-name="fm profile">
+            <header><code>/fm profile [user]</code> · <code>.stats</code></header>
+            <p class="desc">Last.fm profile overview.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Social -->
+      <section class="command-category" id="social">
+        <h2>Social</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="marry">
+            <header><code>/marry &lt;user&gt;</code></header>
+            <p class="desc">Propose to another member.</p>
+            <p class="note">They accept or decline with a button. Married partners get a +10% <code>/daily</code> bonus and an anniversary shoutout.</p>
+          </article>
+          <article class="command-card" data-name="divorce">
+            <header><code>/divorce</code></header>
+            <p class="desc">End your marriage.</p>
+          </article>
+          <article class="command-card" data-name="marriage">
+            <header><code>/marriage [user]</code></header>
+            <p class="desc">Show marriage status and how long you've been together.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Utility -->
+      <section class="command-category" id="utility">
+        <h2>Utility</h2>
+        <div class="command-list">
+          <article class="command-card" data-name="avatar">
+            <header><code>/avatar [user]</code></header>
+            <p class="desc">Show a member's avatar at full size.</p>
+          </article>
+          <article class="command-card" data-name="userinfo">
+            <header><code>/userinfo [user]</code></header>
+            <p class="desc">Account and membership details for a member.</p>
+          </article>
+          <article class="command-card" data-name="serverinfo">
+            <header><code>/serverinfo</code></header>
+            <p class="desc">Stats about the current server.</p>
           </article>
         </div>
       </section>

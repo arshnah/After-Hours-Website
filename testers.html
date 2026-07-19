@@ -40,15 +40,6 @@
          3. <strong>What actually happened</strong> — the real result, including any error text like "The application did not respond." A screenshot helps.</p>
     </section>
 
-    <section class="known-issues">
-      <h2>⚠️ Known Issue — don't bother testing or reporting these</h2>
-      <p>11 of the new image/meme commands are currently broken because a required package (<code>@napi-rs/canvas</code>) is listed as a dependency but was never installed. If you run any of these, expect an error or no response at all — that's this known issue, not a new bug:</p>
-      <ul>
-        <li><code>/achievement</code>, <code>/ascii</code>, <code>/caption</code>, <code>/deepfry</code>, <code>/glitch</code>, <code>/jail</code>, <code>/pfp-card</code>, <code>/pixelate</code>, <code>/ship-card</code>, <code>/wanted</code>, <code>/wasted</code></li>
-      </ul>
-      <p>It's worse than just those 11, though: command loading has no error handling, so if the bot process restarts while this is unfixed, it can crash on startup before it finishes loading commands — taking every command offline, not just the image ones. If you find that <em>nothing</em> responds at all, this is almost certainly why — no need to file a separate report for that either, just let @vasucoded know it's still unfixed.</p>
-    </section>
-
     <p class="testers-intro">This checklist covers only the commands that are live in the current build. Planned commands that aren't implemented yet are left out on purpose — there's nothing to test there. Run each one in a server where Jugaad is installed. Where an <span class="test-label edge">Edge case</span> is listed, please test it too — those are the situations most likely to expose a bug.</p>
 
     <!-- Economy & Jobs -->

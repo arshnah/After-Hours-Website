@@ -10,13 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=64" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="site-logo">Jugaad</a>
+      <a href="index.html" class="site-logo"><img src="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=128" alt="" class="logo-img" />Jugaad</a>
       <nav class="site-nav">
         <a href="index.html">Home</a>
         <a href="testers.html">Testers</a>
@@ -59,6 +60,7 @@
         <li><a href="#music">Music (Last.fm)</a></li>
         <li><a href="#social">Social</a></li>
         <li><a href="#utility">Utility</a></li>
+        <li><a href="#roadmap">🚧 Roadmap</a></li>
       </ul>
     </aside>
 
@@ -665,6 +667,58 @@
           <article class="command-card" data-name="serverinfo">
             <header><code>/serverinfo</code></header>
             <p class="desc">Stats about the current server.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Roadmap -->
+      <section class="command-category" id="roadmap">
+        <h2>🚧 Roadmap</h2>
+        <p class="category-note">Ideas we're considering next — not built yet. The theme: give Rokda somewhere to go (sinks), reasons to show up daily, and a bit of player-vs-player tension.</p>
+        <div class="command-list">
+          <article class="command-card" data-name="shop">
+            <header><code>/shop · /buy · /inventory <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Spend Rokda on colour roles, <code>/rank</code> badges, XP boosters, and custom titles.</p>
+            <p class="note">The missing money sink — makes every way you earn Rokda actually matter.</p>
+          </article>
+          <article class="command-card" data-name="pet">
+            <header><code>/pet &lt;adopt|feed|rename&gt; <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Adopt a pet with Rokda and feed it daily for a passive XP/daily boost.</p>
+            <p class="note">A recurring sink that builds attachment — feed it or it gets sad.</p>
+          </article>
+          <article class="command-card" data-name="bank">
+            <header><code>/bank &lt;deposit|withdraw&gt; <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">A safe vault that earns small daily interest — but only the wallet can be robbed.</p>
+          </article>
+          <article class="command-card" data-name="rob">
+            <header><code>/rob &lt;user&gt; <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Try to steal from another member's wallet.</p>
+            <p class="note">Cooldown-gated, with a chance to fail and pay a fine. Bank your Rokda to stay safe.</p>
+          </article>
+          <article class="command-card" data-name="heist">
+            <header><code>/heist <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Co-op group robbery — players buy in, and the crew wins big together or busts.</p>
+          </article>
+          <article class="command-card" data-name="rps">
+            <header><code>/rps &lt;user&gt; &lt;bet&gt; <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Challenge someone to rock-paper-scissors for Rokda.</p>
+          </article>
+          <article class="command-card" data-name="quests">
+            <header><code>/quests <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Three rotating daily objectives (win 2 coinflips, chat 20 messages, buy a stock…) for Rokda and XP.</p>
+            <p class="note">The daily habit loop that ties all the existing commands together.</p>
+          </article>
+          <article class="command-card" data-name="wordle">
+            <header><code>/wordle <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">One word-guessing puzzle a day for a Rokda reward.</p>
+          </article>
+          <article class="command-card" data-name="achievements">
+            <header><code>/achievements [user] <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Unlockable badges for milestones (first jackpot, level 10, 10k balance), shown on your <code>/rank</code>.</p>
+          </article>
+          <article class="command-card" data-name="rep">
+            <header><code>/rep &lt;user&gt; <span class="badge badge-soon">Planned</span></code></header>
+            <p class="desc">Give a member reputation once a day — a social currency separate from Rokda.</p>
           </article>
         </div>
       </section>

@@ -748,8 +748,8 @@
       <article class="test-card">
         <h3>/family</h3>
         <div class="test-step">
-          <p><span class="test-label action">Action</span> <code>/family adopt user:@a</code>, <code>/family friend user:@b</code> (each accepts), then <code>/family view</code>.</p>
-          <p><span class="test-label expected">Expected</span> A modern card (accent bar + your avatar) shows your tree. Adopt/friend use accept buttons; the tree lists Children, Friends, derived Siblings, and your <code>/marriage</code> partner.</p>
+          <p><span class="test-label action">Action</span> <code>/family adopt user:@a</code>, <code>/family friend user:@b</code>, <code>/family brother user:@c</code>, <code>/family sister user:@d</code> (each accepts), then <code>/family view</code>.</p>
+          <p><span class="test-label expected">Expected</span> A modern card (accent bar + your avatar) shows your tree. Adopt/friend/brother/sister use accept buttons; the tree lists Children, Friends, Brothers, Sisters, derived Siblings, and your <code>/marriage</code> partner. <code>/family unsibling</code> removes a sibling.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/family view</code> on a big family; try to adopt yourself or an ancestor.</p>

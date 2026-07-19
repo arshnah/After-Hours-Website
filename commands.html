@@ -32,6 +32,7 @@
       <div class="legend-item"><code class="mono">&lt;required&gt;</code> — argument must be provided</div>
       <div class="legend-item"><code class="mono">[optional]</code> — argument may be omitted</div>
       <div class="legend-item"><span class="badge badge-soon">Coming soon</span> — planned, not yet implemented</div>
+      <div class="legend-item"><span class="badge badge-issue">Known issue</span> — built, but currently broken</div>
     </div>
 
     <div class="filter-bar">
@@ -230,50 +231,50 @@
       <!-- Image & Meme Tools -->
       <section class="command-category" id="image-meme">
         <h2>Image &amp; Meme Tools</h2>
-        <p class="category-note">All image commands work on the caller's own avatar if no user is provided.</p>
+        <p class="category-note">All image commands work on the caller's own avatar if no user is provided. The eleven canvas-based commands below (marked <span class="badge badge-issue">Known issue</span>) are built but currently broken — see the <a href="testers.html">Testers</a> page for details. The rest are unaffected.</p>
         <div class="command-list">
           <article class="command-card" data-name="wanted">
-            <header><code>/wanted [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/wanted [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Composites the avatar into a WANTED poster with a bounty pulled from the user's current Rokda balance.</p>
           </article>
           <article class="command-card" data-name="deepfry">
-            <header><code>/deepfry [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/deepfry [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Classic deep-fried meme effect on the avatar.</p>
           </article>
           <article class="command-card" data-name="jail">
-            <header><code>/jail [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/jail [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Jail-bars overlay on the avatar.</p>
           </article>
           <article class="command-card" data-name="wasted">
-            <header><code>/wasted [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/wasted [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">GTA-style desaturated WASTED screen.</p>
           </article>
           <article class="command-card" data-name="pixelate">
-            <header><code>/pixelate [user] [level] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/pixelate [user] [level] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Mosaic effect. Level controls block size.</p>
           </article>
           <article class="command-card" data-name="glitch">
-            <header><code>/glitch [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/glitch [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">RGB channel shift / chromatic aberration.</p>
           </article>
           <article class="command-card" data-name="pfp-card">
-            <header><code>/pfp-card [user] [color] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/pfp-card [user] [color] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Circle-cropped avatar with a colored ring border.</p>
           </article>
           <article class="command-card" data-name="caption">
-            <header><code>/caption [user] [top] [bottom] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/caption [user] [top] [bottom] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Classic impact-font meme caption on an avatar or uploaded image.</p>
           </article>
           <article class="command-card" data-name="achievement">
-            <header><code>/achievement &lt;text&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/achievement &lt;text&gt; <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Achievement Unlocked toast card with fill-in text.</p>
           </article>
           <article class="command-card" data-name="ascii">
-            <header><code>/ascii [user] <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/ascii [user] <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Convert avatar to ASCII art.</p>
           </article>
           <article class="command-card" data-name="ship-card">
-            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt; <span class="badge badge-soon">Coming soon</span></code></header>
+            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt; <span class="badge badge-issue">Known issue</span></code></header>
             <p class="desc">Visual version of <code>/ship</code> — two avatars, a heart, and the compatibility percentage.</p>
           </article>
         </div>
@@ -543,6 +544,12 @@
     </main>
 
   </div>
+
+  <button type="button" class="to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </button>
 
   <script src="script.js"></script>
 </body>

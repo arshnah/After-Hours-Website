@@ -738,10 +738,18 @@
     <section class="test-category">
       <h2>Social</h2>
       <article class="test-card">
-        <h3>/marry, /divorce, /marriage</h3>
+        <h3>/family</h3>
         <div class="test-step">
-          <p><span class="test-label action">Action</span> <code>/marry user:@someone</code>, have them click Accept; then <code>/marriage</code> and later <code>/divorce</code>.</p>
-          <p><span class="test-label expected">Expected</span> The proposee accepts/declines with a button. Married status shows a duration; <code>/daily</code> pays a +10% bonus while married.</p>
+          <p><span class="test-label action">Action</span> <code>/family marry user:@someone</code> (they click Accept), then <code>/family view</code>, then <code>/family divorce</code>.</p>
+          <p><span class="test-label expected">Expected</span> A modern card (accent bar + your avatar) shows your tree. Marrying asks the partner to accept with a button; married status shows on the card and <code>/daily</code> pays a +10% bonus while married.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/family adopt user:@a</code>, <code>/family friend user:@b</code> (each accepts), then <code>/family view</code>.</p>
+          <p><span class="test-label expected">Expected</span> Adopt/friend also use accept buttons; the tree then lists Children, Friends, and derived Siblings.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/family view</code> on a big family; try to adopt yourself or an ancestor.</p>
+          <p><span class="test-label expected">Expected</span> Listing many members does <strong>not</strong> ping them all. Adopting yourself or one of your own ancestors is refused (no family-tree loops).</p>
         </div>
       </article>
 

@@ -60,7 +60,6 @@
         <li><a href="#music">Music (Last.fm)</a></li>
         <li><a href="#social">Social</a></li>
         <li><a href="#utility">Utility</a></li>
-        <li><a href="#roadmap">🚧 Roadmap</a></li>
       </ul>
     </aside>
 
@@ -108,6 +107,34 @@
           <article class="command-card" data-name="pay">
             <header><code>/pay &lt;user&gt; &lt;amount&gt;</code></header>
             <p class="desc">Send Rokda to another member.</p>
+          </article>
+          <article class="command-card" data-name="shop">
+            <header><code>/shop</code></header>
+            <p class="desc">Browse the Rokda shop — cosmetic badges, equippable titles, and time-limited XP boosters.</p>
+            <p class="note">The money sink that makes every way you earn Rokda matter. No Discord roles — nothing touches your server's role hierarchy.</p>
+          </article>
+          <article class="command-card" data-name="buy">
+            <header><code>/buy &lt;item&gt;</code></header>
+            <p class="desc">Buy a shop item. Badges &amp; titles show on your <code>/rank</code>; boosters instantly double your message XP for a while.</p>
+          </article>
+          <article class="command-card" data-name="inventory">
+            <header><code>/inventory [user]</code></header>
+            <p class="desc">See owned badges, titles, and any active booster. Equip a title straight from the dropdown.</p>
+          </article>
+          <article class="command-card" data-name="bank">
+            <header><code>/bank &lt;balance|deposit|withdraw&gt; [amount]</code></header>
+            <p class="desc">A safe vault that earns small daily interest — and can't be robbed. Only your wallet is fair game for <code>/rob</code>.</p>
+            <p class="note">Leave the amount blank to deposit or withdraw everything.</p>
+          </article>
+          <article class="command-card" data-name="rob">
+            <header><code>/rob &lt;user&gt;</code></header>
+            <p class="desc">Try to steal from another member's wallet.</p>
+            <p class="note">1-hour cooldown, with a chance to get caught and pay a fine to the victim. Bank your Rokda to stay safe.</p>
+          </article>
+          <article class="command-card" data-name="quests">
+            <header><code>/quests</code></header>
+            <p class="desc">Three rotating daily objectives — chat, gamble, invest, feed your pet, and more — for Rokda and XP.</p>
+            <p class="note">The daily habit loop that ties the whole bot together. Resets every day (UTC).</p>
           </article>
         </div>
       </section>
@@ -171,6 +198,16 @@
             <header><code>/elimination config &lt;enabled&gt;</code></header>
             <p class="desc">Configure whether eliminated players get a short timeout.</p>
             <p class="note">Requires the Manage Server permission.</p>
+          </article>
+          <article class="command-card" data-name="heist">
+            <header><code>/heist &lt;buyin&gt;</code></header>
+            <p class="desc">Assemble a crew for a co-op robbery. Everyone pays the buy-in into a pot; a bigger crew means better odds.</p>
+            <p class="note">Join via buttons before the timer ends. On success the pot is multiplied and split evenly — on a bust, everyone loses their buy-in.</p>
+          </article>
+          <article class="command-card" data-name="rps">
+            <header><code>/rps &lt;user&gt; &lt;bet&gt;</code></header>
+            <p class="desc">Challenge a member to rock-paper-scissors for Rokda.</p>
+            <p class="note">Both stake the bet; picks stay hidden until both lock in. Winner takes the pot, a tie refunds both.</p>
           </article>
         </div>
       </section>
@@ -238,6 +275,11 @@
             <p class="desc">Search Giphy for a GIF.</p>
             <p class="note">SFW-filtered, with a 🔀 button to shuffle to another result.</p>
           </article>
+          <article class="command-card" data-name="wordle">
+            <header><code>/wordle [guess]</code></header>
+            <p class="desc">The daily 5-letter word puzzle — one word a day for the whole server, six tries, for a Rokda reward.</p>
+            <p class="note">Guess with <code>/wordle guess:&lt;word&gt;</code>; run it with no guess to see your board. Solve it faster for a bigger payout.</p>
+          </article>
         </div>
       </section>
 
@@ -251,49 +293,10 @@
             <p class="desc">Anime reaction GIF — hug, pat, kiss, slap, punch, dance, cry, and 25 more.</p>
             <p class="note">One command for all reactions, powered by nekos.best. Solo reactions ignore the target.</p>
           </article>
-          <article class="command-card" data-name="wanted">
-            <header><code>/wanted [user]</code></header>
-            <p class="desc">Composites the avatar into a WANTED poster with a bounty pulled from the user's current Rokda balance.</p>
-          </article>
-          <article class="command-card" data-name="deepfry">
-            <header><code>/deepfry [user]</code></header>
-            <p class="desc">Classic deep-fried meme effect on the avatar.</p>
-          </article>
-          <article class="command-card" data-name="jail">
-            <header><code>/jail [user]</code></header>
-            <p class="desc">Jail-bars overlay on the avatar.</p>
-          </article>
-          <article class="command-card" data-name="wasted">
-            <header><code>/wasted [user]</code></header>
-            <p class="desc">GTA-style desaturated WASTED screen.</p>
-          </article>
-          <article class="command-card" data-name="pixelate">
-            <header><code>/pixelate [user] [level]</code></header>
-            <p class="desc">Mosaic effect. Level controls block size.</p>
-          </article>
-          <article class="command-card" data-name="glitch">
-            <header><code>/glitch [user]</code></header>
-            <p class="desc">RGB channel shift / chromatic aberration.</p>
-          </article>
-          <article class="command-card" data-name="pfp-card">
-            <header><code>/pfp-card [user] [color]</code></header>
-            <p class="desc">Circle-cropped avatar with a colored ring border.</p>
-          </article>
-          <article class="command-card" data-name="caption">
-            <header><code>/caption [user] [top] [bottom]</code></header>
-            <p class="desc">Classic impact-font meme caption on an avatar or uploaded image.</p>
-          </article>
-          <article class="command-card" data-name="achievement">
-            <header><code>/achievement &lt;text&gt;</code></header>
-            <p class="desc">Achievement Unlocked toast card with fill-in text.</p>
-          </article>
-          <article class="command-card" data-name="ascii">
-            <header><code>/ascii [user]</code></header>
-            <p class="desc">Convert avatar to ASCII art.</p>
-          </article>
-          <article class="command-card" data-name="ship-card">
-            <header><code>/ship-card &lt;user1&gt; &lt;user2&gt;</code></header>
-            <p class="desc">Visual version of <code>/ship</code> — two avatars, a heart, and the compatibility percentage.</p>
+          <article class="command-card" data-name="image">
+            <header><code>/image &lt;subcommand&gt; [user] […]</code></header>
+            <p class="desc">Every canvas effect in one command. Subcommands: <code>deepfry</code>, <code>wanted</code>, <code>jail</code>, <code>wasted</code>, <code>pixelate</code>, <code>glitch</code>, <code>pfp-card</code>, <code>caption</code>, <code>achievement</code>, <code>ascii</code>, <code>ship-card</code>.</p>
+            <p class="note">e.g. <code>/image wanted</code> drops the avatar onto a WANTED poster with a bounty from the user's Rokda; <code>/image ship-card &lt;user1&gt; &lt;user2&gt;</code> renders the ship; <code>/image pixelate [level]</code> controls block size. Uses your own avatar when no user is given.</p>
           </article>
         </div>
       </section>
@@ -388,12 +391,17 @@
         <div class="command-list">
           <article class="command-card" data-name="rank">
             <header><code>/rank [user]</code></header>
-            <p class="desc">Show level, XP, XP to next level, and progress bar.</p>
+            <p class="desc">Show level, XP, XP to next level, and progress bar — plus any equipped title and earned badges.</p>
           </article>
           <article class="command-card" data-name="leaderboard">
             <header><code>/leaderboard [type]</code></header>
             <p class="desc">Top 10 by Rokda balance or by level.</p>
             <p class="note">Type choices: richest (default) or level.</p>
+          </article>
+          <article class="command-card" data-name="achievements">
+            <header><code>/achievements [user]</code></header>
+            <p class="desc">Unlockable milestone badges — first jackpot, wallet milestones, level 10/25/50, collector, wordsmith — shown on your <code>/rank</code>.</p>
+            <p class="note">Unlock automatically as you play; the embed tracks how many of the total you've earned.</p>
           </article>
         </div>
       </section>
@@ -649,6 +657,15 @@
             <header><code>/marriage [user]</code></header>
             <p class="desc">Show marriage status and how long you've been together.</p>
           </article>
+          <article class="command-card" data-name="pet">
+            <header><code>/pet &lt;adopt|feed|status|rename&gt;</code></header>
+            <p class="desc">Adopt a pet with Rokda and feed it to keep it happy. Hunger ticks down over time; feeding once a day pays a companion bonus that grows as your pet levels up.</p>
+            <p class="note">Six species to choose from. One pet per member.</p>
+          </article>
+          <article class="command-card" data-name="rep">
+            <header><code>/rep &lt;give|check|leaderboard&gt;</code></header>
+            <p class="desc">Give a member +1 reputation once a day — a social currency separate from Rokda — or check someone's rep and the server leaderboard.</p>
+          </article>
         </div>
       </section>
 
@@ -675,57 +692,6 @@
         </div>
       </section>
 
-      <!-- Roadmap -->
-      <section class="command-category" id="roadmap">
-        <h2>🚧 Roadmap</h2>
-        <p class="category-note">Ideas we're considering next — not built yet. The theme: give Rokda somewhere to go (sinks), reasons to show up daily, and a bit of player-vs-player tension.</p>
-        <div class="command-list">
-          <article class="command-card" data-name="shop">
-            <header><code>/shop · /buy · /inventory <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Spend Rokda on <code>/rank</code> badges, XP boosters, and profile cosmetics.</p>
-            <p class="note">The missing money sink — makes every way you earn Rokda actually matter. No Discord roles, nothing that touches your server's role hierarchy.</p>
-          </article>
-          <article class="command-card" data-name="pet">
-            <header><code>/pet &lt;adopt|feed|rename&gt; <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Adopt a pet with Rokda and feed it daily for a passive XP/daily boost.</p>
-            <p class="note">A recurring sink that builds attachment — feed it or it gets sad.</p>
-          </article>
-          <article class="command-card" data-name="bank">
-            <header><code>/bank &lt;deposit|withdraw&gt; <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">A safe vault that earns small daily interest — but only the wallet can be robbed.</p>
-          </article>
-          <article class="command-card" data-name="rob">
-            <header><code>/rob &lt;user&gt; <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Try to steal from another member's wallet.</p>
-            <p class="note">Cooldown-gated, with a chance to fail and pay a fine. Bank your Rokda to stay safe.</p>
-          </article>
-          <article class="command-card" data-name="heist">
-            <header><code>/heist <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Co-op group robbery — players buy in, and the crew wins big together or busts.</p>
-          </article>
-          <article class="command-card" data-name="rps">
-            <header><code>/rps &lt;user&gt; &lt;bet&gt; <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Challenge someone to rock-paper-scissors for Rokda.</p>
-          </article>
-          <article class="command-card" data-name="quests">
-            <header><code>/quests <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Three rotating daily objectives (win 2 coinflips, chat 20 messages, buy a stock…) for Rokda and XP.</p>
-            <p class="note">The daily habit loop that ties all the existing commands together.</p>
-          </article>
-          <article class="command-card" data-name="wordle">
-            <header><code>/wordle <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">One word-guessing puzzle a day for a Rokda reward.</p>
-          </article>
-          <article class="command-card" data-name="achievements">
-            <header><code>/achievements [user] <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Unlockable badges for milestones (first jackpot, level 10, 10k balance), shown on your <code>/rank</code>.</p>
-          </article>
-          <article class="command-card" data-name="rep">
-            <header><code>/rep &lt;user&gt; <span class="badge badge-soon">Planned</span></code></header>
-            <p class="desc">Give a member reputation once a day — a social currency separate from Rokda.</p>
-          </article>
-        </div>
-      </section>
 
     </main>
 

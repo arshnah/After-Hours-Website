@@ -118,6 +118,54 @@
           <p><span class="test-label expected">Expected</span> A per-job cooldown message. No extra pay until the cooldown is up.</p>
         </div>
       </article>
+
+      <article class="test-card">
+        <h3>/shop, /buy, /inventory</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/shop</code>, then <code>/buy item:</code> and pick a badge, a title, and a booster.</p>
+          <p><span class="test-label expected">Expected</span> The shop lists items grouped into badges, titles, and boosters. Each buy debits the exact price. A badge then shows on your <code>/rank</code>; a booster shows a 2× XP timer.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/inventory</code>, then use the dropdown to equip a title, then <code>/rank</code>.</p>
+          <p><span class="test-label expected">Expected</span> Inventory lists what you own and the active booster; equipping a title makes it appear next to your name on <code>/rank</code>.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Buy the same badge twice, and try a purchase you can't afford.</p>
+          <p><span class="test-label expected">Expected</span> The second badge buy is refused with "already own"; an unaffordable buy is refused and does not change your balance.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/bank</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/bank deposit</code> (no amount), then <code>/bank balance</code>, then <code>/bank withdraw amount:100</code>.</p>
+          <p><span class="test-label expected">Expected</span> Deposit with no amount moves your whole wallet into the bank; balance shows wallet vs bank vs net worth; withdraw moves Rokda back to the wallet.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/bank withdraw amount:999999999</code> (more than banked).</p>
+          <p><span class="test-label expected">Expected</span> Refused with how much you actually have banked. Nothing moves.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/rob</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/rob user:@someone</code> who has Rokda in their wallet.</p>
+          <p><span class="test-label expected">Expected</span> Either you steal a slice of their wallet, or you get caught and pay them a fine. A 1-hour cooldown starts.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/rob</code> again right away; and rob someone who banked all their Rokda.</p>
+          <p><span class="test-label expected">Expected</span> The repeat is refused with a cooldown timer; robbing someone with an empty wallet says they're not worth robbing (their bank is untouchable).</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/quests</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/quests</code>, complete one (e.g. claim <code>/daily</code> or send messages), then <code>/quests</code> again and click Claim.</p>
+          <p><span class="test-label expected">Expected</span> Three daily quests with progress bars. Progress advances as you play; a completed quest becomes claimable and pays Rokda + XP once. The same three stay all day.</p>
+        </div>
+      </article>
     </section>
 
     <!-- Gambling -->
@@ -243,6 +291,26 @@
           <p><span class="test-label expected">Expected</span> Only works if you have the Manage Server permission; it turns the short-timeout penalty for eliminated players on or off. Members without that permission get a permission error instead.</p>
         </div>
       </article>
+
+      <article class="test-card">
+        <h3>/heist</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/heist buyin:500</code>, have a second person click "Join the crew", then let the timer end (or the host clicks "Start now").</p>
+          <p><span class="test-label expected">Expected</span> A lobby shows the crew, pot, and success chance (which rises as more people join). At the end the crew either wins a multiplied pot split evenly, or busts and loses their buy-ins.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Start a heist that nobody joins; try to join without enough Rokda.</p>
+          <p><span class="test-label expected">Expected</span> With a solo crew it cancels and refunds the host. A join you can't afford is refused privately and doesn't add you.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/rps</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/rps user:@someone bet:100</code>; the other person clicks Accept, then both pick rock/paper/scissors.</p>
+          <p><span class="test-label expected">Expected</span> Both stakes are held; picks stay hidden until both lock in. The winner gets the whole pot, a tie refunds both. Declining or timing out refunds the challenger.</p>
+        </div>
+      </article>
     </section>
 
     <!-- Fun & Social -->
@@ -342,6 +410,18 @@
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/wyr</code>, then react with one of the two options</p>
           <p><span class="test-label expected">Expected</span> Posts a would-you-rather with two reaction options, tallies votes for about 30 seconds, then reveals the split.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/wordle</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/wordle guess:crane</code>, then keep guessing; run <code>/wordle</code> with no guess to see your board.</p>
+          <p><span class="test-label expected">Expected</span> Standard 🟩/🟨/⬛ feedback per guess, up to six tries. Solving pays a Rokda reward (bigger for fewer guesses). Everyone in the server shares the same word each day.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Finish today's puzzle, then guess again; try a 4-letter or non-letter guess.</p>
+          <p><span class="test-label expected">Expected</span> After finishing it says come back tomorrow (no second reward). An invalid guess is rejected with a "must be 5 letters" note and doesn't use a try.</p>
         </div>
       </article>
     </section>
@@ -513,6 +593,13 @@
           <p><span class="test-label expected">Expected</span> Top 10 by level. Without <code>type</code>, it ranks by Rokda balance instead.</p>
         </div>
       </article>
+      <article class="test-card">
+        <h3>/achievements</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/achievements</code>, then trigger one (e.g. a big gambling win or reaching a balance milestone) and check <code>/rank</code>.</p>
+          <p><span class="test-label expected">Expected</span> Lists unlocked and locked milestones with an X / total counter. Unlocking one posts a short celebration, and the badge then appears on your <code>/rank</code>.</p>
+        </div>
+      </article>
     </section>
 
     <!-- Image & Meme Tools -->
@@ -527,10 +614,14 @@
         </div>
       </article>
       <article class="test-card">
-        <h3>/deepfry, /pixelate, /wasted, /jail, /glitch, /caption, /ship-card, /wanted, /pfp-card, /achievement, /ascii</h3>
+        <h3>/image &lt;subcommand&gt;</h3>
         <div class="test-step">
-          <p><span class="test-label action">Action</span> Run each on yourself or another member.</p>
-          <p><span class="test-label expected">Expected</span> A rendered image (or ASCII text for <code>/ascii</code>). No "invalid size" errors — that bug is fixed.</p>
+          <p><span class="test-label action">Action</span> Run each subcommand: <code>/image deepfry</code>, <code>pixelate</code>, <code>wasted</code>, <code>jail</code>, <code>glitch</code>, <code>caption</code>, <code>ship-card</code>, <code>wanted</code>, <code>pfp-card</code>, <code>achievement</code>, <code>ascii</code> — on yourself or another member.</p>
+          <p><span class="test-label expected">Expected</span> A rendered image (or ASCII text for <code>ascii</code>). No "invalid size" errors — that bug is fixed. All eleven effects are now under the one <code>/image</code> command.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/image wanted</code> with no user, and <code>/image ship-card user1:@a user2:@b</code></p>
+          <p><span class="test-label expected">Expected</span> <code>wanted</code> uses your own avatar with a bounty from your Rokda; <code>ship-card</code> renders both avatars with a compatibility %.</p>
         </div>
       </article>
     </section>
@@ -651,6 +742,30 @@
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/marry user:@someone</code>, have them click Accept; then <code>/marriage</code> and later <code>/divorce</code>.</p>
           <p><span class="test-label expected">Expected</span> The proposee accepts/declines with a button. Married status shows a duration; <code>/daily</code> pays a +10% bonus while married.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/pet</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/pet adopt species:</code> pick one, then <code>/pet feed</code> and <code>/pet status</code>.</p>
+          <p><span class="test-label expected">Expected</span> Adopting costs Rokda and creates one pet. Feeding costs Rokda, fills hunger, and the first feed of the day pays a companion bonus. Status shows hunger dropping over time.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Adopt a second pet; feed with no pet.</p>
+          <p><span class="test-label expected">Expected</span> A second adopt is refused (one pet per member); feeding with no pet prompts you to adopt first — no error.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/rep</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/rep give user:@someone</code>, then <code>/rep check</code> and <code>/rep leaderboard</code>.</p>
+          <p><span class="test-label expected">Expected</span> The target's rep goes up by 1. Check shows a member's rep; the leaderboard ranks the most-repped members.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Give rep twice in a day; rep yourself.</p>
+          <p><span class="test-label expected">Expected</span> The second give is refused with a cooldown timer; repping yourself is refused.</p>
         </div>
       </article>
     </section>

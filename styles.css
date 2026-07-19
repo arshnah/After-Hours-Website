@@ -1248,3 +1248,19 @@ section > .container > h2::before {
     transform: none;
   }
 }
+
+/* --- Bot avatar (added) --- */
+.site-logo::before { display: none; } /* avatar replaces the coin mark */
+.logo-img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}
+.hero-avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 26px;
+  display: block;
+  margin: 0 auto 22px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+}

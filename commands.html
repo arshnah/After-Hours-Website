@@ -110,8 +110,16 @@
           </article>
           <article class="command-card" data-name="shop">
             <header><code>/shop</code></header>
-            <p class="desc">Browse the Rokda shop — cosmetic badges, equippable titles, and time-limited XP boosters.</p>
-            <p class="note">The money sink that makes every way you earn Rokda matter. No Discord roles — nothing touches your server's role hierarchy.</p>
+            <p class="desc">Browse the Rokda shop — cosmetic badges, equippable titles, time-limited XP boosters, and functional tools &amp; perks.</p>
+            <p class="note">Tools actually <em>do</em> things: 🎣🔫⛏️ unlock <code>/grind</code>, 🛡️ Shield blocks a <code>/rob</code>, 💼 Briefcase gives 1.5× <code>/work</code>, 🍀 Lucky Charm voids gambling losses. No Discord roles — nothing touches your server's role hierarchy.</p>
+          </article>
+          <article class="command-card" data-name="grind">
+            <header><code>/grind &lt;hunt|fish|dig|beg&gt;</code></header>
+            <p class="desc">Work the land for Rokda on a cooldown. <code>hunt</code>/<code>fish</code>/<code>dig</code> need the matching tool from <code>/shop</code>; <code>beg</code> is free but can come up empty.</p>
+          </article>
+          <article class="command-card" data-name="crime">
+            <header><code>/crime</code></header>
+            <p class="desc">Attempt a crime for a big payout — but you might get caught and fined. 90-minute cooldown.</p>
           </article>
           <article class="command-card" data-name="buy">
             <header><code>/buy &lt;item&gt;</code></header>
@@ -209,6 +217,16 @@
             <p class="desc">Challenge a member to rock-paper-scissors for Rokda.</p>
             <p class="note">Both stake the bet; picks stay hidden until both lock in. Winner takes the pot, a tie refunds both.</p>
           </article>
+          <article class="command-card" data-name="highlow">
+            <header><code>/highlow &lt;bet&gt;</code></header>
+            <p class="desc">Guess whether the next card is higher or lower — win pays 2×.</p>
+            <p class="note">A 🍀 Lucky Charm from the shop gives a chance to void a loss.</p>
+          </article>
+          <article class="command-card" data-name="scratch">
+            <header><code>/scratch</code></header>
+            <p class="desc">Buy a 500-Rokda scratch card; match three symbols for up to a 20× payout.</p>
+            <p class="note">Lucky Charm can refund the card cost on a miss.</p>
+          </article>
         </div>
       </section>
 
@@ -216,6 +234,26 @@
       <section class="command-category" id="fun-social">
         <h2>Fun &amp; Social</h2>
         <div class="command-list">
+          <article class="command-card" data-name="owo">
+            <header><code>/owo [user]</code> · <code>/uwu [user]</code></header>
+            <p class="desc">OwO / UwU at someone (or the whole server). Every <code>/owo</code> bumps your counter.</p>
+          </article>
+          <article class="command-card" data-name="owofight">
+            <header><code>/owofight &lt;user&gt;</code></header>
+            <p class="desc">Challenge someone to an OwO-style fight. 🐾</p>
+          </article>
+          <article class="command-card" data-name="owoleaderboard">
+            <header><code>/owoleaderboard</code></header>
+            <p class="desc">Top OwO-ers in the server.</p>
+          </article>
+          <article class="command-card" data-name="gag">
+            <header><code>/gag &lt;pp|iq|simp&gt; [user]</code></header>
+            <p class="desc">Joke rating machine — deterministic per user, totally "scientific."</p>
+          </article>
+          <article class="command-card" data-name="text">
+            <header><code>/text &lt;clap|reverse|emojify&gt; &lt;text&gt;</code></header>
+            <p class="desc">Text transformers: 👏 clap 👏 between words, reverse it, or turn it into regional-indicator emojis.</p>
+          </article>
           <article class="command-card" data-name="td">
             <header><code>/td [mode]</code></header>
             <p class="desc">Truth or Dare — random pick, or force a mode.</p>
@@ -677,6 +715,11 @@
           <article class="command-card" data-name="avatar">
             <header><code>/avatar [user]</code></header>
             <p class="desc">Show a member's avatar at full size.</p>
+          </article>
+          <article class="command-card" data-name="snipe">
+            <header><code>/snipe</code></header>
+            <p class="desc">Show the last deleted message in the channel.</p>
+            <p class="note">Needs the Message Content intent to capture message text.</p>
           </article>
           <article class="command-card" data-name="userinfo">
             <header><code>/userinfo [user]</code></header>

@@ -166,6 +166,27 @@
           <p><span class="test-label expected">Expected</span> Three daily quests with progress bars. Progress advances as you play; a completed quest becomes claimable and pays Rokda + XP once. The same three stay all day.</p>
         </div>
       </article>
+
+      <article class="test-card">
+        <h3>/grind &amp; /crime</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/grind fish</code> without a rod, then buy 🎣 Fishing Rod from <code>/shop</code> and try again. Then <code>/grind beg</code> and <code>/crime</code>.</p>
+          <p><span class="test-label expected">Expected</span> Fishing is refused until you own the rod. With it, you catch something and earn Rokda on a cooldown. Beg sometimes finds nothing; crime either pays big or fines you.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> <code>/grind fish</code> twice in a row.</p>
+          <p><span class="test-label expected">Expected</span> The second is refused with a cooldown timer — no double reward.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>Functional shop tools</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> Buy 🛡️ Shield, have someone <code>/rob</code> you. Buy 💼 Briefcase, then <code>/work</code>.</p>
+          <p><span class="test-label expected">Expected</span> The Shield blocks one rob and then disappears from <code>/inventory</code>. Briefcase gives a visible 1.5× on work payouts. (No Discord roles are ever granted.)</p>
+        </div>
+      </article>
+
     </section>
 
     <!-- Gambling -->
@@ -311,11 +332,35 @@
           <p><span class="test-label expected">Expected</span> Both stakes are held; picks stay hidden until both lock in. The winner gets the whole pot, a tie refunds both. Declining or timing out refunds the challenger.</p>
         </div>
       </article>
+
+      <article class="test-card">
+        <h3>/highlow &amp; /scratch</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/highlow bet:100</code>, click Higher/Lower. Then <code>/scratch</code> a few times.</p>
+          <p><span class="test-label expected">Expected</span> Highlow reveals the next card and pays 2× on a correct call; scratch shows a 3×3 grid and pays up to 20× on three-of-a-kind. With a 🍀 Lucky Charm owned, some losses are voided/refunded with a note.</p>
+        </div>
+      </article>
     </section>
 
     <!-- Fun & Social -->
     <section class="test-category">
       <h2>Fun &amp; Social</h2>
+
+      <article class="test-card">
+        <h3>/owo, /uwu, /owofight, /owoleaderboard</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/owo user:@someone</code> a few times, <code>/uwu</code>, <code>/owofight user:@someone</code>, then <code>/owoleaderboard</code>.</p>
+          <p><span class="test-label expected">Expected</span> OwO/UwU post flavour and ping only the target (not everyone). Your OwO counter climbs and the leaderboard ranks the top OwO-ers.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/gag &amp; /text</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/gag pp</code>, <code>/gag iq user:@someone</code>, <code>/gag simp</code>. Then <code>/text clap text:hello world</code>, <code>/text reverse</code>, <code>/text emojify</code>.</p>
+          <p><span class="test-label expected">Expected</span> Gag ratings are the same every time for the same user (deterministic joke). Text transformers clap/reverse/emojify the input and never ping anyone.</p>
+        </div>
+      </article>
 
       <article class="test-card">
         <h3>/td</h3>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testers — Jugaad</title>
+  <title>Testers · Jugaad</title>
   <meta name="description" content="Alpha test checklist for Jugaad. Run each live command, check the expected result, and report anything that breaks." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,20 +28,20 @@
   <main class="testers-page">
 
     <section class="alpha-banner">
-      <h1>ALPHA — Testers Wanted</h1>
-      <p>Jugaad is in active development. Commands change often, and some will break — that's expected at this stage. The whole point of the alpha is to find those breakages before a stable release. If you run the tests below and report what goes wrong, you're directly moving the bot toward being stable and trustworthy. Thank you for helping.</p>
+      <h1>ALPHA: Testers Wanted</h1>
+      <p>Jugaad is in active development. Commands change often, and some will break. That's expected at this stage. The whole point of the alpha is to find those breakages before a stable release. If you run the tests below and report what goes wrong, every report makes the next build steadier. Thanks for helping.</p>
     </section>
 
     <section class="report-bug">
       <h2>How to report a bug</h2>
       <p>If any test below fails or behaves differently than the expected result, message <span class="report-target">@vasucoded</span> on Discord directly.</p>
       <p>Include three things so the bug can actually be fixed:</p>
-      <p>1. <strong>What you ran</strong> — the exact command and options (e.g. <code>/coinflip amount:50 side:heads</code>).<br />
-         2. <strong>What you expected</strong> — what the checklist said should happen.<br />
-         3. <strong>What actually happened</strong> — the real result, including any error text like "The application did not respond." A screenshot helps.</p>
+      <p>1. <strong>What you ran</strong>: the exact command and options (e.g. <code>/coinflip amount:50 side:heads</code>).<br />
+         2. <strong>What you expected</strong>: what the checklist said should happen.<br />
+         3. <strong>What actually happened</strong>: the real result, including any error text like "The application did not respond." A screenshot helps.</p>
     </section>
 
-    <p class="testers-intro">This checklist covers only the commands that are live in the current build. Planned commands that aren't implemented yet are left out on purpose — there's nothing to test there. Run each one in a server where Jugaad is installed. Where an <span class="test-label edge">Edge case</span> is listed, please test it too — those are the situations most likely to expose a bug.</p>
+    <p class="testers-intro">This checklist covers only the commands that are live in the current build. Planned commands that aren't implemented yet are left out on purpose, because there's nothing to test there. Run each one in a server where Jugaad is installed. Where an <span class="test-label edge">Edge case</span> is listed, please test it too. Those are the situations most likely to expose a bug.</p>
 
     <!-- Economy & Jobs -->
     <section class="test-category">
@@ -67,7 +67,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/daily</code> again right away</p>
-          <p><span class="test-label expected">Expected</span> It refuses and tells you how long until you can claim again. Your balance does not change — you cannot claim twice in one day.</p>
+          <p><span class="test-label expected">Expected</span> It refuses and tells you how long until you can claim again. Your balance does not change. You cannot claim twice in one day.</p>
         </div>
       </article>
 
@@ -95,7 +95,7 @@
         <h3>/job apply</h3>
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/job apply name:</code> then pick a job from the dropdown</p>
-          <p><span class="test-label expected">Expected</span> You're assigned that job and get a confirmation. The job comes from a dropdown — you can't type a job name that doesn't exist.</p>
+          <p><span class="test-label expected">Expected</span> You're assigned that job and get a confirmation. The job comes from a dropdown, so you can't type a job name that doesn't exist.</p>
         </div>
       </article>
 
@@ -175,7 +175,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/grind fish</code> twice in a row.</p>
-          <p><span class="test-label expected">Expected</span> The second is refused with a cooldown timer — no double reward.</p>
+          <p><span class="test-label expected">Expected</span> The second is refused with a cooldown timer, and no double reward.</p>
         </div>
       </article>
 
@@ -197,7 +197,7 @@
         <h3>/coinflip</h3>
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/coinflip amount:50 side:heads</code></p>
-          <p><span class="test-label expected">Expected</span> Your balance drops by 50 if you lose, or you net +50 (the bet is doubled) if you win. A result embed appears either way — no "application did not respond" error.</p>
+          <p><span class="test-label expected">Expected</span> Your balance drops by 50 if you lose, or you net +50 (the bet is doubled) if you win. A result embed appears either way, with no "application did not respond" error.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/coinflip amount:999999 side:heads</code> (more than you own)</p>
@@ -221,7 +221,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> Start a hand, then run <code>/blackjack amount:100</code> again before finishing the first</p>
-          <p><span class="test-label expected">Expected</span> The second attempt is blocked — only one hand at a time. Separately, if you start a hand and just wait, it auto-resolves after 60 seconds instead of getting stuck.</p>
+          <p><span class="test-label expected">Expected</span> The second attempt is blocked. Only one hand at a time. Separately, if you start a hand and just wait, it auto-resolves after 60 seconds instead of getting stuck.</p>
         </div>
       </article>
 
@@ -237,7 +237,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/dice amount:50 mode:higher number:25</code> (outside 1–20)</p>
-          <p><span class="test-label expected">Expected</span> Discord rejects the number before the command runs — it must be between 1 and 20.</p>
+          <p><span class="test-label expected">Expected</span> Discord rejects the number before the command runs. It must be between 1 and 20.</p>
         </div>
       </article>
 
@@ -253,7 +253,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/roulette amount:50 bet_type:number</code> with no <code>value</code></p>
-          <p><span class="test-label expected">Expected</span> It tells you a number is required and the bet is not placed — your balance stays the same.</p>
+          <p><span class="test-label expected">Expected</span> It tells you a number is required and the bet is not placed, and your balance stays the same.</p>
         </div>
       </article>
 
@@ -265,7 +265,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/crash amount:50</code> and never press Cash Out</p>
-          <p><span class="test-label expected">Expected</span> When the multiplier crashes you lose your bet — no payout, and the message resolves cleanly rather than hanging.</p>
+          <p><span class="test-label expected">Expected</span> When the multiplier crashes you lose your bet, with no payout, and the message resolves cleanly rather than hanging.</p>
         </div>
       </article>
 
@@ -277,7 +277,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/lottery buy tickets:99999</code> (beyond your balance or the per-purchase cap)</p>
-          <p><span class="test-label expected">Expected</span> Rejected — either the ticket count is capped by Discord or you're told you can't afford it. Your balance is unchanged.</p>
+          <p><span class="test-label expected">Expected</span> Rejected: either the ticket count is capped by Discord or you're told you can't afford it. Your balance is unchanged.</p>
         </div>
       </article>
 
@@ -438,7 +438,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> Run the exact same pair again</p>
-          <p><span class="test-label expected">Expected</span> You get the same percentage every time — the result is deterministic for a given pair.</p>
+          <p><span class="test-label expected">Expected</span> You get the same percentage every time. The result is deterministic for a given pair.</p>
         </div>
       </article>
 
@@ -474,7 +474,7 @@
     <!-- Moderation -->
     <section class="test-category">
       <h2>Moderation</h2>
-      <p class="testers-intro">These commands only appear in Discord's slash-command list for members who hold the matching permission (e.g. Ban Members for <code>/ban</code>). If you can't see a command at all, that's the permission gate working correctly — not a bug. Ask a server admin to grant you a staff role with the needed permissions before testing the rest of this section. Test these on a throwaway account or a member who's expecting it, not a real regular.</p>
+      <p class="testers-intro">These commands only appear in Discord's slash-command list for members who hold the matching permission (e.g. Ban Members for <code>/ban</code>). If you can't see a command at all, that's the permission gate working correctly, not a bug. Ask a server admin to grant you a staff role with the needed permissions before testing the rest of this section. Test these on a throwaway account or a member who's expecting it, not a real regular.</p>
 
       <article class="test-card">
         <h3>/warn</h3>
@@ -484,11 +484,11 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> Run <code>/warn</code> on the same user 3 times total</p>
-          <p><span class="test-label expected">Expected</span> On the 3rd warning, the bot also applies a 10-minute timeout automatically and says so in the reply — as long as your role is above the target's.</p>
+          <p><span class="test-label expected">Expected</span> On the 3rd warning, the bot also applies a 10-minute timeout automatically and says so in the reply, as long as your role is above the target's.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/warn user:@yourself reason:testing</code></p>
-          <p><span class="test-label expected">Expected</span> Rejected — you can't warn yourself.</p>
+          <p><span class="test-label expected">Expected</span> Rejected: you can't warn yourself.</p>
         </div>
       </article>
 
@@ -496,7 +496,7 @@
         <h3>/warnings</h3>
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/warnings user:@testaccount</code> (after giving them at least one warning)</p>
-          <p><span class="test-label expected">Expected</span> Lists each warning with its reason, who issued it, and when — most recent 15 if there are more.</p>
+          <p><span class="test-label expected">Expected</span> Lists each warning with its reason, who issued it, and when, showing the most recent 15 if there are more.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/warnings user:@someoneneverwarned</code></p>
@@ -512,7 +512,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/kick user:@someonewithahigherrole</code></p>
-          <p><span class="test-label expected">Expected</span> Rejected with a message about role hierarchy — nobody gets kicked.</p>
+          <p><span class="test-label expected">Expected</span> Rejected with a message about role hierarchy, and nobody gets kicked.</p>
         </div>
       </article>
 
@@ -528,7 +528,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/unban user-id:&lt;an ID that was never banned&gt;</code></p>
-          <p><span class="test-label expected">Expected</span> Says that user isn't banned — no error, no false success.</p>
+          <p><span class="test-label expected">Expected</span> Says that user isn't banned, with no error and no false success.</p>
         </div>
       </article>
 
@@ -540,7 +540,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/timeout user:@yourself duration:5</code></p>
-          <p><span class="test-label expected">Expected</span> Rejected — you can't time yourself out.</p>
+          <p><span class="test-label expected">Expected</span> Rejected: you can't time yourself out.</p>
         </div>
       </article>
 
@@ -552,7 +552,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/purge amount:150</code></p>
-          <p><span class="test-label expected">Expected</span> Discord blocks the option before the command runs — 100 is the max.</p>
+          <p><span class="test-label expected">Expected</span> Discord blocks the option before the command runs. 100 is the max.</p>
         </div>
       </article>
 
@@ -588,7 +588,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/unlockdown reason:testing</code>, then press Confirm</p>
-          <p><span class="test-label expected">Expected</span> Same flow in reverse — every channel unlocks.</p>
+          <p><span class="test-label expected">Expected</span> Same flow in reverse. Every channel unlocks.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> Run <code>/lockdown</code> again, but press Cancel (or just let the prompt sit for 30 seconds)</p>
@@ -604,7 +604,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/nickname reset user:@someonewithnonickname</code></p>
-          <p><span class="test-label expected">Expected</span> Says that member doesn't have a nickname set — nothing changes.</p>
+          <p><span class="test-label expected">Expected</span> Says that member doesn't have a nickname set, so nothing changes.</p>
         </div>
       </article>
 
@@ -616,7 +616,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/modlog set channel:</code> pointed at a channel the bot can't post in</p>
-          <p><span class="test-label expected">Expected</span> Rejected with a message saying the bot can't send messages there — the setting isn't saved.</p>
+          <p><span class="test-label expected">Expected</span> Rejected with a message saying the bot can't send messages there, so the setting isn't saved.</p>
         </div>
       </article>
     </section>
@@ -650,7 +650,7 @@
     <!-- Image & Meme Tools -->
     <section class="test-category">
       <h2>Image &amp; Meme Tools</h2>
-      <p class="testers-intro">These were previously broken and are now fixed — please confirm each actually returns an image.</p>
+      <p class="testers-intro">These were previously broken and are now fixed. Please confirm each actually returns an image.</p>
       <article class="test-card">
         <h3>/action</h3>
         <div class="test-step">
@@ -661,8 +661,8 @@
       <article class="test-card">
         <h3>/image &lt;subcommand&gt;</h3>
         <div class="test-step">
-          <p><span class="test-label action">Action</span> Run each subcommand: <code>/image deepfry</code>, <code>pixelate</code>, <code>wasted</code>, <code>jail</code>, <code>glitch</code>, <code>caption</code>, <code>ship-card</code>, <code>wanted</code>, <code>pfp-card</code>, <code>achievement</code>, <code>ascii</code> — on yourself or another member.</p>
-          <p><span class="test-label expected">Expected</span> A rendered image (or ASCII text for <code>ascii</code>). No "invalid size" errors — that bug is fixed. All eleven effects are now under the one <code>/image</code> command.</p>
+          <p><span class="test-label action">Action</span> Run each subcommand: <code>/image deepfry</code>, <code>pixelate</code>, <code>wasted</code>, <code>jail</code>, <code>glitch</code>, <code>caption</code>, <code>ship-card</code>, <code>wanted</code>, <code>pfp-card</code>, <code>achievement</code>, <code>ascii</code>, on yourself or another member.</p>
+          <p><span class="test-label expected">Expected</span> A rendered image (or ASCII text for <code>ascii</code>). No "invalid size" errors, because that bug is fixed. All eleven effects are now under the one <code>/image</code> command.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/image wanted</code> with no user, and <code>/image ship-card user1:@a user2:@b</code></p>
@@ -810,7 +810,7 @@
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> Adopt a second pet; feed with no pet.</p>
-          <p><span class="test-label expected">Expected</span> A second adopt is refused (one pet per member); feeding with no pet prompts you to adopt first — no error.</p>
+          <p><span class="test-label expected">Expected</span> A second adopt is refused (one pet per member); feeding with no pet prompts you to adopt first, with no error.</p>
         </div>
       </article>
 

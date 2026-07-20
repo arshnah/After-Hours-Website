@@ -292,6 +292,103 @@
     window.addEventListener("scroll", pickActive, { passive: true });
   }
 
+  // ---- Live stats ----
+  //
+  // Progressive enhancement, deliberately. The numbers are already correct in
+  // the HTML; this only overwrites them if the API answers. A missing meta tag,
+  // an unreachable box, a CORS refusal or malformed JSON all leave the page
+  // exactly as served — the failure mode is "slightly stale", never "blank".
+  //
+  // The meta content must be an https:// origin. The site is served over HTTPS
+  // and browsers block http:// fetches from an https:// page, so an http origin
+  // here silently fails no matter what the server does.
+  const apiBase = (document.querySelector('meta[name="jugaad-api"]')?.content || "").replace(/\/$/, "");
+
+  function applyStats(stats) {
+    document.querySelectorAll("[data-stat]").forEach(function (el) {
+      const value = stats[el.getAttribute("data-stat")];
+      if (typeof value === "number") el.textContent = value.toLocaleString();
+    });
+
+    // The search trigger and footer quote the command count in prose.
+    const commands = stats.commands;
+    if (typeof commands === "number") {
+      const trigger = document.querySelector("#search-trigger .grow");
+      if (trigger) trigger.textContent = "Search " + commands + " commands…";
+      document.querySelectorAll("[data-stat-text]").forEach(function (el) {
+        el.textContent = el.getAttribute("data-stat-text").replace("{commands}", commands);
+      });
+    }
+  }
+
+  if (apiBase) {
+    fetch(apiBase + "/stats", { headers: { accept: "application/json" } })
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(applyStats)
+      .catch(function () {
+        // Intentionally silent: the served numbers are the fallback.
+      });
+  }
+
+  // ---- Leaderboard page ----
+
+  const boardEl = document.getElementById("leaderboard");
+  if (boardEl && apiBase) {
+    const tabs = document.querySelectorAll(".board-tab");
+
+    function renderBoard(type) {
+      boardEl.innerHTML = '<p class="board-empty">Loading…</p>';
+      fetch(apiBase + "/leaderboard?type=" + encodeURIComponent(type) + "&limit=15")
+        .then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          if (!data.entries || !data.entries.length) {
+            boardEl.innerHTML = '<p class="board-empty">Nothing here yet.</p>';
+            return;
+          }
+          boardEl.innerHTML = data.entries
+            .map(function (e) {
+              // textContent-style escaping: names come from Discord display
+              // names, which can contain anything.
+              const safe = String(e.name).replace(/[&<>"']/g, function (c) {
+                return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+              });
+              return (
+                '<li class="board-row">' +
+                '<span class="board-rank">' + e.rank + "</span>" +
+                '<span class="board-name">' + safe + "</span>" +
+                '<span class="board-value">' + String(e.label ?? e.value) + "</span>" +
+                "</li>"
+              );
+            })
+            .join("");
+        })
+        .catch(function () {
+          boardEl.innerHTML =
+            '<p class="board-empty">Leaderboards are offline right now. Try <code>/rank</code> in Discord.</p>';
+        });
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        tabs.forEach(function (t) {
+          t.classList.toggle("active", t === tab);
+        });
+        renderBoard(tab.getAttribute("data-board"));
+      });
+    });
+
+    renderBoard("level");
+  } else if (boardEl) {
+    boardEl.innerHTML =
+      '<p class="board-empty">Leaderboards aren\'t switched on yet. Use <code>/rank</code> in Discord.</p>';
+  }
+
   // ---- testers.html filter ----
   //
   // Same interaction as the commands filter, on a page that had 75 test cards

@@ -11,6 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=64" />
+  <!-- Live stats source. Empty = disabled, and the hardcoded numbers below
+       stand as-is. Set this to the API origin once it's behind TLS. -->
+  <meta name="jugaad-api" content="" />
+
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -20,6 +24,7 @@
       <a href="index.html" class="site-logo"><img src="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=128" alt="" class="logo-img" />Jugaad</a>
       <nav class="site-nav">
         <a href="commands.html">Commands</a>
+        <a href="leaderboard.html">Leaderboard</a>
         <a href="testers.html">Testers</a>
       </nav>
     </div>
@@ -65,7 +70,7 @@
     <section class="stats-section" style="padding-top:44px;padding-bottom:0;">
       <div class="container">
         <div class="stat-strip" data-reveal>
-          <div><span class="n">85</span><span class="l">Commands</span></div>
+          <div><span class="n" data-stat="commands">85</span><span class="l">Commands</span></div>
           <div><span class="n">9</span><span class="l">Categories</span></div>
           <div><span class="n">₹0</span><span class="l">Real Money</span></div>
           <div><span class="n">∞</span><span class="l">Free Forever</span></div>

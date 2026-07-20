@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leaderboard · Jugaad</title>
-  <meta name="description" content="Top players on Jugaad: levels, Rokda, and reputation." />
+  <meta name="description" content="Top players on Jugaad: levels, Rokda, reputation, and Minecraft playtime." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,12 +36,15 @@
       <h2>Leaderboard</h2>
     </div>
     <div class="rule-torn"></div>
-    <p class="section-intro">Live from the bot. Levels come from chatting, Rokda from working and gambling, reputation from other people giving it to you.</p>
+    <p class="section-intro">Live from the bot. Levels come from chatting, Rokda from working and gambling, reputation from other people giving it to you, and playtime from hours on the Minecraft server.</p>
 
     <div class="board-tabs">
       <button type="button" class="board-tab active" data-board="level">Levels</button>
       <button type="button" class="board-tab" data-board="rokda">Rokda</button>
       <button type="button" class="board-tab" data-board="rep">Reputation</button>
+      <!-- Minecraft names, not Discord ones: the server knows who played, not
+           who they are on Discord, and most players never link an account. -->
+      <button type="button" class="board-tab" data-board="playtime">Playtime</button>
     </div>
 
     <ol class="board" id="leaderboard">

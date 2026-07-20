@@ -353,8 +353,10 @@
           }
           boardEl.innerHTML = data.entries
             .map(function (e) {
-              // textContent-style escaping: names come from Discord display
-              // names, which can contain anything.
+              // textContent-style escaping: names are Discord display names on
+              // most boards, which can contain anything. (Playtime sends
+              // Minecraft names, which cannot — but the escaping is what makes
+              // that a property of the data rather than something to rely on.)
               const safe = String(e.name).replace(/[&<>"']/g, function (c) {
                 return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
               });

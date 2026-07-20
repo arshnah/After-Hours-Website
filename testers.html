@@ -668,6 +668,30 @@
     <!-- Community & Engagement -->
     <section class="test-category">
       <h2>Community &amp; Engagement</h2>
+
+      <article class="test-card">
+        <h3>/counting</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/counting set channel:#counting</code>, then in that channel post <code>1</code>, have someone else post <code>2</code>, then <code>3</code>.</p>
+          <p><span class="test-label expected">Expected</span> Each correct number gets a ✅. A new record also gets a 🎉.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Post the next number twice in a row yourself; then post a wrong number; then post <code>hello</code> and <code>5 nice</code>.</p>
+          <p><span class="test-label expected">Expected</span> Counting twice in a row is ❌ and resets to 0. A wrong number is ❌, resets, and calls out who broke it and at what. Non-numbers are ignored completely: no ❌, no reset. <code>/counting stats</code> shows the record surviving the reset.</p>
+        </div>
+      </article>
+
+      <article class="test-card">
+        <h3>/story</h3>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/story start</code>, then take turns posting single words with someone else, then <code>/story see</code>.</p>
+          <p><span class="test-label expected">Expected</span> Each accepted word gets a ✅ and <code>see</code> reads the story back in order.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label edge">Edge case</span> Post two words in a row yourself; post <code>two words</code>; then <code>/story end</code> and post another word.</p>
+          <p><span class="test-label expected">Expected</span> A second word in a row gets ⏳ and is not added. A multi-word message is ignored entirely. After <code>end</code>, words stop being added but <code>/story see</code> still shows the finished story.</p>
+        </div>
+      </article>
       <article class="test-card">
         <h3>/reactionrole add</h3>
         <div class="test-step">
@@ -777,18 +801,14 @@
     <section class="test-category">
       <h2>Social</h2>
       <article class="test-card">
-        <h3>/marriage</h3>
-        <div class="test-step">
-          <p><span class="test-label action">Action</span> <code>/marriage marry user:@someone</code> (they click Accept), then <code>/marriage status</code>, then <code>/marriage divorce</code>.</p>
-          <p><span class="test-label expected">Expected</span> Marrying asks the partner to accept with a button; status shows the couple + how long married on a Components&nbsp;V2 card; <code>/daily</code> pays a +10% bonus while married.</p>
-        </div>
-      </article>
-
-      <article class="test-card">
         <h3>/family</h3>
         <div class="test-step">
           <p><span class="test-label action">Action</span> <code>/family adopt user:@a</code>, <code>/family friend user:@b</code>, <code>/family brother user:@c</code>, <code>/family sister user:@d</code> (each accepts), then <code>/family view</code>.</p>
-          <p><span class="test-label expected">Expected</span> A modern card (accent bar + your avatar) shows your tree. Adopt/friend/brother/sister use accept buttons; the tree lists Children, Friends, Brothers, Sisters, derived Siblings, and your <code>/marriage</code> partner. <code>/family unsibling</code> removes a sibling.</p>
+          <p><span class="test-label expected">Expected</span> A modern card (accent bar + your avatar) shows your tree. Adopt/friend/brother/sister use accept buttons; the tree lists Children, Friends, Brothers, Sisters, derived Siblings, and your partner. <code>/family unsibling</code> removes a sibling.</p>
+        </div>
+        <div class="test-step">
+          <p><span class="test-label action">Action</span> <code>/family marry user:@someone</code> (they click Accept), then <code>/family marriage</code>, then <code>/family divorce</code>.</p>
+          <p><span class="test-label expected">Expected</span> Marrying asks the partner to accept with a button; <code>marriage</code> shows the couple and how long married; <code>/daily</code> pays a +10% bonus while married. These used to be <code>/marriage</code> and now live under <code>/family</code>.</p>
         </div>
         <div class="test-step">
           <p><span class="test-label edge">Edge case</span> <code>/family view</code> on a big family; try to adopt yourself or an ancestor.</p>

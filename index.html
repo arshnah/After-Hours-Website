@@ -25,6 +25,17 @@
     </div>
   </header>
 
+  <!-- index.html has nothing to filter in place, so its search field opens the
+       palette. commands.html and testers.html use their own filter bars, which
+       sit in the same spot, so every page has a search field under the header. -->
+  <div class="search-trigger-wrap">
+    <button type="button" class="search-trigger" id="search-trigger">
+      <span class="mag" aria-hidden="true"></span>
+      <span class="grow">Search 84 commands…</span>
+      <kbd>/</kbd>
+    </button>
+  </div>
+
   <main>
 
     <section class="hero">

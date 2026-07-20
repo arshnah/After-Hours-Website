@@ -41,6 +41,11 @@
          3. <strong>What actually happened</strong>: the real result, including any error text like "The application did not respond." A screenshot helps.</p>
     </section>
 
+    <div class="filter-bar">
+      <input type="text" id="test-filter" placeholder="Filter tests…" autocomplete="off" />
+    </div>
+    <p class="no-results" id="test-no-results">No tests match your filter.</p>
+
     <p class="testers-intro">This checklist covers only the commands that are live in the current build. Planned commands that aren't implemented yet are left out on purpose, because there's nothing to test there. Run each one in a server where Jugaad is installed. Where an <span class="test-label edge">Edge case</span> is listed, please test it too. Those are the situations most likely to expose a bug.</p>
 
     <!-- Economy & Jobs -->

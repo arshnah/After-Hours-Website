@@ -291,4 +291,312 @@
     // section still needs to keep the highlight correct.
     window.addEventListener("scroll", pickActive, { passive: true });
   }
+
+  // ---- testers.html filter ----
+  //
+  // Same interaction as the commands filter, on a page that had 75 test cards
+  // and no way to narrow them. Matches on the command name in the card's <h3>
+  // plus the step text, so "cooldown" finds every test that mentions one.
+
+  const testFilter = document.getElementById("test-filter");
+  const testNoResults = document.getElementById("test-no-results");
+
+  if (testFilter) {
+    const testCards = [...document.querySelectorAll(".test-card")].map(function (card) {
+      const h3 = card.querySelector("h3");
+      return {
+        card: card,
+        name: h3 ? h3.textContent.trim() : "",
+        hay: card.textContent.replace(/\s+/g, " ").trim().toLowerCase(),
+      };
+    });
+
+    const testHint = document.createElement("span");
+    testHint.className = "filter-hint";
+    testHint.textContent = "/";
+    testFilter.parentElement.appendChild(testHint);
+
+    const testCount = document.createElement("p");
+    testCount.className = "result-count";
+    testFilter.closest(".filter-bar").insertAdjacentElement("afterend", testCount);
+
+    function runTestFilter() {
+      const query = testFilter.value.trim();
+      let shown = 0;
+
+      // Fuzzy (subsequence) matching only against the command name. Against the
+      // whole card it's meaningless — "daily" subsequence-matched 54 of 75 cards,
+      // because d-a-i-l-y turns up scattered through any long paragraph. The body
+      // is matched on substring so "cooldown" still finds every test that
+      // mentions one.
+      const lower = query.toLowerCase();
+      testCards.forEach(function (entry) {
+        const match = fuzzyMatch(query, entry.name) || (lower && entry.hay.includes(lower));
+        entry.card.style.display = match ? "" : "none";
+        if (match) shown++;
+      });
+
+      // Hide a category heading once every test under it is filtered out.
+      document.querySelectorAll(".test-category").forEach(function (section) {
+        const visible = [...section.querySelectorAll(".test-card")].some(function (c) {
+          return c.style.display !== "none";
+        });
+        section.style.display = visible ? "" : "none";
+      });
+
+      if (testNoResults) testNoResults.style.display = shown ? "none" : "block";
+      testCount.innerHTML = query
+        ? "<b>" + shown + "</b> of " + testCards.length + " tests match “" + query + "”"
+        : "<b>" + testCards.length + "</b> tests";
+    }
+
+    testFilter.addEventListener("input", runTestFilter);
+    testFilter.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        testFilter.value = "";
+        runTestFilter();
+        testFilter.blur();
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      const el = document.activeElement;
+      const tag = el && el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (el && el.isContentEditable)) return;
+      e.preventDefault();
+      testFilter.focus();
+      testFilter.select();
+    });
+
+    runTestFilter();
+  }
+
+  // ---- Global command palette ----
+  //
+  // Searches every command from any page. commands.html is the single source of
+  // truth: on that page the index is read straight out of the DOM, and on the
+  // others it's lazily fetched and parsed on first open. Nothing is generated
+  // or duplicated, so the index can't drift out of sync with the catalog.
+
+  let commandIndex = null;
+  let indexPromise = null;
+
+  function parseCommands(doc) {
+    const out = [];
+    doc.querySelectorAll(".command-category").forEach(function (section) {
+      const heading = section.querySelector("h2");
+      const cat = heading ? heading.textContent.trim() : "";
+      section.querySelectorAll(".command-card").forEach(function (card) {
+        const code = card.querySelector("code");
+        const desc = card.querySelector(".desc");
+        out.push({
+          name: card.getAttribute("data-name") || "",
+          sig: code ? code.textContent.trim() : "",
+          desc: desc ? desc.textContent.trim() : "",
+          cat: cat,
+          id: section.id || "",
+        });
+      });
+    });
+    return out;
+  }
+
+  function loadIndex() {
+    if (commandIndex) return Promise.resolve(commandIndex);
+    if (indexPromise) return indexPromise;
+
+    if (document.querySelector(".command-category")) {
+      commandIndex = parseCommands(document);
+      return Promise.resolve(commandIndex);
+    }
+
+    // Fetching a sibling page fails under file:// (treated as cross-origin).
+    // Resolving to an empty index is the graceful path: the palette then offers
+    // a link to commands.html instead of showing a broken box.
+    indexPromise = fetch("commands.html")
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        commandIndex = parseCommands(new DOMParser().parseFromString(html, "text/html"));
+        return commandIndex;
+      })
+      .catch(function () {
+        commandIndex = [];
+        return commandIndex;
+      });
+
+    return indexPromise;
+  }
+
+  const paletteEl = document.createElement("div");
+  paletteEl.className = "palette";
+  paletteEl.id = "palette";
+  paletteEl.hidden = true;
+  paletteEl.innerHTML =
+    '<div class="palette-box" role="dialog" aria-modal="true" aria-label="Search commands">' +
+    '<input type="text" id="palette-input" placeholder="Search commands…" autocomplete="off" ' +
+    'role="combobox" aria-expanded="true" aria-controls="palette-results" />' +
+    '<ul class="palette-results" id="palette-results" role="listbox"></ul>' +
+    '<div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span>' +
+    "<span><kbd>enter</kbd> open</span><span><kbd>esc</kbd> close</span></div>" +
+    "</div>";
+  document.body.appendChild(paletteEl);
+
+  const paletteInput = paletteEl.querySelector("#palette-input");
+  const paletteList = paletteEl.querySelector("#palette-results");
+  let paletteRows = [];
+  let cursor = 0;
+  let lastFocus = null;
+
+  function commandsHref(entry) {
+    return "commands.html?q=" + encodeURIComponent(entry.name) + (entry.id ? "#" + entry.id : "");
+  }
+
+  // Rank, don't just filter. fuzzyMatch is subsequence-based, which is right for
+  // short command names but useless against a full sentence — "slot" subsequence-
+  // matches the description of /shop, /rob and /buy, which buried /slots at
+  // position 8. Descriptions are therefore matched on substring only, and scored
+  // below every name match.
+  function score(query, e) {
+    if (!query) return 0;
+    const q = query.toLowerCase();
+    const name = e.name.toLowerCase();
+    if (name === q) return 0;
+    if (name.startsWith(q)) return 1;
+    if (name.includes(q)) return 2;
+    if (e.sig.toLowerCase().includes(q)) return 3;
+    if (fuzzyMatch(query, e.name)) return 4;
+    if (e.desc.toLowerCase().includes(q)) return 5;
+    return -1;
+  }
+
+  function renderPalette(query) {
+    const list = commandIndex || [];
+    const hits = list
+      .map(function (e) {
+        return { e: e, s: score(query, e) };
+      })
+      .filter(function (r) {
+        return r.s >= 0;
+      })
+      .sort(function (a, b) {
+        return a.s - b.s;
+      })
+      .slice(0, 40)
+      .map(function (r) {
+        return r.e;
+      });
+
+    paletteRows = hits;
+    cursor = 0;
+
+    if (!list.length) {
+      paletteList.innerHTML =
+        '<li class="palette-empty">Couldn\'t load the command list. ' +
+        '<a href="commands.html">Open the commands page</a> instead.</li>';
+      return;
+    }
+    if (!hits.length) {
+      paletteList.innerHTML = '<li class="palette-empty">Nothing matches “' + query + "”.</li>";
+      return;
+    }
+
+    paletteList.innerHTML = hits
+      .map(function (e, i) {
+        return (
+          '<li role="option" aria-selected="' + (i === 0) + '">' +
+          '<a href="' + commandsHref(e) + '">' +
+          '<span class="cmd">' + e.sig + "</span>" +
+          '<span class="txt">' + e.desc + "</span>" +
+          '<span class="cat">' + e.cat + "</span>" +
+          "</a></li>"
+        );
+      })
+      .join("");
+  }
+
+  function moveCursor(delta) {
+    const items = paletteList.querySelectorAll('li[role="option"]');
+    if (!items.length) return;
+    if (items[cursor]) items[cursor].setAttribute("aria-selected", "false");
+    cursor = (cursor + delta + items.length) % items.length;
+    items[cursor].setAttribute("aria-selected", "true");
+    items[cursor].scrollIntoView({ block: "nearest" });
+  }
+
+  function openPalette() {
+    lastFocus = document.activeElement;
+    paletteEl.hidden = false;
+    paletteInput.value = "";
+    paletteList.innerHTML = '<li class="palette-empty">Loading…</li>';
+    paletteInput.focus();
+    loadIndex().then(function () {
+      if (!paletteEl.hidden) renderPalette("");
+    });
+  }
+
+  function closePalette() {
+    paletteEl.hidden = true;
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  const searchTrigger = document.getElementById("search-trigger");
+  if (searchTrigger) searchTrigger.addEventListener("click", openPalette);
+
+  paletteInput.addEventListener("input", function () {
+    renderPalette(paletteInput.value.trim());
+  });
+
+  paletteEl.addEventListener("click", function (e) {
+    if (e.target === paletteEl) closePalette();
+  });
+
+  paletteInput.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closePalette();
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      moveCursor(1);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      moveCursor(-1);
+    } else if (e.key === "Enter") {
+      const link = paletteList.querySelectorAll('li[role="option"] a')[cursor];
+      if (link) {
+        e.preventDefault();
+        link.click();
+      }
+    }
+  });
+
+  // Cmd/Ctrl+K opens the palette anywhere. "/" is left to the page's own filter
+  // when it has one, so the shortcut always means "search what's in front of me".
+  document.addEventListener("keydown", function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      paletteEl.hidden ? openPalette() : closePalette();
+      return;
+    }
+    if (e.key === "/" && !filterInput && !testFilter && paletteEl.hidden) {
+      const el = document.activeElement;
+      const tag = el && el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (el && el.isContentEditable)) return;
+      e.preventDefault();
+      openPalette();
+    }
+  });
+
+  // Arriving from the palette: ?q= prefills the filter so the linked command is
+  // the only one on screen, rather than dumping the reader in a 105-card list.
+  if (filterInput) {
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) {
+      filterInput.value = q;
+      filterInput.dispatchEvent(new Event("input"));
+    }
+  }
 })();

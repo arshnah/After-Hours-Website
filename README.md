@@ -1,6 +1,6 @@
 # Jugaad Docs
 
-**Live: https://jugaad-bot-website.vercel.app**
+**Live: https://jugaadbot.vercel.app**
 
 Public landing page, command reference, and alpha tester checklist for Jugaad, a Discord bot. Plain HTML/CSS/JS, no build step, no framework, no dependencies. Pages: `index.html` (landing), `commands.html` (full command catalog), `testers.html` (alpha test checklist), shared `styles.css` and `script.js`.
 

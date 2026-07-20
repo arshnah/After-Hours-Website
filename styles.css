@@ -1,42 +1,83 @@
 /* ==========================================================================
-   Jugaad — shared stylesheet
-   Design lane: "street jugaad" — Indian truck-art / risograph poster energy.
-   Warm ink, newsprint cream, halftone dots, tape, marquee ticker, stencil type.
+   After Hours — shared stylesheet
 
-   The one deliberate exception: the Discord mockups on the landing page use
-   real Discord greys. The contrast is the point — a raw poster wall wrapped
-   around a pristine screenshot-accurate card reads as "proof".
+   Design lane: the avatar's own world. A city after midnight, a ferris wheel
+   turning behind him, neon doing the work the sun isn't. Violet-black ground,
+   ember and magenta signage, periwinkle haze where paper used to be.
+
+   This replaced a truck-art / risograph poster lane. The translation that
+   mattered was not the palette but the DEVICES: offset shadows and taped tilts
+   are how ink sits on paper, and neither means anything at night. They became
+   glow and alignment. The halftone dot field became the ferris wheel.
+
+   The one deliberate exception: the Discord mockups on the landing page keep
+   real Discord greys. The contrast is the point — a lit street wrapped around
+   a pristine screenshot-accurate card reads as "proof".
    ========================================================================== */
 
 :root {
-  /* Ink — warm black, not the blue-black every dark SaaS site ships. */
-  --ink: #100d0a;
-  --ink-deep: #080605;
-  --ink-raise: #1b1611;
-  --ink-raise-hi: #251e17;
+  /* ── After Hours ──────────────────────────────────────────────────────────
+     Every value below is sampled from the avatar, so the site and the profile
+     picture are the same place: a city at night, a ferris wheel behind him,
+     neon holding the dark up.
 
-  /* Newsprint */
-  --paper: #f4ede0;
-  --paper-dim: #ddd3c2;
+     The base is violet-black, NOT neutral black — the avatar's night has a
+     purple cast and a grey-black next to it reads as dead. */
+  --night: #0a0710;
+  --night-deep: #06040b;
+  --night-raise: #17111f;
+  --night-raise-hi: #221a2d;
 
-  --rule: #34291f;
-  --rule-hi: #4b3c2d;
+  /* The pale "AFTER" lettering. Stands in for what used to be newsprint —
+     there is no paper in a night scene, so the light value is haze. */
+  --haze: #bacafc;
+  --haze-dim: #8f9ac9;
 
-  --text: #ece4d8;
-  --text-muted: #a2947f;
+  --edge: #2a2038;
+  --edge-hi: #3d2f52;
 
-  /* Truck-art palette. Gold matches ROKDA_GOLD (0xd4af37) in lib/embeds.js. */
-  --gold: #d4af37;
-  --gold-hi: #f0cc5c;
-  --gold-deep: #a8842a;
-  --vermilion: #e2452b;
-  --marigold: #f0a028;
-  --peacock: #1a9c8a;
+  --text: #e4e6f5;
+  --text-muted: #8b86a0;
 
-  --gold-rgb: 212, 175, 55;
-  --vermilion-rgb: 226, 69, 43;
-  --marigold-rgb: 240, 160, 40;
-  --peacock-rgb: 26, 156, 138;
+  /* The orange "HOURS" lettering. Matches ROKDA_GOLD (0xfd8547) in
+     lib/embeds.js, so an embed and the site are literally the same orange. */
+  --ember: #fd8547;
+  --ember-hi: #ffa877;
+  --ember-deep: #c25f2c;
+  /* The ferris wheel behind him. */
+  --neon: #d6336c;
+  /* His jacket. */
+  --deep-blue: #0c4275;
+
+  --ember-rgb: 253, 133, 71;
+  --neon-rgb: 214, 51, 108;
+  --deep-blue-rgb: 12, 66, 117;
+  --haze-rgb: 186, 202, 252;
+
+  /* ── Names the rest of the sheet already uses ──────────────────────────────
+     1,900 lines and four pages reference the old truck-art names. Repointing
+     them here retones the whole site from one block, instead of a rename that
+     would touch every rule and every page for no visual difference. */
+  --ink: var(--night);
+  --ink-deep: var(--night-deep);
+  --ink-raise: var(--night-raise);
+  --ink-raise-hi: var(--night-raise-hi);
+  --paper: var(--haze);
+  --paper-dim: var(--haze-dim);
+  --rule: var(--edge);
+  --rule-hi: var(--edge-hi);
+
+  --gold: var(--ember);
+  --gold-hi: var(--ember-hi);
+  --gold-deep: var(--ember-deep);
+  --vermilion: var(--neon);
+  --marigold: var(--ember-hi);
+  --peacock: var(--deep-blue);
+
+  --gold-rgb: var(--ember-rgb);
+  --vermilion-rgb: var(--neon-rgb);
+  --marigold-rgb: var(--ember-rgb);
+  --peacock-rgb: var(--deep-blue-rgb);
 
   /* Legacy aliases — commands.html / testers.html markup still asks for these. */
   --accent: var(--gold);
@@ -67,10 +108,14 @@
   --t-fast: 140ms var(--ease);
   --t-med: 260ms var(--ease);
 
-  --shadow-sm: 2px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow-md: 4px 4px 0 rgba(0, 0, 0, 0.55);
-  --shadow-lg: 8px 8px 0 rgba(0, 0, 0, 0.6);
-  --shadow-gold: 4px 4px 0 var(--gold-deep);
+  /* Hard offset shadows are a PRINT device — ink sitting proud of paper. This
+     page is lit signage now, so depth comes from glow and falloff instead.
+     Same variable names, so every card and button converts at once. */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 6px 22px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 14px 44px rgba(0, 0, 0, 0.62);
+  --shadow-gold: 0 0 24px rgba(var(--ember-rgb), 0.34);
+  --shadow-neon: 0 0 26px rgba(var(--neon-rgb), 0.3);
 }
 
 * {
@@ -93,18 +138,46 @@ body {
   overflow-x: hidden;
 }
 
-/* Halftone dot field + film grain. Both fixed, purely decorative, no markup. */
+/* ── The ferris wheel ───────────────────────────────────────────────────────
+   The structure standing behind him in the avatar, rebuilt in CSS and parked
+   behind the hero so the page opens on the same view the profile picture does.
+
+   This replaces a halftone dot field, which was the right texture for a
+   newsprint poster and means nothing at night. Spokes are a repeating conic
+   gradient, the rims are ring stops in a radial gradient, and the whole thing
+   is masked to fade out well before it reaches any text.
+
+   No image, no markup, no animation — it is scenery, and a background that
+   moves would fight the content for attention. */
 body::before {
   content: "";
   position: fixed;
-  inset: 0;
+  top: -30vmax;
+  left: 50%;
+  width: 96vmax;
+  height: 96vmax;
+  transform: translateX(-50%);
   z-index: 0;
   pointer-events: none;
-  background-image: radial-gradient(rgba(var(--gold-rgb), 0.16) 1px, transparent 1px);
-  background-size: 7px 7px;
-  -webkit-mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 5%, transparent 70%);
-  mask-image: radial-gradient(ellipse 90% 55% at 50% 0%, #000 5%, transparent 70%);
-  opacity: 0.75;
+  background-image:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(var(--neon-rgb), 0.19) 0deg 0.32deg,
+      transparent 0.32deg 7.5deg
+    ),
+    radial-gradient(
+      circle,
+      transparent 0 29.6%,
+      rgba(var(--neon-rgb), 0.17) 29.6% 30%,
+      transparent 30% 45.6%,
+      rgba(var(--neon-rgb), 0.13) 45.6% 46%,
+      transparent 46% 61.6%,
+      rgba(var(--neon-rgb), 0.09) 61.6% 62%,
+      transparent 62%
+    );
+  -webkit-mask-image: radial-gradient(circle at 50% 32%, #000 6%, transparent 58%);
+  mask-image: radial-gradient(circle at 50% 32%, #000 6%, transparent 58%);
+  opacity: 0.9;
 }
 
 body::after {
@@ -238,7 +311,7 @@ code, .mono {
 }
 
 .site-logo:hover .logo-img {
-  transform: rotate(-6deg);
+  transform: none;
 }
 
 .site-nav {
@@ -330,15 +403,21 @@ code, .mono {
   position: relative;
 }
 
+/* Round, because the art is already a circular badge and squaring it off cropped
+   the ring he was drawn inside. It sits at the hub of the ferris wheel behind
+   it, so the page opens on the same composition as the avatar itself. */
 .hero-avatar {
-  width: 96px;
-  height: 96px;
+  width: 112px;
+  height: 112px;
   display: block;
   margin: 0 auto 20px;
-  border: 3px solid var(--gold);
-  border-radius: 4px;
-  box-shadow: var(--shadow-lg);
-  transform: rotate(-2.5deg);
+  border: 2px solid rgba(var(--haze-rgb), 0.45);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 6px rgba(var(--neon-rgb), 0.09),
+    0 0 38px rgba(var(--neon-rgb), 0.34),
+    var(--shadow-lg);
+  transform: none;
 }
 
 .hero-badge {
@@ -354,7 +433,7 @@ code, .mono {
   background: var(--vermilion);
   padding: 5px 14px;
   margin-bottom: 22px;
-  transform: rotate(-1.2deg);
+  transform: none;
   box-shadow: var(--shadow-sm);
 }
 
@@ -785,14 +864,14 @@ section > .container > h2,
   background: rgba(244, 237, 224, 0.16);
   border-left: 1px dashed rgba(244, 237, 224, 0.3);
   border-right: 1px dashed rgba(244, 237, 224, 0.3);
-  transform: rotate(-4deg);
+  transform: none;
   pointer-events: none;
 }
 
 .feature-card:nth-child(even)::before {
   left: auto;
   right: 18px;
-  transform: rotate(5deg);
+  transform: none;
 }
 
 .feature-card:hover {
@@ -816,7 +895,7 @@ section > .container > h2,
 }
 
 .feature-card:hover .icon {
-  transform: rotate(-8deg) scale(1.06);
+  transform: scale(1.06);
   border-color: var(--vermilion);
 }
 

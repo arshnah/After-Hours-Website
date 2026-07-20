@@ -1,7 +1,7 @@
 # Website Redesign — Brief
 
 > **Start here in a fresh session.** This file is the whole handoff for a full
-> visual redesign of the Jugaad site. Written 2026-07-19.
+> visual redesign of the Jugaad site. Written Mon 2026-07-20.
 
 ---
 

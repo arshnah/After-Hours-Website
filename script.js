@@ -1,6 +1,8 @@
 // Jugaad docs — command filter, mobile category nav, and presentation polish
 
 (function () {
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   function fuzzyMatch(query, target) {
     if (!query) return true;
     query = query.toLowerCase();
@@ -14,14 +16,46 @@
     return qi === query.length;
   }
 
+  // ---- Command filter ----
+
   const filterInput = document.getElementById("command-filter");
   const noResults = document.getElementById("no-results");
+  const allCards = document.querySelectorAll(".command-card");
+
+  let resultCount = null;
 
   if (filterInput) {
-    filterInput.addEventListener("input", function () {
+    // "/" hint chip inside the input.
+    const hint = document.createElement("span");
+    hint.className = "filter-hint";
+    hint.textContent = "/";
+    filterInput.parentElement.appendChild(hint);
+
+    // Live result count, injected after the filter bar.
+    resultCount = document.createElement("p");
+    resultCount.className = "result-count";
+    filterInput.closest(".filter-bar").insertAdjacentElement("afterend", resultCount);
+
+    const total = allCards.length;
+
+    // Deliberately "entries", not "commands". There are 85 actual slash
+    // commands but ~106 cards, because subcommands (/fun, /owo, /grind, /image)
+    // get their own card. Saying "commands" here would contradict the 85 on the
+    // landing page.
+    function setCount(shown, query) {
+      if (!query) {
+        resultCount.innerHTML = "<b>" + total + "</b> entries";
+        return;
+      }
+      resultCount.innerHTML =
+        "<b>" + shown + "</b> of " + total + " entries match “" + query + "”";
+    }
+
+    function runFilter() {
       const query = filterInput.value.trim();
       const categories = document.querySelectorAll(".command-category");
       let anyVisible = false;
+      let shown = 0;
 
       categories.forEach(function (category) {
         const cards = category.querySelectorAll(".command-card");
@@ -36,13 +70,102 @@
 
         category.style.display = visibleInCategory > 0 ? "" : "none";
         if (visibleInCategory > 0) anyVisible = true;
+        shown += visibleInCategory;
       });
 
       if (noResults) {
         noResults.style.display = anyVisible ? "none" : "block";
       }
+      setCount(shown, query);
+    }
+
+    filterInput.addEventListener("input", runFilter);
+
+    // Escape clears the field rather than just blurring it.
+    filterInput.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        filterInput.value = "";
+        runFilter();
+        filterInput.blur();
+      }
+    });
+
+    setCount(total, "");
+  }
+
+  // Press "/" anywhere to jump into the filter — but not while the user is
+  // already typing into something.
+  if (filterInput) {
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      const el = document.activeElement;
+      const tag = el && el.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (el && el.isContentEditable)) return;
+      e.preventDefault();
+      filterInput.focus();
+      filterInput.select();
     });
   }
+
+  // ---- Copy-to-clipboard per command ----
+  //
+  // Injected rather than written into commands.html so the ~106 cards stay
+  // plain content. No clipboard API (insecure context, denied permission) just
+  // means no button, not a broken one.
+  if (allCards.length && navigator.clipboard) {
+    allCards.forEach(function (card) {
+      const code = card.querySelector("code");
+      if (!code) return;
+
+      // Card signatures look like "/balance [user]" or "/image wanted [image]".
+      // Copy only the invocable part — keep leading words (command + any
+      // subcommand), drop the [optional] / <required> argument placeholders, so
+      // what lands on the clipboard actually runs when pasted into Discord.
+      const text = code.textContent
+        .trim()
+        .split(/\s+/)
+        .reduce(function (acc, word) {
+          if (acc.stop || /^[[<]/.test(word)) {
+            acc.stop = true;
+            return acc;
+          }
+          acc.parts.push(word);
+          return acc;
+        }, { parts: [], stop: false })
+        .parts.join(" ");
+
+      if (!text) return;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "copy-cmd";
+      btn.textContent = "Copy";
+      btn.setAttribute("aria-label", "Copy " + text);
+
+      btn.addEventListener("click", function () {
+        navigator.clipboard.writeText(text).then(
+          function () {
+            btn.textContent = "Copied";
+            btn.classList.add("done");
+            setTimeout(function () {
+              btn.textContent = "Copy";
+              btn.classList.remove("done");
+            }, 1400);
+          },
+          function () {
+            btn.textContent = "Failed";
+            setTimeout(function () {
+              btn.textContent = "Copy";
+            }, 1400);
+          },
+        );
+      });
+
+      card.appendChild(btn);
+    });
+  }
+
+  // ---- Mobile category nav ----
 
   const navToggle = document.getElementById("mobile-nav-toggle");
   const sidebar = document.getElementById("sidebar");
@@ -61,9 +184,6 @@
 
   // ---- Presentation ----
 
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // Header gets a shadow once the page is scrolled off the top.
   const header = document.querySelector(".site-header");
   const toTop = document.querySelector(".to-top");
 
@@ -123,7 +243,8 @@
     setTimeout(revealAll, 1500);
   }
 
-  // Sidebar scrollspy — highlights the category currently in view.
+  // ---- Sidebar scrollspy ----
+
   const sidebarLinks = document.querySelectorAll(".sidebar a[href^='#']");
 
   if (sidebarLinks.length && "IntersectionObserver" in window) {
@@ -147,18 +268,20 @@
       activeLink = link;
     }
 
-    const spy = new IntersectionObserver(
-      function () {
-        // Pick the last section whose top has passed the header line.
-        const marker = 120;
-        let current = null;
-        sections.forEach(function (section) {
-          if (section.getBoundingClientRect().top <= marker) current = section;
-        });
-        setActive(current ? linkFor.get(current) : null);
-      },
-      { rootMargin: "-100px 0px 0px 0px", threshold: [0, 0.25, 0.5, 1] },
-    );
+    function pickActive() {
+      const marker = 120;
+      let current = null;
+      sections.forEach(function (section) {
+        if (section.style.display === "none") return;
+        if (section.getBoundingClientRect().top <= marker) current = section;
+      });
+      setActive(current ? linkFor.get(current) : null);
+    }
+
+    const spy = new IntersectionObserver(pickActive, {
+      rootMargin: "-100px 0px 0px 0px",
+      threshold: [0, 0.25, 0.5, 1],
+    });
 
     sections.forEach(function (section) {
       spy.observe(section);
@@ -166,18 +289,6 @@
 
     // The observer only fires on threshold crossings; scrolling within one long
     // section still needs to keep the highlight correct.
-    window.addEventListener(
-      "scroll",
-      function () {
-        const marker = 120;
-        let current = null;
-        sections.forEach(function (section) {
-          if (section.style.display === "none") return;
-          if (section.getBoundingClientRect().top <= marker) current = section;
-        });
-        setActive(current ? linkFor.get(current) : null);
-      },
-      { passive: true },
-    );
+    window.addEventListener("scroll", pickActive, { passive: true });
   }
 })();

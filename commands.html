@@ -396,6 +396,16 @@
       <section class="command-category" id="community">
         <h2>Community &amp; Engagement</h2>
         <div class="command-list">
+          <article class="command-card" data-name="counting">
+            <header><code>/counting &lt;set|stats|reset|disable&gt;</code></header>
+            <p class="desc">Pick a channel and members count upward together, one number per message.</p>
+            <p class="note">Wrong number, or counting twice in a row, resets the chain to 0 and calls out who broke it. The record survives resets. Anything that isn't a bare number is ignored, so people can still talk. Requires Manage Server.</p>
+          </article>
+          <article class="command-card" data-name="story">
+            <header><code>/story &lt;start|see|end|reset&gt;</code></header>
+            <p class="desc">One-word story: everyone builds a story together, one word per message.</p>
+            <p class="note">Nobody can add two words in a row. Anything longer than a single word is ignored, so the channel stays chattable. <code>see</code> reads it back, <code>end</code> stops it but keeps the text.</p>
+          </article>
           <article class="command-card" data-name="reactionrole add">
             <header><code>/reactionrole add &lt;message-link&gt; &lt;emoji&gt; &lt;role&gt;</code></header>
             <p class="desc">Bind an emoji reaction to a role grant.</p>
@@ -630,15 +640,10 @@
       <section class="command-category" id="social">
         <h2>Social</h2>
         <div class="command-list">
-          <article class="command-card" data-name="marriage">
-            <header><code>/marriage &lt;marry|divorce|status&gt;</code></header>
-            <p class="desc">Marry another member, divorce, or check marriage status, all on a modern Components&nbsp;V2 card.</p>
-            <p class="note"><code>marry</code> asks your partner to accept with a button. Married partners get a +10% <code>/daily</code> bonus and an anniversary shoutout.</p>
-          </article>
           <article class="command-card" data-name="family">
-            <header><code>/family &lt;view|adopt|disown|emancipate|friend|unfriend|brother|sister|unsibling&gt;</code></header>
+            <header><code>/family &lt;view|marry|divorce|marriage|adopt|disown|emancipate|friend|unfriend|brother|sister|unsibling&gt;</code></header>
             <p class="desc">A full family tree: partner, parents, children, brothers, sisters, siblings, and friends, shown on a Components&nbsp;V2 card with your avatar.</p>
-            <p class="note"><code>adopt</code>, <code>friend</code>, <code>brother</code>, and <code>sister</code> ask the other person to accept with a button. The tree also shows your <code>/marriage</code> partner and any siblings derived from shared parents.</p>
+            <p class="note">Marriage lives here too: <code>marry</code>, <code>divorce</code>, and <code>marriage</code> for status. <code>marry</code>, <code>adopt</code>, <code>friend</code>, <code>brother</code>, and <code>sister</code> ask the other person to accept with a button. Married partners get a +10% <code>/daily</code> bonus and an anniversary shoutout. Siblings can also be derived from shared parents.</p>
           </article>
           <article class="command-card" data-name="pet">
             <header><code>/pet &lt;adopt|feed|status|rename&gt;</code></header>

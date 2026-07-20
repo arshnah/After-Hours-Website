@@ -1,4 +1,4 @@
-// Jugaad docs — command filter, mobile category nav, and presentation polish
+// After Hours docs — command filter, mobile category nav, and presentation polish
 
 (function () {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

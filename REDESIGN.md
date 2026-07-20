@@ -1,7 +1,26 @@
 # Website Redesign — Brief
 
-> **Start here in a fresh session.** This file is the whole handoff for a full
-> visual redesign of the Jugaad site. Written Mon 2026-07-20.
+> ## ✅ DONE — shipped Mon 2026-07-20 (`f1742ad` on `main`)
+>
+> Lane chosen: **street jugaad** (option 2 below). Warm ink, halftone + grain,
+> Anton display type, offset-print wordmark, hard screen-print shadows, tape
+> corners, marquee ticker. Gold aligned to `#d4af37` = `ROKDA_GOLD`.
+>
+> The "no proof" gap is closed: four Components V2 cards (`/family view`,
+> `/rank`, `/slots`, `/marriage marry`) rebuilt in pure HTML/CSS on the landing
+> page. `/image achievement` was deliberately **left out** — it's a canvas-
+> rendered PNG, not a V2 container, so a CSS mock would misrepresent it.
+>
+> Also landed: live result count, `/` to focus filter, Escape to clear,
+> per-command copy-to-clipboard, and a real bug fix — long choice-list
+> signatures were overflowing the viewport behind `overflow-x: hidden`.
+>
+> Still open: the footer links to `commands.html` rather than GitHub, because
+> the bot repo is private. Swap it if that ever changes.
+>
+> **Revert instructions below are still valid.**
+
+> The original brief follows, kept for the rationale. Written Mon 2026-07-20.
 
 ---
 

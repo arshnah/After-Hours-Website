@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard · Jugaad</title>
+  <meta name="description" content="Top players on Jugaad: levels, Rokda, and reputation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=64" />
+  <!-- Must match index.html. Empty = leaderboards stay off and the page says so. -->
+  <meta name="jugaad-api" content="" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="site-logo"><img src="https://cdn.discordapp.com/avatars/1526129273075929159/9fe22ef2569ecffbc7eb3f4ace33cc23.png?size=128" alt="" class="logo-img" />Jugaad</a>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="commands.html">Commands</a>
+        <a href="testers.html">Testers</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="board-page">
+
+    <div class="section-head">
+      <span class="num">★</span>
+      <h2>Leaderboard</h2>
+    </div>
+    <div class="rule-torn"></div>
+    <p class="section-intro">Live from the bot. Levels come from chatting, Rokda from working and gambling, reputation from other people giving it to you.</p>
+
+    <div class="board-tabs">
+      <button type="button" class="board-tab active" data-board="level">Levels</button>
+      <button type="button" class="board-tab" data-board="rokda">Rokda</button>
+      <button type="button" class="board-tab" data-board="rep">Reputation</button>
+    </div>
+
+    <ol class="board" id="leaderboard">
+      <li class="board-empty">Loading…</li>
+    </ol>
+
+    <p class="board-note">Updated at most once a minute. Only the public server is listed.</p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Built with Node.js, discord.js, and Supabase.</span>
+      <a href="commands.html">All Commands</a>
+    </div>
+  </footer>
+
+  <button type="button" class="to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -2004,6 +2004,75 @@ section > .container > h2,
   flex: none;
 }
 
+/* ── Hover stats (playtime board only) ─────────────────────────────────────
+   Read straight out of Minecraft's own stats files. Rendered inline and
+   revealed with CSS rather than positioned by JS: the row is the only anchor
+   needed, and a tooltip that costs no scroll/resize handlers cannot drift out
+   of place. :focus-within carries it for keyboard and touch, where :hover
+   either never fires or sticks. */
+
+.board-row.has-stats { position: relative; cursor: help; }
+
+.board-stats {
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 44px;
+  right: 12px;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 6px 18px;
+  padding: 12px 14px;
+  border: 2px solid var(--rule);
+  background: var(--ink-raise);
+  box-shadow: var(--shadow-md);
+  font-size: 0.78rem;
+  /* visibility, not display:none — display cannot transition, and a panel that
+     snaps in on every accidental pointer cross is worse than no panel. */
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.board-row.has-stats:hover .board-stats,
+.board-row.has-stats:focus-within .board-stats {
+  visibility: visible;
+  opacity: 1;
+}
+
+.board-stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-mono);
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.board-stat b {
+  font-family: var(--font-body, inherit);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* The last rows would open a panel below the fold, so they flip upwards.
+   :not(:nth-child(-n+3)) is what stops a SHORT board flipping everything: on a
+   three-row board every row is also one of the last three, so row 1 flipped up
+   and covered the tabs above it. A row has to be near the bottom AND not near
+   the top to earn the flip. */
+.board-row.has-stats:nth-last-child(-n + 3):not(:nth-child(-n + 3)) .board-stats {
+  top: auto;
+  bottom: calc(100% - 6px);
+}
+
+@media (max-width: 700px) {
+  .board-stats {
+    left: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 0.72rem;
+  }
+}
+
 .board-empty {
   padding: 30px 18px;
   text-align: center;

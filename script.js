@@ -339,7 +339,16 @@
   if (boardEl && apiBase) {
     const tabs = document.querySelectorAll(".board-tab");
 
+    // Which request is the current one. Responses arrive in whatever order the
+    // network feels like, so without this a slow early request lands after a
+    // fast later one and overwrites it: the page opens on Levels, you click
+    // Playtime, Playtime renders, and then the original Levels response finally
+    // returns and repaints the board with XP while the Playtime tab is still
+    // highlighted. Looks like the board spontaneously changed a minute later.
+    let latest = 0;
+
     function renderBoard(type) {
+      const mine = ++latest;
       boardEl.innerHTML = '<p class="board-empty">Loading…</p>';
       fetch(apiBase + "/leaderboard?type=" + encodeURIComponent(type) + "&limit=15")
         .then(function (r) {
@@ -347,6 +356,7 @@
           return r.json();
         })
         .then(function (data) {
+          if (mine !== latest) return; // superseded — a newer tab owns the board
           if (!data.entries || !data.entries.length) {
             boardEl.innerHTML = '<p class="board-empty">Nothing here yet.</p>';
             return;
@@ -371,6 +381,9 @@
             .join("");
         })
         .catch(function () {
+          // Same guard on the failure path: a stale request timing out must not
+          // replace a board that loaded fine with an "offline" message.
+          if (mine !== latest) return;
           boardEl.innerHTML =
             '<p class="board-empty">Leaderboards are offline right now. Try <code>/rank</code> in Discord.</p>';
         });

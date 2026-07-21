@@ -347,15 +347,77 @@
     // highlighted. Looks like the board spontaneously changed a minute later.
     let latest = 0;
 
+    const esc = function (s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    };
+
+    const num = function (n) {
+      return Number(n || 0).toLocaleString("en-IN");
+    };
+
+    // Minecraft's own stats, fetched once and reused. Only the playtime board
+    // has in-game names to join against, so this stays null everywhere else
+    // rather than costing a request the other tabs can't use.
+    let mcStats = null;
+    function loadMcStats() {
+      if (mcStats) return Promise.resolve(mcStats);
+      return fetch(apiBase + "/mc-stats")
+        .then(function (r) {
+          return r.ok ? r.json() : { players: {} };
+        })
+        .then(function (d) {
+          mcStats = d.players || {};
+          return mcStats;
+        })
+        .catch(function () {
+          // Stats are a bonus on top of the board — if they fail the board must
+          // still render, so this resolves empty instead of rejecting.
+          mcStats = {};
+          return mcStats;
+        });
+    }
+
+    function statsPanel(s) {
+      if (!s) return "";
+      const rows = [
+        ["Deaths", num(s.deaths)],
+        ["Mob kills", num(s.mobKills)],
+        ["Player kills", num(s.playerKills)],
+        ["Blocks mined", num(s.blocksMined)],
+        ["Blocks placed", num(s.blocksPlaced)],
+        ["Crafted", num(s.itemsCrafted)],
+        ["Walked", num(s.kmWalked) + " km"],
+        ["Jumps", num(s.jumps)],
+      ];
+      if (s.topMob) rows.push(["Most killed", esc(s.topMob.name) + " ×" + num(s.topMob.count)]);
+      if (s.topBlock) rows.push(["Most mined", esc(s.topBlock.name) + " ×" + num(s.topBlock.count)]);
+
+      return (
+        '<div class="board-stats">' +
+        rows
+          .map(function (r) {
+            return '<span class="board-stat"><b>' + r[0] + "</b>" + r[1] + "</span>";
+          })
+          .join("") +
+        "</div>"
+      );
+    }
+
     function renderBoard(type) {
       const mine = ++latest;
       boardEl.innerHTML = '<p class="board-empty">Loading…</p>';
-      fetch(apiBase + "/leaderboard?type=" + encodeURIComponent(type) + "&limit=15")
-        .then(function (r) {
+      Promise.all([
+        fetch(apiBase + "/leaderboard?type=" + encodeURIComponent(type) + "&limit=15").then(function (r) {
           if (!r.ok) throw new Error("HTTP " + r.status);
           return r.json();
-        })
-        .then(function (data) {
+        }),
+        type === "playtime" ? loadMcStats() : Promise.resolve(null),
+      ])
+        .then(function (both) {
+          const data = both[0];
+          const stats = both[1];
           if (mine !== latest) return; // superseded — a newer tab owns the board
           if (!data.entries || !data.entries.length) {
             boardEl.innerHTML = '<p class="board-empty">Nothing here yet.</p>';
@@ -367,14 +429,16 @@
               // most boards, which can contain anything. (Playtime sends
               // Minecraft names, which cannot — but the escaping is what makes
               // that a property of the data rather than something to rely on.)
-              const safe = String(e.name).replace(/[&<>"']/g, function (c) {
-                return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-              });
+              const safe = esc(e.name);
+              // mcName comes from the API rather than being parsed back out of
+              // `name`, which reads "Display (ingame)" once someone is linked.
+              const panel = stats && e.mcName ? statsPanel(stats[e.mcName]) : "";
               return (
-                '<li class="board-row">' +
+                '<li class="board-row' + (panel ? " has-stats" : "") + '" tabindex="' + (panel ? "0" : "-1") + '">' +
                 '<span class="board-rank">' + e.rank + "</span>" +
                 '<span class="board-name">' + safe + "</span>" +
-                '<span class="board-value">' + String(e.label ?? e.value) + "</span>" +
+                '<span class="board-value">' + esc(String(e.label ?? e.value)) + "</span>" +
+                panel +
                 "</li>"
               );
             })

@@ -2055,6 +2055,19 @@ section > .container > h2,
   color: var(--text-muted);
 }
 
+/* The panel is an auto-fit grid, so this has to span every column or it lands
+   in a single cell beside a stat and reads as one. */
+.board-carried {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--text-muted);
+  white-space: normal;
+}
+
 /* The last rows would open a panel below the fold, so they flip upwards.
    :not(:nth-child(-n+3)) is what stops a SHORT board flipping everything: on a
    three-row board every row is also one of the last three, so row 1 flipped up

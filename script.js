@@ -394,6 +394,14 @@
       if (s.topMob) rows.push(["Most killed", esc(s.topMob.name) + " ×" + num(s.topMob.count)]);
       if (s.topBlock) rows.push(["Most mined", esc(s.topBlock.name) + " ×" + num(s.topBlock.count)]);
 
+      // Some players have progress from before this world existed, which the
+      // server's own stats files cannot know about. Those totals are carried
+      // over from a self-reported figure, so the board says so rather than
+      // presenting them as measured alongside everyone else's.
+      const carried = s.carriedOver
+        ? '<p class="board-carried">Includes progress from before stats tracking started.</p>'
+        : "";
+
       return (
         '<div class="board-stats">' +
         rows
@@ -401,6 +409,7 @@
             return '<span class="board-stat"><b>' + r[0] + "</b>" + r[1] + "</span>";
           })
           .join("") +
+        carried +
         "</div>"
       );
     }

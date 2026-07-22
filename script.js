@@ -38,10 +38,10 @@
 
     const total = allCards.length;
 
-    // Deliberately "entries", not "commands". There are 86 actual slash
-    // commands but ~106 cards, because subcommands (/fun, /owo, /grind, /image)
-    // get their own card. Saying "commands" here would contradict the 86 on the
-    // landing page.
+    // Deliberately "entries", not "commands". There are 89 actual slash
+    // commands but 111 cards, because the page mixes granularity: /grind is one
+    // card covering hunt|fish|dig|beg, while /invest buy gets a card of its own.
+    // Saying "commands" here would contradict the 89 on the landing page.
     function setCount(shown, query) {
       if (!query) {
         resultCount.innerHTML = "<b>" + total + "</b> entries";
@@ -109,7 +109,7 @@
 
   // ---- Copy-to-clipboard per command ----
   //
-  // Injected rather than written into commands.html so the ~106 cards stay
+  // Injected rather than written into commands.html so the 111 cards stay
   // plain content. No clipboard API (insecure context, denied permission) just
   // means no button, not a broken one.
   if (allCards.length && navigator.clipboard) {

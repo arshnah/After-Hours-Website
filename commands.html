@@ -465,6 +465,26 @@
             <p class="desc">Repost messages that hit a ⭐ threshold to a starboard channel.</p>
             <p class="note">Admin only. Live star count; the post is removed if it drops below the threshold.</p>
           </article>
+          <article class="command-card" data-name="starboard stats">
+            <header><code>/starboard stats</code></header>
+            <p class="desc">Show the current starboard settings and the top-starred post.</p>
+            <p class="note">Admin only.</p>
+          </article>
+          <article class="command-card" data-name="starboard disable">
+            <header><code>/starboard disable</code></header>
+            <p class="desc">Turn the starboard off.</p>
+            <p class="note">Admin only. Keeps the threshold and every featured post, so <code>/starboard set</code> resumes rather than re-posting everything.</p>
+          </article>
+          <article class="command-card" data-name="haiku">
+            <header><code>/haiku &lt;on|off|stats|check&gt;</code></header>
+            <p class="desc">Watch the server for messages that accidentally land in 5-7-5, and call them out as haiku.</p>
+            <p class="note">Admin only, and off by default. <code>check</code> tests a line yourself instead of waiting for someone to write one by accident.</p>
+          </article>
+          <article class="command-card" data-name="trigger">
+            <header><code>/trigger &lt;add|remove|list|clear&gt;</code></header>
+            <p class="desc">Custom auto-responses. The bot replies with your text when it sees a phrase, a specific user, an event, or a command.</p>
+            <p class="note">Admin only. <code>add</code> replaces an existing response with the same match, so there is no duplicate to clean up.</p>
+          </article>
           <article class="command-card" data-name="remind">
             <header><code>/remind &lt;when&gt; &lt;text&gt;</code></header>
             <p class="desc">Set a reminder (e.g. 10m, 2h, 1d).</p>

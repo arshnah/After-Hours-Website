@@ -332,6 +332,14 @@ code, .mono {
   transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
 }
 
+/* The one nav item that leaves the site, so it carries the border at rest
+   rather than only on hover. Same hover treatment as the rest, so it reads as
+   part of the nav and not as an ad. */
+.site-nav a.nav-discord {
+  color: var(--gold);
+  border-color: var(--rule);
+}
+
 .site-nav a:hover {
   color: var(--ink);
   background: var(--gold);
@@ -1644,9 +1652,25 @@ section > .container > h2,
     border-bottom: 2px solid var(--rule);
   }
 
+  /* Four items plus the logo do not fit a phone, and the fourth arrived after
+     this layout was settled. Rather than guess which one to hide, the nav
+     scrolls inside its own track — so the page itself never goes wide, which
+     is the failure that actually hurts. min-width:0 is what lets a flex child
+     shrink below its content at all. */
+  .site-nav {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
   .site-nav a {
     padding: 6px 9px;
     font-size: 0.74rem;
+    white-space: nowrap;
   }
 
   .commands-page {

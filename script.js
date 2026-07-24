@@ -785,3 +785,35 @@
     }
   }
 })();
+
+// ── Theme toggle ───────────────────────────────────────────────────────────
+// The <head> script already set data-theme (saved choice, else system) before
+// first paint. This only wires the button and keeps the mobile browser chrome
+// (theme-color) in step. localStorage makes the choice sticky across visits.
+(function () {
+  const root = document.documentElement;
+  const btn = document.getElementById("theme-toggle");
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const CHROME = { dark: "#100d0a", light: "#f4efe5" };
+
+  const current = () => (root.getAttribute("data-theme") === "light" ? "light" : "dark");
+
+  function apply(theme) {
+    root.setAttribute("data-theme", theme);
+    if (meta) meta.setAttribute("content", CHROME[theme]);
+    if (btn) btn.setAttribute("aria-pressed", String(theme === "light"));
+  }
+
+  // Match the chrome colour to whatever the head script resolved.
+  apply(current());
+
+  if (btn) {
+    btn.addEventListener("click", () => {
+      const next = current() === "light" ? "dark" : "light";
+      apply(next);
+      try {
+        localStorage.setItem("ah-theme", next);
+      } catch (e) {}
+    });
+  }
+})();

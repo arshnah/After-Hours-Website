@@ -115,6 +115,12 @@
   --shadow-md: 0 6px 22px rgba(0, 0, 0, 0.55);
   --shadow-lg: 0 14px 44px rgba(0, 0, 0, 0.62);
   --shadow-gold: 0 0 24px rgba(var(--ember-rgb), 0.34);
+
+  /* Tokenised so light mode retones them from one place: the translucent
+     sticky header, and the hard offset shadow on buttons and feature cards. */
+  --header-bg: rgba(16, 13, 10, 0.86);
+  --header-bg-scrolled: rgba(16, 13, 10, 0.96);
+  --offset-ink: rgba(0, 0, 0, 0.6);
   --shadow-neon: 0 0 26px rgba(var(--neon-rgb), 0.3);
 }
 
@@ -265,7 +271,7 @@ code, .mono {
 
 .site-header {
   border-bottom: 2px solid var(--rule);
-  background: rgba(16, 13, 10, 0.86);
+  background: var(--header-bg);
   -webkit-backdrop-filter: blur(12px) saturate(150%);
   backdrop-filter: blur(12px) saturate(150%);
   position: sticky;
@@ -275,7 +281,7 @@ code, .mono {
 }
 
 .site-header.scrolled {
-  background: rgba(16, 13, 10, 0.96);
+  background: var(--header-bg-scrolled);
   border-bottom-color: var(--gold-deep);
 }
 
@@ -376,12 +382,12 @@ code, .mono {
   color: var(--ink);
   background: var(--gold-hi);
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 6px 6px 0 var(--offset-ink);
 }
 
 .btn-primary:active {
   transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 0 var(--offset-ink);
 }
 
 .btn-secondary {
@@ -395,7 +401,7 @@ code, .mono {
   border-color: var(--vermilion);
   color: var(--vermilion);
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 0 var(--offset-ink);
 }
 
 .btn-secondary:active {
@@ -886,7 +892,7 @@ section > .container > h2,
   transform: translate(-3px, -3px);
   border-color: var(--gold-deep);
   background: var(--ink-raise-hi);
-  box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 7px 7px 0 var(--offset-ink);
 }
 
 .feature-card .icon {
@@ -2164,3 +2170,88 @@ section > .container > h2,
     transform: none;
   }
 }
+
+/* ── Light mode ────────────────────────────────────────────────────────────
+   Not an invert. Night becomes a warm day: ivory paper, ink text that keeps
+   the violet cast, and a DEEPENED ember so the orange reads as text on light
+   instead of glowing off it. The Discord mockups keep their hardcoded dark
+   colours on purpose — they are screenshots of Discord, which is dark.
+
+   The head <script> resolves the effective theme (saved choice, else system)
+   into a concrete data-theme before first paint, so there is no flash and no
+   media query is needed here. No-JS falls back to the dark default. */
+:root[data-theme="light"] {
+  --ink: #f4efe5;
+  --ink-deep: #e9e2d4;
+  --ink-raise: #fffdf8;
+  --ink-raise-hi: #f5efe4;
+
+  --paper: #251d30;        /* was a light value; now dark ink for headings on light */
+  --paper-dim: #574f63;
+
+  --rule: #e4ddce;
+  --rule-hi: #d0c7b4;
+
+  --text: #241d2e;
+  --text-muted: #6b6377;
+
+  --gold: #b04e1c;         /* deepened ember: 4.6:1 on the ivory, AA on light */
+  --gold-hi: #e0692b;
+  --gold-deep: #9e4419;
+  --vermilion: #c4285e;
+  --marigold: #e0692b;
+  --peacock: #0c4275;
+
+  --gold-rgb: 176, 78, 28;
+  --marigold-rgb: 176, 78, 28;
+  --ember-rgb: 176, 78, 28;
+
+  --shadow-sm: 0 2px 8px rgba(60, 45, 30, 0.08);
+  --shadow-md: 0 8px 24px rgba(60, 45, 30, 0.10);
+  --shadow-lg: 0 16px 44px rgba(60, 45, 30, 0.14);
+  --shadow-gold: 0 0 22px rgba(176, 78, 28, 0.20);
+
+  --header-bg: rgba(255, 253, 248, 0.82);
+  --header-bg-scrolled: rgba(255, 253, 248, 0.94);
+  --offset-ink: rgba(60, 45, 30, 0.16);
+}
+
+/* The neon ferris-wheel rays behind the hero read as glow on dark; on light
+   they are pulled right back so they suggest rather than streak. */
+:root[data-theme="light"] body::before { opacity: 0.3; }
+
+/* ── Theme toggle ──────────────────────────────────────────────────────── */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  margin-left: 2px;
+  flex: none;
+  border: 2px solid var(--rule);
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+.theme-toggle:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+/* Dark mode offers the sun (switch to light); light mode offers the moon. */
+.theme-toggle .icon-moon { display: none; }
+.theme-toggle .icon-sun { display: block; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display: block; }

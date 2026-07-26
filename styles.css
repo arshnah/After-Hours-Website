@@ -2181,39 +2181,39 @@ section > .container > h2,
    into a concrete data-theme before first paint, so there is no flash and no
    media query is needed here. No-JS falls back to the dark default. */
 :root[data-theme="light"] {
-  --ink: #f4efe5;
-  --ink-deep: #e9e2d4;
-  --ink-raise: #fffdf8;
-  --ink-raise-hi: #f5efe4;
+  --ink: #fafafc;
+  --ink-deep: #f0f2f7;
+  --ink-raise: #ffffff;
+  --ink-raise-hi: #f8f9fd;
 
-  --paper: #251d30;        /* was a light value; now dark ink for headings on light */
-  --paper-dim: #574f63;
+  --paper: #0a0710;        /* deep purple/night text for headings */
+  --paper-dim: #2a2038;
 
-  --rule: #e4ddce;
-  --rule-hi: #d0c7b4;
+  --rule: #e2e6f0;
+  --rule-hi: #cbd2e3;
 
-  --text: #241d2e;
-  --text-muted: #6b6377;
+  --text: #10111a;
+  --text-muted: #5a627a;
 
-  --gold: #b04e1c;         /* deepened ember: 4.6:1 on the ivory, AA on light */
-  --gold-hi: #e0692b;
-  --gold-deep: #9e4419;
-  --vermilion: #c4285e;
-  --marigold: #e0692b;
-  --peacock: #0c4275;
+  --gold: #e8590c;         /* beautiful premium vibrant orange */
+  --gold-hi: #f76707;
+  --gold-deep: #d9480f;
+  --vermilion: #d6336c;    /* vibrant neon pink */
+  --marigold: #f76707;
+  --peacock: #1c7ed6;      /* clean sky blue */
 
-  --gold-rgb: 176, 78, 28;
-  --marigold-rgb: 176, 78, 28;
-  --ember-rgb: 176, 78, 28;
+  --gold-rgb: 232, 89, 12;
+  --marigold-rgb: 247, 103, 7;
+  --ember-rgb: 232, 89, 12;
 
-  --shadow-sm: 0 2px 8px rgba(60, 45, 30, 0.08);
-  --shadow-md: 0 8px 24px rgba(60, 45, 30, 0.10);
-  --shadow-lg: 0 16px 44px rgba(60, 45, 30, 0.14);
-  --shadow-gold: 0 0 22px rgba(176, 78, 28, 0.20);
+  --shadow-sm: 0 2px 8px rgba(16, 17, 26, 0.04);
+  --shadow-md: 0 8px 24px rgba(16, 17, 26, 0.06);
+  --shadow-lg: 0 16px 44px rgba(16, 17, 26, 0.08);
+  --shadow-gold: 0 0 22px rgba(232, 89, 12, 0.12);
 
-  --header-bg: rgba(255, 253, 248, 0.82);
-  --header-bg-scrolled: rgba(255, 253, 248, 0.94);
-  --offset-ink: rgba(60, 45, 30, 0.16);
+  --header-bg: rgba(250, 250, 252, 0.85);
+  --header-bg-scrolled: rgba(250, 250, 252, 0.96);
+  --offset-ink: rgba(16, 17, 26, 0.08);
 }
 
 /* The neon ferris-wheel rays behind the hero read as glow on dark; on light

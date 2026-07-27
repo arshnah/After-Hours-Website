@@ -406,7 +406,7 @@
         '<div class="board-stats">' +
         rows
           .map(function (r) {
-            return '<span class="board-stat"><b>' + r[0] + "</b>" + r[1] + "</span>";
+            return '<span class="board-stat"><b>' + r[0] + "</b><i>" + r[1] + "</i></span>";
           })
           .join("") +
         carried +

@@ -2041,49 +2041,52 @@ section > .container > h2,
    of place. :focus-within carries it for keyboard and touch, where :hover
    either never fires or sticks. */
 
-.board-row.has-stats { position: relative; cursor: help; }
+.board-row.has-stats { flex-wrap: wrap; row-gap: 0; cursor: help; }
 
 .board-stats {
-  position: absolute;
-  top: calc(100% - 6px);
-  left: 44px;
-  right: 12px;
-  z-index: 20;
+  flex-basis: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
   gap: 6px 18px;
-  padding: 12px 14px;
-  border: 2px solid var(--rule);
-  background: var(--ink-raise);
-  box-shadow: var(--shadow-md);
+  padding: 0 14px;
+  margin-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  border: 0 solid var(--rule);
+  background: var(--ink-deep);
   font-size: 0.78rem;
-  /* visibility, not display:none — display cannot transition, and a panel that
-     snaps in on every accidental pointer cross is worse than no panel. */
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.12s ease;
+  transition: max-height 0.18s ease, padding 0.18s ease, margin 0.18s ease;
 }
 
 .board-row.has-stats:hover .board-stats,
 .board-row.has-stats:focus-within .board-stats {
-  visibility: visible;
-  opacity: 1;
+  max-height: 420px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-width: 2px;
 }
 
 .board-stat {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
+  gap: 0 10px;
+  min-width: 0;
   font-family: var(--font-mono);
   color: var(--gold);
-  white-space: nowrap;
 }
+
+.board-stat b,
+.board-stat i { white-space: nowrap; }
 
 .board-stat b {
   font-family: var(--font-body, inherit);
   font-weight: 600;
   color: var(--text-muted);
 }
+
+.board-stat i { font-style: normal; }
 
 /* The panel is an auto-fit grid, so this has to span every column or it lands
    in a single cell beside a stat and reads as one. */
@@ -2098,19 +2101,8 @@ section > .container > h2,
   white-space: normal;
 }
 
-/* The last rows would open a panel below the fold, so they flip upwards.
-   :not(:nth-child(-n+3)) is what stops a SHORT board flipping everything: on a
-   three-row board every row is also one of the last three, so row 1 flipped up
-   and covered the tabs above it. A row has to be near the bottom AND not near
-   the top to earn the flip. */
-.board-row.has-stats:nth-last-child(-n + 3):not(:nth-child(-n + 3)) .board-stats {
-  top: auto;
-  bottom: calc(100% - 6px);
-}
-
 @media (max-width: 700px) {
   .board-stats {
-    left: 12px;
     grid-template-columns: repeat(2, 1fr);
     font-size: 0.72rem;
   }

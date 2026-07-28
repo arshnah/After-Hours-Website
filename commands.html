@@ -488,6 +488,26 @@
             <p class="desc">Turn the starboard off.</p>
             <p class="note">Admin only. Keeps the threshold and every featured post, so <code>/starboard set</code> resumes rather than re-posting everything.</p>
           </article>
+          <article class="command-card" data-name="automessages status">
+            <header><code>/automessages status</code></header>
+            <p class="desc">Show which automatic messages are on and off here.</p>
+            <p class="note">Covers level-ups, welcome, goodbye, achievement unlocks and starboard posts.</p>
+          </article>
+          <article class="command-card" data-name="automessages toggle">
+            <header><code>/automessages toggle &lt;type&gt;</code></header>
+            <p class="desc">Turn one kind of automatic message on or off.</p>
+            <p class="note">Admin only. Everything is on until you turn it off, so a new server behaves exactly as before.</p>
+          </article>
+          <article class="command-card" data-name="automessages disable">
+            <header><code>/automessages disable</code></header>
+            <p class="desc">Silence every message the bot posts on its own.</p>
+            <p class="note">Admin only. Commands still answer — this only covers what the bot says unprompted.</p>
+          </article>
+          <article class="command-card" data-name="automessages enable">
+            <header><code>/automessages enable</code></header>
+            <p class="desc">Turn every automatic message back on.</p>
+            <p class="note">Admin only. Restores anything <code>/automessages disable</code> silenced.</p>
+          </article>
           <article class="command-card" data-name="haiku">
             <header><code>/haiku &lt;on|off|stats|check&gt;</code></header>
             <p class="desc">Watch the server for messages that accidentally land in 5-7-5, and call them out as haiku.</p>
@@ -743,6 +763,24 @@
           <article class="command-card" data-name="serverinfo">
             <header><code>/serverinfo</code></header>
             <p class="desc">Stats about the current server.</p>
+          </article>
+          <article class="command-card" data-name="google">
+            <header><code>/google &lt;query&gt;</code></header>
+            <p class="desc">Search Google without leaving Discord.</p>
+          </article>
+          <article class="command-card" data-name="wiki">
+            <header><code>/wiki &lt;query&gt;</code></header>
+            <p class="desc">Look a topic up on Wikipedia.</p>
+          </article>
+          <article class="command-card" data-name="template save">
+            <header><code>/template save</code></header>
+            <p class="desc">Save this server's roles, channels, permissions and emojis, and get a code back.</p>
+            <p class="note">Admin only. The code looks like <code>AH-XXXXXX</code>.</p>
+          </article>
+          <article class="command-card" data-name="template import">
+            <header><code>/template import &lt;code&gt; [clear]</code></header>
+            <p class="desc">Rebuild a saved layout in this server from its code.</p>
+            <p class="note">Admin only. <code>clear</code> deletes every existing channel and role first, and cannot be undone. The bot's own role has to sit above any role it recreates, or that role is skipped.</p>
           </article>
         </div>
       </section>

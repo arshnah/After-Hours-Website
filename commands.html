@@ -329,15 +329,44 @@
         <h2>Moderation</h2>
         <p class="category-note">Moderation commands are gated by real Discord permissions. Discord hides each one from anyone who lacks the matching permission, so most members never see this category at all. Every action here (except <code>/slowmode</code>, <code>/lock</code>, and <code>/unlock</code>, which reply publicly since they change visible channel state) replies privately to the moderator, and is also posted to the server's mod-log channel if one is configured with <code>/modlog set</code>.</p>
         <div class="command-list">
-          <article class="command-card" data-name="warn">
-            <header><code>/warn &lt;user&gt; &lt;reason&gt;</code></header>
+          <article class="command-card" data-name="warn add">
+            <header><code>/warn add &lt;user&gt; &lt;reason&gt;</code></header>
             <p class="desc">Warn a member.</p>
-            <p class="note">Requires Moderate Members. Auto-times the member out for 10 minutes on their 3rd (or later) warning, if role hierarchy allows it.</p>
+            <p class="note">Requires Moderate Members. Auto-times the member out for 10 minutes on their 3rd (or later) warning, if role hierarchy allows it. From a text prefix, <code>ah warn @user reason</code> still works.</p>
           </article>
-          <article class="command-card" data-name="warnings">
-            <header><code>/warnings &lt;user&gt;</code></header>
+          <article class="command-card" data-name="warn list">
+            <header><code>/warn list &lt;user&gt;</code></header>
             <p class="desc">List a member's warning history.</p>
-            <p class="note">Requires Moderate Members. Shows the 15 most recent, each with reason, moderator, and timestamp.</p>
+            <p class="note">Requires Moderate Members. Shows the 15 most recent, each with reason, moderator and timestamp, numbered against the full history so the numbers stay valid for <code>/warn remove</code>. Also <code>ah warns</code>.</p>
+          </article>
+          <article class="command-card" data-name="warn remove">
+            <header><code>/warn remove &lt;user&gt; &lt;number&gt;</code></header>
+            <p class="desc">Delete one warning by its number in the list.</p>
+            <p class="note">Requires Moderate Members. Also <code>ah unwarn</code>.</p>
+          </article>
+          <article class="command-card" data-name="warn clear">
+            <header><code>/warn clear &lt;user&gt;</code></header>
+            <p class="desc">Delete a member's entire warning history.</p>
+            <p class="note">Requires Moderate Members.</p>
+          </article>
+          <article class="command-card" data-name="role add">
+            <header><code>/role add &lt;user&gt; &lt;role&gt;</code></header>
+            <p class="desc">Give a member a role.</p>
+            <p class="note">Requires Manage Roles. Checks both hierarchies — a role at or above your own highest isn't yours to give, or the bot would be handing out permissions you don't have.</p>
+          </article>
+          <article class="command-card" data-name="role remove">
+            <header><code>/role remove &lt;user&gt; &lt;role&gt;</code></header>
+            <p class="desc">Take a role away from a member.</p>
+            <p class="note">Requires Manage Roles. Same hierarchy rules as <code>/role add</code>.</p>
+          </article>
+          <article class="command-card" data-name="role info">
+            <header><code>/role info &lt;role&gt;</code></header>
+            <p class="desc">Members, position, colour, creation date and key permissions for a role.</p>
+          </article>
+          <article class="command-card" data-name="nickname set">
+            <header><code>/nickname set &lt;user&gt; &lt;nickname&gt;</code></header>
+            <p class="desc">Change a member's nickname.</p>
+            <p class="note">Requires Manage Nicknames. Discord never lets any bot rename the server owner — that's a platform rule, not a permission you can grant.</p>
           </article>
           <article class="command-card" data-name="kick">
             <header><code>/kick &lt;user&gt; [reason]</code></header>
@@ -763,6 +792,30 @@
           <article class="command-card" data-name="serverinfo">
             <header><code>/serverinfo</code></header>
             <p class="desc">Stats about the current server.</p>
+          </article>
+          <article class="command-card" data-name="bot ping">
+            <header><code>/bot ping</code></header>
+            <p class="desc">Round-trip and gateway latency.</p>
+            <p class="note">Two different numbers. Round trip is what you feel; the gateway heartbeat is the connection to Discord.</p>
+          </article>
+          <article class="command-card" data-name="bot info">
+            <header><code>/bot info</code></header>
+            <p class="desc">Uptime, servers, members, command count.</p>
+          </article>
+          <article class="command-card" data-name="bot invite">
+            <header><code>/bot invite</code></header>
+            <p class="desc">Link to add After Hours to a server.</p>
+            <p class="note">Asks for the permissions it actually uses, not Administrator.</p>
+          </article>
+          <article class="command-card" data-name="emoji info">
+            <header><code>/emoji info &lt;emoji&gt;</code></header>
+            <p class="desc">Enlarge a custom emoji and show its id, whether it's animated, and when it was made.</p>
+            <p class="note">Custom emoji only — a built-in like 🎲 is just a character, there's nothing to enlarge.</p>
+          </article>
+          <article class="command-card" data-name="emoji steal">
+            <header><code>/emoji steal &lt;emoji&gt; [name]</code></header>
+            <p class="desc">Copy a custom emoji into this server.</p>
+            <p class="note">Requires Manage Expressions, on you and on the bot.</p>
           </article>
           <article class="command-card" data-name="google">
             <header><code>/google &lt;query&gt;</code></header>

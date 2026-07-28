@@ -493,6 +493,30 @@
             <header><code>/suggest &lt;text&gt;</code></header>
             <p class="desc">Post a suggestion embed with 👍/👎 pre-added.</p>
           </article>
+          <article class="command-card" data-name="ticket setup">
+            <header><code>/ticket setup &lt;panel&gt; [category] [staff] [log] [max]</code></header>
+            <p class="desc">Post the ticket panel and choose where tickets go.</p>
+            <p class="note">Requires Manage Server, and the bot needs Manage Channels. Members open a ticket from the button; each one is a private channel only they and staff can see. <code>max</code> caps how many a member can have open at once, default 1.</p>
+          </article>
+          <article class="command-card" data-name="ticket open">
+            <header><code>/ticket open [subject]</code></header>
+            <p class="desc">Open a ticket without using the panel.</p>
+          </article>
+          <article class="command-card" data-name="ticket close">
+            <header><code>/ticket close</code></header>
+            <p class="desc">Close the ticket in this channel.</p>
+            <p class="note">Staff or the person who opened it. The channel is deleted 10 seconds later, and the closure is posted to the log channel if one is set.</p>
+          </article>
+          <article class="command-card" data-name="ticket add">
+            <header><code>/ticket add &lt;user&gt;</code></header>
+            <p class="desc">Let someone else see this ticket.</p>
+            <p class="note">Staff only — the opener inviting anyone they like defeats the point of it being private.</p>
+          </article>
+          <article class="command-card" data-name="ticket remove">
+            <header><code>/ticket remove &lt;user&gt;</code></header>
+            <p class="desc">Remove someone from this ticket.</p>
+            <p class="note">Staff only.</p>
+          </article>
           <article class="command-card" data-name="poll">
             <header><code>/poll &lt;question&gt; &lt;option1&gt; &lt;option2&gt; [option3] [option4]</code></header>
             <p class="desc">Post a poll with numbered emoji reactions.</p>
@@ -816,6 +840,11 @@
             <header><code>/emoji steal &lt;emoji&gt; [name]</code></header>
             <p class="desc">Copy a custom emoji into this server.</p>
             <p class="note">Requires Manage Expressions, on you and on the bot.</p>
+          </article>
+          <article class="command-card" data-name="Translate">
+            <header><code>Translate</code></header>
+            <p class="desc">Right-click any message → Apps → Translate. Detects the language and translates it to English.</p>
+            <p class="note">A message context menu, not a slash command — you translate a message you're already looking at. The reply is private to you, since a public translation under someone's message reads like a correction.</p>
           </article>
           <article class="command-card" data-name="google">
             <header><code>/google &lt;query&gt;</code></header>

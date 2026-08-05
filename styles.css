@@ -2215,16 +2215,69 @@ section > .container > h2,
 .chart-bar {
   fill: var(--gold);
   transition: fill var(--t-fast);
+  cursor: pointer;
 }
 
-.chart-bar:hover {
+.chart-bar:hover,
+.chart-bar:focus-visible {
   fill: var(--vermilion);
+}
+
+.chart-point {
+  fill: var(--gold);
+  stroke: var(--ink-raise);
+  stroke-width: 1.5;
+  transition: fill var(--t-fast), r var(--t-fast);
+  cursor: pointer;
+}
+
+.chart-point:hover,
+.chart-point:focus-visible {
+  fill: var(--vermilion);
+  r: 6;
+}
+
+.chart-bar:focus-visible,
+.chart-point:focus-visible {
+  outline: none;
 }
 
 .chart-axis {
   fill: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 9px;
+}
+
+/* JS-positioned, one shared element reused across all three charts. */
+.chart-tooltip {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  background: var(--ink-raise-hi);
+  border: 2px solid var(--rule-hi);
+  box-shadow: var(--shadow-lg);
+  padding: 8px 11px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -6px);
+  transition: opacity var(--t-fast), transform var(--t-fast);
+}
+
+.chart-tooltip.visible {
+  opacity: 1;
+  transform: translate(-50%, -10px);
+}
+
+.chart-tooltip b {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold);
 }
 
 @media (max-width: 700px) {

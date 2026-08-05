@@ -505,6 +505,52 @@
       });
     }
 
+    // One shared tooltip, positioned on hover/focus instead of the browser's
+    // own <title> (slow to appear, can't be styled, and on its own gives no
+    // reason for a bar to look interactive at all).
+    const tooltip = document.createElement("div");
+    tooltip.className = "chart-tooltip";
+    tooltip.setAttribute("role", "tooltip");
+    document.body.appendChild(tooltip);
+
+    function tipHtml(bigText, lines) {
+      return "<b>" + escA(bigText) + "</b>" + lines.map(escA).join("<br>");
+    }
+
+    function showTooltip(el) {
+      const tip = el.getAttribute("data-tip");
+      if (!tip) return;
+      tooltip.innerHTML = tip;
+      const rect = el.getBoundingClientRect();
+      let left = rect.left + rect.width / 2;
+      left = Math.min(Math.max(left, 70), window.innerWidth - 70);
+      tooltip.style.left = left + "px";
+      tooltip.style.top = rect.top + "px";
+      tooltip.classList.add("visible");
+    }
+    function hideTooltip() {
+      tooltip.classList.remove("visible");
+    }
+    function wireTooltips(container) {
+      if (!container) return;
+      container.addEventListener("mouseover", function (e) {
+        const t = e.target.closest(".chart-bar, .chart-point");
+        if (t) showTooltip(t);
+      });
+      container.addEventListener("mouseout", function (e) {
+        const t = e.target.closest(".chart-bar, .chart-point");
+        if (t) hideTooltip();
+      });
+      container.addEventListener("focusin", function (e) {
+        const t = e.target.closest(".chart-bar, .chart-point");
+        if (t) showTooltip(t);
+      });
+      container.addEventListener("focusout", function (e) {
+        const t = e.target.closest(".chart-bar, .chart-point");
+        if (t) hideTooltip();
+      });
+    }
+
     // Line + filled area over time. points: [{ label, value }]. The SVG has
     // no preserveAspectRatio override, so height:auto in CSS scales it
     // uniformly — text stays legible at any width instead of stretching.
@@ -530,8 +576,10 @@
       if (points.length === 1) {
         const x = w / 2;
         const y = toY(points[0].value);
+        const tip = tipHtml(numA(points[0].value) + " messages", [points[0].label]);
         let single = '<svg viewBox="0 0 ' + w + " " + h + '" class="chart-svg" role="img" aria-label="Messages per day">';
-        single += '<circle cx="' + x + '" cy="' + y.toFixed(1) + '" r="4" class="chart-bar"></circle>';
+        single +=
+          '<circle cx="' + x + '" cy="' + y.toFixed(1) + '" r="4" tabindex="0" class="chart-point" data-tip="' + tip + '"></circle>';
         single += '<text x="' + x + '" y="' + (y - 10).toFixed(1) + '" text-anchor="middle" class="chart-axis">' + numA(points[0].value) + "</text>";
         single += '<text x="' + x + '" y="' + (h - 4) + '" text-anchor="middle" class="chart-axis">' + escA(points[0].label) + "</text>";
         single += "</svg>";
@@ -572,13 +620,24 @@
           '<text x="' + peakX.toFixed(1) + '" y="' + (toY(peak.value) - 6).toFixed(1) +
           '" text-anchor="middle" class="chart-axis">' + numA(peak.value) + "</text>";
       }
+      // A dot per day, not just the two edges and the peak — every day's
+      // number should be a hover/tap away, not just the three the chart
+      // already labels.
+      points.forEach(function (p, i) {
+        const x = padX + i * stepX;
+        const y = toY(p.value);
+        const tip = tipHtml(numA(p.value) + " messages", [p.label]);
+        svg +=
+          '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3" tabindex="0" class="chart-point" data-tip="' + tip + '"></circle>';
+      });
       svg += "</svg>";
       return svg;
     }
 
     // bars: [{ label, value }]. labelEvery shows one label per N bars, so 24
-    // hourly bars don't turn into an unreadable wall of text.
-    function barChart(bars, labelEvery) {
+    // hourly bars don't turn into an unreadable wall of text. unit names
+    // what's being counted ("messages", "people") for the tooltip.
+    function barChart(bars, labelEvery, unit) {
       const w = 720;
       const h = 200;
       const padX = 8;
@@ -589,6 +648,7 @@
           return b.value;
         }).concat([1]),
       );
+      const total = bars.reduce(function (sum, b) { return sum + b.value; }, 0);
       const innerW = w - padX * 2;
       const slot = innerW / bars.length;
       const barW = Math.max(1, slot - 3);
@@ -598,10 +658,11 @@
         const x = padX + i * slot;
         const barH = Math.max(0, (b.value / max) * (h - padY * 2));
         const y = h - padY - barH;
+        const pct = total ? Math.round((b.value / total) * 100) : 0;
+        const tip = tipHtml(numA(b.value) + " " + unit, [pct + "% of the total", b.tipLabel || b.label]);
         svg +=
           '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) +
-          '" height="' + barH.toFixed(1) + '" class="chart-bar"><title>' + escA(b.label) + ": " + numA(b.value) +
-          "</title></rect>";
+          '" height="' + barH.toFixed(1) + '" tabindex="0" class="chart-bar" data-tip="' + tip + '"></rect>';
         if (labelEvery && i % labelEvery === 0) {
           svg +=
             '<text x="' + (x + barW / 2).toFixed(1) + '" y="' + (h - 4) +
@@ -652,9 +713,9 @@
         if (hourlyEl) {
           const hourBars = [];
           for (let hr = 0; hr < 24; hr += 1) {
-            hourBars.push({ label: hr + "h", value: hourlyTotals[hr] || 0 });
+            hourBars.push({ label: hr + "h", tipLabel: String(hr).padStart(2, "0") + ":00 UTC", value: hourlyTotals[hr] || 0 });
           }
-          hourlyEl.innerHTML = barChart(hourBars, 4);
+          hourlyEl.innerHTML = barChart(hourBars, 4, "messages");
         }
       })
       .catch(function () {
@@ -679,15 +740,20 @@
           }
           wealthEl.innerHTML = barChart(
             buckets.map(function (b) {
-              return { label: b.bucket, value: b.count };
+              return { label: b.bucket, tipLabel: b.bucket + " Rokda", value: b.count };
             }),
             1,
+            "people",
           );
         })
         .catch(function () {
           wealthEl.innerHTML = '<p class="board-empty">Wealth data is offline right now.</p>';
         });
     }
+
+    wireTooltips(dailyEl);
+    wireTooltips(hourlyEl);
+    wireTooltips(wealthEl);
   }
 
   // ---- testers.html filter ----

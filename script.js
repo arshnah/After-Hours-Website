@@ -519,11 +519,27 @@
           return p.value;
         }).concat([1]),
       );
-      const innerW = w - padX * 2;
-      const stepX = points.length > 1 ? innerW / (points.length - 1) : 0;
       const toY = function (v) {
         return h - padY - (v / max) * (h - padY * 2);
       };
+
+      // stepX is only 0 with one point, and a 0-length path draws nothing —
+      // a brand-new server with a single day of data isn't a rare edge case
+      // here, it's the first thing anyone sees. Render it as a dot instead
+      // of an invisible line.
+      if (points.length === 1) {
+        const x = w / 2;
+        const y = toY(points[0].value);
+        let single = '<svg viewBox="0 0 ' + w + " " + h + '" class="chart-svg" role="img" aria-label="Messages per day">';
+        single += '<circle cx="' + x + '" cy="' + y.toFixed(1) + '" r="4" class="chart-bar"></circle>';
+        single += '<text x="' + x + '" y="' + (y - 10).toFixed(1) + '" text-anchor="middle" class="chart-axis">' + numA(points[0].value) + "</text>";
+        single += '<text x="' + x + '" y="' + (h - 4) + '" text-anchor="middle" class="chart-axis">' + escA(points[0].label) + "</text>";
+        single += "</svg>";
+        return single;
+      }
+
+      const innerW = w - padX * 2;
+      const stepX = innerW / (points.length - 1);
 
       let lineD = "";
       points.forEach(function (p, i) {
@@ -537,22 +553,24 @@
       const peak = points.reduce(function (best, p) {
         return p.value > best.value ? p : best;
       }, points[0]);
-      const peakX = padX + points.indexOf(peak) * stepX;
+      const peakIndex = points.indexOf(peak);
+      const peakX = padX + peakIndex * stepX;
+      // Skip the peak label when it lands on either edge — it would sit
+      // exactly on top of the date label there instead of beside it.
+      const showPeak = peak.value > 0 && peakIndex !== 0 && peakIndex !== points.length - 1;
 
       let svg = '<svg viewBox="0 0 ' + w + " " + h + '" class="chart-svg" role="img" aria-label="Messages per day">';
       svg += '<path d="' + areaD + '" class="chart-area"></path>';
       svg += '<path d="' + lineD.trim() + '" class="chart-line"></path>';
-      if (points.length) {
-        svg += '<text x="' + padX + '" y="14" class="chart-axis">' + escA(points[0].label) + "</text>";
+      svg += '<text x="' + padX + '" y="14" class="chart-axis">' + escA(points[0].label) + "</text>";
+      svg +=
+        '<text x="' + (w - padX) + '" y="14" text-anchor="end" class="chart-axis">' +
+        escA(points[points.length - 1].label) +
+        "</text>";
+      if (showPeak) {
         svg +=
-          '<text x="' + (w - padX) + '" y="14" text-anchor="end" class="chart-axis">' +
-          escA(points[points.length - 1].label) +
-          "</text>";
-        if (peak.value > 0) {
-          svg +=
-            '<text x="' + peakX.toFixed(1) + '" y="' + (toY(peak.value) - 6).toFixed(1) +
-            '" text-anchor="middle" class="chart-axis">' + numA(peak.value) + "</text>";
-        }
+          '<text x="' + peakX.toFixed(1) + '" y="' + (toY(peak.value) - 6).toFixed(1) +
+          '" text-anchor="middle" class="chart-axis">' + numA(peak.value) + "</text>";
       }
       svg += "</svg>";
       return svg;

@@ -433,6 +433,11 @@
             <p class="desc">Automatically give a role to new members on join.</p>
             <p class="note">Requires Manage Server. The role must sit below the bot's highest role.</p>
           </article>
+          <article class="command-card" data-name="setup">
+            <header><code>/setup</code></header>
+            <p class="desc">Guided setup for every server setting in one place — log channel, mod log, welcome, goodbye, confessions, pulse, starboard, auto-role, automod, and AFK renaming.</p>
+            <p class="note">Requires Manage Server. Picks channels and roles from Discord's own menus, nothing to type. The individual commands below still work the same as always — this is just one place to find them.</p>
+          </article>
         </div>
       </section>
 
@@ -489,9 +494,25 @@
             <header><code>/goodbye set &lt;channel&gt;</code></header>
             <p class="desc">Configure the goodbye channel for member-leave embeds.</p>
           </article>
-          <article class="command-card" data-name="suggest">
-            <header><code>/suggest &lt;text&gt;</code></header>
-            <p class="desc">Post a suggestion embed with 👍/👎 pre-added.</p>
+          <article class="command-card" data-name="suggest config">
+            <header><code>/suggest config &lt;channel&gt;</code></header>
+            <p class="desc">Set the suggestions channel and post the submission panel there.</p>
+            <p class="note">Requires Manage Server. Members submit through the panel's button + a short modal, not a slash command — so a suggestion is never a public "everyone sees you typing" moment.</p>
+          </article>
+          <article class="command-card" data-name="suggest approve">
+            <header><code>/suggest approve &lt;number&gt; [note]</code></header>
+            <p class="desc">Mark a suggestion approved and lock its voting buttons.</p>
+            <p class="note">Requires Manage Server.</p>
+          </article>
+          <article class="command-card" data-name="suggest deny">
+            <header><code>/suggest deny &lt;number&gt; [note]</code></header>
+            <p class="desc">Mark a suggestion denied and lock its voting buttons.</p>
+            <p class="note">Requires Manage Server.</p>
+          </article>
+          <article class="command-card" data-name="suggest note">
+            <header><code>/suggest note &lt;number&gt; &lt;note&gt;</code></header>
+            <p class="desc">Add a staff note to a suggestion without changing its status.</p>
+            <p class="note">Requires Manage Server.</p>
           </article>
           <article class="command-card" data-name="ticket setup">
             <header><code>/ticket setup &lt;panel&gt; [category] [staff] [log] [max]</code></header>

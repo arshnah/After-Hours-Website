@@ -477,6 +477,201 @@
       '<p class="board-empty">Leaderboards aren\'t switched on yet. Use <code>/rank</code> in Discord.</p>';
   }
 
+  // ---- Server Activity charts (leaderboard.html) ----
+  //
+  // Plain SVG built by hand — no chart library, matching the rest of the site
+  // having zero dependencies. Same progressive-enhancement rule as everything
+  // else here: no apiBase, or a failed fetch, just leaves the "Loading…"
+  // placeholders as they were served.
+
+  const dailyEl = document.getElementById("chart-daily");
+  if (dailyEl && apiBase) {
+    const hourlyEl = document.getElementById("chart-hourly");
+    const wealthEl = document.getElementById("chart-wealth");
+    const statEls = document.querySelectorAll("[data-activity-stat]");
+
+    const escA = function (s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    };
+    const numA = function (n) {
+      return Number(n || 0).toLocaleString("en-IN");
+    };
+
+    function setActivityStat(name, value) {
+      statEls.forEach(function (el) {
+        if (el.getAttribute("data-activity-stat") === name) el.textContent = numA(value);
+      });
+    }
+
+    // Line + filled area over time. points: [{ label, value }]. The SVG has
+    // no preserveAspectRatio override, so height:auto in CSS scales it
+    // uniformly — text stays legible at any width instead of stretching.
+    function lineChart(points) {
+      const w = 720;
+      const h = 200;
+      const padX = 8;
+      const padY = 24;
+      const max = Math.max.apply(
+        null,
+        points.map(function (p) {
+          return p.value;
+        }).concat([1]),
+      );
+      const innerW = w - padX * 2;
+      const stepX = points.length > 1 ? innerW / (points.length - 1) : 0;
+      const toY = function (v) {
+        return h - padY - (v / max) * (h - padY * 2);
+      };
+
+      let lineD = "";
+      points.forEach(function (p, i) {
+        const x = padX + i * stepX;
+        const y = toY(p.value);
+        lineD += (i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1) + " ";
+      });
+      const lastX = (padX + (points.length - 1) * stepX).toFixed(1);
+      const areaD = lineD + "L" + lastX + "," + (h - padY) + " L" + padX + "," + (h - padY) + " Z";
+
+      const peak = points.reduce(function (best, p) {
+        return p.value > best.value ? p : best;
+      }, points[0]);
+      const peakX = padX + points.indexOf(peak) * stepX;
+
+      let svg = '<svg viewBox="0 0 ' + w + " " + h + '" class="chart-svg" role="img" aria-label="Messages per day">';
+      svg += '<path d="' + areaD + '" class="chart-area"></path>';
+      svg += '<path d="' + lineD.trim() + '" class="chart-line"></path>';
+      if (points.length) {
+        svg += '<text x="' + padX + '" y="14" class="chart-axis">' + escA(points[0].label) + "</text>";
+        svg +=
+          '<text x="' + (w - padX) + '" y="14" text-anchor="end" class="chart-axis">' +
+          escA(points[points.length - 1].label) +
+          "</text>";
+        if (peak.value > 0) {
+          svg +=
+            '<text x="' + peakX.toFixed(1) + '" y="' + (toY(peak.value) - 6).toFixed(1) +
+            '" text-anchor="middle" class="chart-axis">' + numA(peak.value) + "</text>";
+        }
+      }
+      svg += "</svg>";
+      return svg;
+    }
+
+    // bars: [{ label, value }]. labelEvery shows one label per N bars, so 24
+    // hourly bars don't turn into an unreadable wall of text.
+    function barChart(bars, labelEvery) {
+      const w = 720;
+      const h = 200;
+      const padX = 8;
+      const padY = 20;
+      const max = Math.max.apply(
+        null,
+        bars.map(function (b) {
+          return b.value;
+        }).concat([1]),
+      );
+      const innerW = w - padX * 2;
+      const slot = innerW / bars.length;
+      const barW = Math.max(1, slot - 3);
+
+      let svg = '<svg viewBox="0 0 ' + w + " " + h + '" class="chart-svg" role="img" aria-label="Distribution">';
+      bars.forEach(function (b, i) {
+        const x = padX + i * slot;
+        const barH = Math.max(0, (b.value / max) * (h - padY * 2));
+        const y = h - padY - barH;
+        svg +=
+          '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) +
+          '" height="' + barH.toFixed(1) + '" class="chart-bar"><title>' + escA(b.label) + ": " + numA(b.value) +
+          "</title></rect>";
+        if (labelEvery && i % labelEvery === 0) {
+          svg +=
+            '<text x="' + (x + barW / 2).toFixed(1) + '" y="' + (h - 4) +
+            '" text-anchor="middle" class="chart-axis">' + escA(b.label) + "</text>";
+        }
+      });
+      svg += "</svg>";
+      return svg;
+    }
+
+    fetch(apiBase + "/activity?days=30")
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        const days = data.days || [];
+        if (!days.length) {
+          dailyEl.innerHTML =
+            '<p class="board-empty">No activity recorded yet — check back once the bot has been running a while.</p>';
+          if (hourlyEl) hourlyEl.innerHTML = '<p class="board-empty">—</p>';
+          return;
+        }
+
+        let totalMessages = 0;
+        let totalJoins = 0;
+        let totalLeaves = 0;
+        const hourlyTotals = {};
+        const points = days.map(function (d) {
+          totalMessages += d.messages || 0;
+          totalJoins += d.joins || 0;
+          totalLeaves += d.leaves || 0;
+          const hourly = d.hourly_messages || {};
+          Object.keys(hourly).forEach(function (hr) {
+            hourlyTotals[hr] = (hourlyTotals[hr] || 0) + hourly[hr];
+          });
+          const dt = new Date(d.day + "T00:00:00Z");
+          const label = dt.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+          return { label: label, value: d.messages || 0 };
+        });
+
+        setActivityStat("messages", totalMessages);
+        setActivityStat("joins", totalJoins);
+        setActivityStat("leaves", totalLeaves);
+
+        dailyEl.innerHTML = lineChart(points);
+
+        if (hourlyEl) {
+          const hourBars = [];
+          for (let hr = 0; hr < 24; hr += 1) {
+            hourBars.push({ label: hr + "h", value: hourlyTotals[hr] || 0 });
+          }
+          hourlyEl.innerHTML = barChart(hourBars, 4);
+        }
+      })
+      .catch(function () {
+        dailyEl.innerHTML = '<p class="board-empty">Activity data is offline right now.</p>';
+        if (hourlyEl) hourlyEl.innerHTML = '<p class="board-empty">—</p>';
+      });
+
+    if (wealthEl) {
+      fetch(apiBase + "/wealth")
+        .then(function (r) {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          const buckets = data.buckets || [];
+          const hasAny = buckets.some(function (b) {
+            return b.count > 0;
+          });
+          if (!buckets.length || !hasAny) {
+            wealthEl.innerHTML = '<p class="board-empty">Nothing here yet.</p>';
+            return;
+          }
+          wealthEl.innerHTML = barChart(
+            buckets.map(function (b) {
+              return { label: b.bucket, value: b.count };
+            }),
+            1,
+          );
+        })
+        .catch(function () {
+          wealthEl.innerHTML = '<p class="board-empty">Wealth data is offline right now.</p>';
+        });
+    }
+  }
+
   // ---- testers.html filter ----
   //
   // Same interaction as the commands filter, on a page that had 75 test cards

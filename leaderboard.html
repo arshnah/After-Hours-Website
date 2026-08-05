@@ -84,6 +84,37 @@
 
     <p class="board-note">Updated at most once a minute. Only the public server is listed.</p>
 
+    <div class="section-head">
+      <span class="num">▲</span>
+      <h2>Server Activity</h2>
+    </div>
+    <div class="rule-torn"></div>
+    <p class="section-intro">Message and member trends, collected live by the bot. This started recently, so the chart fills in over time rather than showing history from before that.</p>
+
+    <div class="activity-stats" id="activity-stats">
+      <div class="activity-stat"><b data-activity-stat="messages">—</b><span>messages, last 30 days</span></div>
+      <div class="activity-stat"><b data-activity-stat="joins">—</b><span>joined</span></div>
+      <div class="activity-stat"><b data-activity-stat="leaves">—</b><span>left</span></div>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-title">Messages per day</h3>
+      <div class="chart-wrap" id="chart-daily"><p class="board-empty">Loading…</p></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h3 class="chart-title">Busiest hours (UTC)</h3>
+        <div class="chart-wrap" id="chart-hourly"><p class="board-empty">Loading…</p></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">Rokda distribution</h3>
+        <div class="chart-wrap" id="chart-wealth"><p class="board-empty">Loading…</p></div>
+      </div>
+    </div>
+
+    <p class="board-note">Wealth is a live snapshot of every wallet on the server; the other charts are a rolling 30-day window.</p>
+
   </main>
 
   <footer class="site-footer">

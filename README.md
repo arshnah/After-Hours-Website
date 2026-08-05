@@ -7,10 +7,19 @@ Public landing page, command reference, and alpha tester checklist for After Hou
 **Live data.** `index.html` and `leaderboard.html` both carry a
 `<meta name="jugaad-api">` tag pointing at `https://jugaadapi.arshnah.in` (the
 bot's read-only API, behind nginx on the VPS). The command count and the
-leaderboards come from there. It is **progressive enhancement**: the numbers in
-the HTML are already correct, and a missing tag, an unreachable API, a CORS
-refusal or bad JSON all leave the page exactly as served. The failure mode is
-"slightly stale", never "blank". Both tags must match.
+leaderboards come from there. `leaderboard.html` also has a **Server
+Activity** section — a daily messages chart, a busiest-hours-UTC chart, and a
+Rokda wealth distribution, all plain hand-built SVG (`lineChart`/`barChart` in
+`script.js`, no chart library) reading `/activity` and `/wealth`. It is
+**progressive enhancement**: the numbers in the HTML are already correct, and
+a missing tag, an unreachable API, a CORS refusal or bad JSON all leave the
+page exactly as served. The failure mode is "slightly stale", never "blank".
+Both tags must match.
+
+Activity data only exists from whenever `guild_activity_daily` started being
+written (see `Jugaad-Bot/lib/activity.js`) — the daily chart has no history
+before that and starts empty, by design, not as a bug. Wealth is a live
+snapshot of every wallet, so it's accurate immediately.
 
 **Search.** `Cmd/Ctrl+K` anywhere opens a palette that searches every command;
 `/` focuses whichever filter the page has. `commands.html` is the single source
